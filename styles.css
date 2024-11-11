@@ -1,0 +1,41 @@
+:root {
+    --light-background-color: #FFF;
+    --light-primary-color: #222;
+    --dark-background-color: #222;
+    --dark-primary-color: #FFF;
+}
+  
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    margin: 0;
+    font-family: "Lexend", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-family: "Bungee Tint", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 10vw;
+    margin: 0 0 0.25em 0;
+}
+
+p {
+    margin: 0 10% 1em 10%;
+    text-align: center;
+}
