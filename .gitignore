@@ -1,0 +1,2 @@
+# ignore mac only DS Store files
+.DS_Store
