@@ -19,6 +19,7 @@ body {
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
+    font-size: 1.5em;
 }
 
 main {
@@ -32,10 +33,14 @@ h1 {
     font-weight: 400;
     font-style: normal;
     font-size: 10vw;
-    margin: 0 0 0.25em 0;
+    margin: auto;
 }
 
 p {
-    margin: 0 10% 1em 10%;
+    margin: 0 10% 0 10%;
     text-align: center;
 }
+
+a {
+    color: var(--light-primary-color);
+  }
