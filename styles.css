@@ -36,8 +36,31 @@ h1 {
     margin: auto;
 }
 
-p {
-    margin: 0 10% 0 10%;
+/* h1 floating animation */
+
+@keyframes float {
+    0% { transform: translateY(0); text-shadow: none; }
+    50% { transform: translateY(-0.025em); text-shadow: 2px 2px 5px rgba(187,45,20,0.3); }
+    100% { transform: translateY(0); text-shadow: none; }
+}
+
+.float {
+    display: flex;
+    justify-content: center;
+}
+
+.float span {
+    display: inline-block;
+    animation: float 3s ease-in-out infinite;
+    font-size: inherit;
+    margin: 0;
+    animation-delay: calc(var(--i) * 0.3s);
+}
+
+/* end h1 floating animation */
+
+p, header {
+    margin: 1em 10% 1em 10%;
     text-align: center;
 }
 
