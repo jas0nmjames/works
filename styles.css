@@ -67,3 +67,14 @@ p, header {
 a {
     color: var(--light-primary-color);
   }
+
+@media only screen and (max-width: 768px) {
+    h1 {
+        font-size: 3em;
+    }
+
+    .float {
+        flex-wrap: wrap;
+        margin: 0 16px 0 16px;
+    }
+} 
