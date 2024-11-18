@@ -19,7 +19,7 @@ body {
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
-    font-size: 1.5em;
+    font-size: 1.25em;
 }
 
 main {
@@ -32,7 +32,7 @@ h1 {
     font-family: "Bungee Tint", sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 10vw;
+    font-size: 10em;
     margin: auto;
 }
 
@@ -47,6 +47,9 @@ h1 {
 .float {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
+    line-height: 1;
+    margin: 0 16px 0 16px;
 }
 
 .float span {
@@ -70,15 +73,11 @@ a {
 
 @media only screen and (max-width: 768px) {
     body {
-        font-size: 1em;
+        height: auto;
+        margin: 1em auto 1em auto;
 }
-    
-    h1 {
-        font-size: 12em;
-    }
 
-    .float {
-        flex-wrap: wrap;
-        margin: 0 16px 0 16px;
+    h1 {
+        font-size: 8em;
     }
 } 
