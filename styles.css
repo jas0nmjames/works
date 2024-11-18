@@ -1,8 +1,8 @@
 :root {
-    --light-background-color: #FFF;
+    --light-background-color: rgb(243 155 131 / 10% );
     --light-primary-color: #222;
     --dark-background-color: #222;
-    --dark-primary-color: #FFF;
+    --dark-primary-color: #F39B83;
 }
   
 html {
@@ -20,6 +20,8 @@ body {
     font-weight: 300;
     font-style: normal;
     font-size: 1.25em;
+    background-color: var(--light-background-color);
+    color: var(--light-primary-color);
 }
 
 main {
@@ -39,9 +41,9 @@ h1 {
 /* h1 floating animation */
 
 @keyframes float {
-    0% { transform: translateY(0); text-shadow: none; }
-    50% { transform: translateY(-0.025em); text-shadow: 2px 2px 5px rgba(187,45,20,0.3); }
-    100% { transform: translateY(0); text-shadow: none; }
+    0% { transform: translateY(0) rotate(0deg); text-shadow: none; }
+    50% { transform: translateY(-0.025em) rotate(-1.5deg); text-shadow: 2px 2px 5px rgba(187,45,20,0.3); }
+    100% { transform: translateY(0) rotate(0deg); text-shadow: none; }
 }
 
 .float {
