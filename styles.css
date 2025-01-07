@@ -1,5 +1,4 @@
 :root {
-    /*--light-background-color: rgb(243 155 131 / 10% );*/
     --light-background-color: rgb(243 155 131 / 10% );
     --light-primary-color: #222;
     --dark-background-color: #222;
@@ -21,9 +20,10 @@ body {
     font-weight: 300;
     font-style: normal;
     font-size: 1.25em;
-    background-color: var(--light-background-color);
-    background: linear-gradient(rgb(243 155 131 / 5% ), rgb(243 155 131 / 25% ));
     color: var(--light-primary-color);
+    /* background-color: var(--light-background-color); */
+    /* background: linear-gradient(rgb(243 155 131 / 5% ), rgb(243 155 131 / 25% )); */
+    background-color: linear-gradient(rgb(243 155 131 / 5% ), rgb(243 155 131 / 25% ));
 }
 
 main {
@@ -37,6 +37,14 @@ h1 {
     font-weight: 400;
     font-style: normal;
     font-size: 10em;
+    margin: auto;
+}
+
+h2 {
+    font-family: "Bungee Tint", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1em;
     margin: auto;
 }
 
@@ -66,7 +74,7 @@ h1 {
 
 /* end h1 floating animation */
 
-p, header {
+p, header, footer {
     margin: 1em 10% 1em 10%;
     text-align: center;
 }
