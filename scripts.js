@@ -2,9 +2,6 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("JavaScript is working!");
 });
 
-// Privacy Friendly Analytics with Plausible.io
-window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }
-
 // Display Browser Information to the User
 
 document.addEventListener('DOMContentLoaded', async () => {
