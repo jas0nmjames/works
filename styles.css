@@ -9,11 +9,9 @@ html {
     scroll-behavior: smooth;
 }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Full viewport height */
+/* Screen-wide grid and typography base */
+body.screen {
+    min-height: 100svh;
     margin: 0;
     font-family: "Lexend", sans-serif;
     font-optical-sizing: auto;
@@ -24,20 +22,70 @@ body {
     /* background-color: var(--light-background-color); */
     /* background: linear-gradient(rgb(243 155 131 / 5% ), rgb(243 155 131 / 25% )); */
     background-color: linear-gradient(rgb(243 155 131 / 5% ), rgb(243 155 131 / 25% ));
+    display: grid;
+    place-items: stretch;
 }
 
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* Main grid: header (top-left), hero fills, footer (bottom-right), then extras below */
+main.layout {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr auto auto; /* extras is the last row */
+    grid-template-areas:
+      "header ."
+      "hero   hero"
+      ".      footer"
+      "extras extras";
+    gap: clamp(12px, 2vmin, 28px);
+    padding: clamp(12px, 2vmin, 28px);
 }
 
+/* Header and footer positioning in corners */
+.site-header { 
+  grid-area: header; 
+  align-self: start; 
+  justify-self: start; 
+  text-align: left;
+}
+
+.site-footer { 
+  grid-area: footer; 
+  align-self: end; 
+  justify-self: end; 
+  text-align: right;
+  max-width: min(70ch, 38vw);
+}
+
+/* Hero center */
+.hero {
+  grid-area: hero;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding-inline: 2vmin;
+}
+
+/* Fit box that the title should fill */
+.hero-box {
+  width: 95vw;      /* ~95% of viewport width */
+  height: 80vh;     /* ~80% of viewport height */
+  max-width: 100%;
+  max-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 0;       /* avoid padding affecting fit math */
+  overflow: visible;
+}
+
+/* Typography */
 h1 {
     font-family: "Bungee Tint", sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 10em;
-    margin: auto;
+    /* Start small; JS will grow it to fit both width & height */
+    font-size: 10px;
+    line-height: 0.9;
+    margin: 0;
 }
 
 h2 {
@@ -59,9 +107,12 @@ h2 {
 .float {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+    align-items: center;
+    flex-wrap: wrap;       /* allow natural wrapping when width is tight */
+    white-space: normal;   /* allow wrapping */
     line-height: 1;
     margin: 0 16px 0 16px;
+    transform-origin: center;
 }
 
 .float span {
@@ -74,22 +125,34 @@ h2 {
 
 /* end h1 floating animation */
 
+/* Links and extras */
 p, header, footer {
-    margin: 1em 10% 1em 10%;
+    margin: 0;
     text-align: center;
 }
 
 a {
     color: var(--light-primary-color);
-  }
-
-@media only screen and (max-width: 768px) {
-    body {
-        height: auto;
-        margin: 1em auto 1em auto;
 }
 
-    h1 {
-        font-size: 8em;
+.extras {
+    grid-area: extras;
+    margin: 1em 10% 3em 10%;
+    text-align: center;
+}
+
+/* Mobile: stack header / hero / footer cleanly */
+@media only screen and (max-width: 768px) {
+    main.layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto auto;
+        grid-template-areas:
+          "header"
+          "hero"
+          "footer"
+          "extras";
     }
-} 
+
+    .site-header { justify-self: start; text-align: left; }
+    .site-footer { justify-self: end; text-align: right; max-width: 100%; }
+}
