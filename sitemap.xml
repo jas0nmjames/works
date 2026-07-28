@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Sitemap for https://jasonjames.works/
+  Added 2026-07-28.
+
+  MAINTENANCE
+    - Add one <url> block per publicly reachable page. Only list pages you
+      want indexed, and only canonical URLs (the same value you put in the
+      page's <link rel="canonical">). Never list a redirect or a 404.
+    - <lastmod> must be W3C date format (YYYY-MM-DD). Keep it truthful:
+      crawlers learn to distrust sitemaps whose dates always say "today",
+      and a stale-but-honest date is treated better than a fake fresh one.
+    - <changefreq> and <priority> are hints only. Google has said it ignores
+      both. They are included here for the crawlers that still read them;
+      dropping them entirely is also fine.
+    - This file is referenced from robots.txt. If you rename it, update the
+      "Sitemap:" line there too.
+    - Once there is more than a handful of pages, consider generating this
+      at build time rather than hand-editing.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Home. Currently the only published page on the site. -->
+  <url>
+    <loc>https://jasonjames.works/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- TEMPLATE - copy this block for each new page, then uncomment.
+       Remember to give the new page its own <link rel="canonical">
+       and <meta name="description"> as well.
+  <url>
+    <loc>https://jasonjames.works/example-case-study/</loc>
+    <lastmod>2026-01-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  -->
+
+</urlset>

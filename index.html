@@ -7,6 +7,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>jasonjames.works Design Portfolio</title>
+
+    <!-- ============================================================
+         DISCOVERY / METADATA
+         Added 2026-07-28. Everything between here and END DISCOVERY
+         exists to describe this page to search engines, AI crawlers,
+         and link-preview unfurlers (Slack, iMessage, LinkedIn).
+         Update the description + og:title together when the page
+         stops being a placeholder.
+         ============================================================ -->
+
+    <!-- Fallback snippet for search results and retrieval crawlers.
+         Aim for ~150-160 characters; longer gets truncated. -->
+    <meta name="description" content="The design portfolio of Jason James, a UX designer. Currently a placeholder while the full portfolio is built.">
+    <meta name="author" content="Jason James">
+
+    <!-- Canonical URL. Prevents duplicate-content confusion if the page is
+         ever reachable at more than one address (www vs bare, /index.html
+         vs /, Netlify preview deploys). Must be the absolute, preferred URL. -->
+    <link rel="canonical" href="https://jasonjames.works/">
+
+    <!-- Open Graph: controls how the link looks when shared in Slack,
+         iMessage, LinkedIn, Discord, etc. Some text extractors also fall
+         back to og:description when a page has little body copy. -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="jasonjames.works">
+    <meta property="og:title" content="jasonjames.works Design Portfolio">
+    <meta property="og:description" content="The design portfolio of Jason James, a UX designer. Currently a placeholder while the full portfolio is built.">
+    <meta property="og:url" content="https://jasonjames.works/">
+    <meta property="og:locale" content="en_US">
+
+    <!-- TODO: og:image is intentionally left commented out.
+         The only image in this repo is the 2 KB favicon, which is far below
+         the minimum most platforms accept and would unfurl as a broken or
+         tiny thumbnail - worse than no image at all, which unfurls as clean
+         text. To enable: create a 1200x630 PNG or JPG (under ~5 MB), drop it
+         at the repo root, then uncomment these three lines.
+    <meta property="og:image" content="https://jasonjames.works/og-image.png">
+    <meta property="og:image:alt" content="Describe the image here for screen readers and text-only crawlers.">
+    <meta name="twitter:card" content="summary_large_image">
+    -->
+    <!-- Until an og:image exists, this renders a text-only preview card.
+         Swap to "summary_large_image" above when you add the image. -->
+    <meta name="twitter:card" content="summary">
+
+    <!-- Schema.org structured data describing the person behind the site.
+         This is the highest-value item here: the "sameAs" array is how
+         search knowledge graphs and AI entity-resolution stitch your
+         scattered profiles into ONE identity rather than several unrelated
+         ones. Add any new profile you control to that list (Bluesky,
+         Mastodon, speaker pages, publication bylines).
+         Validate changes at https://validator.schema.org/ - a syntax error
+         here silently voids the whole block. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Jason James",
+      "url": "https://jasonjames.works/",
+      "jobTitle": "UX Designer",
+      "sameAs": [
+        "https://www.linkedin.com/in/jasonjamesworks/",
+        "https://github.com/jas0nmjames",
+        "https://resume.jasonmjam.es/",
+        "https://jasonmjam.es/"
+      ]
+    }
+    </script>
+    <!-- Deliberately omitted from the block above, add only if you want them public:
+         "email"     - publishing it in structured data invites scrapers.
+         "worksFor"  - your employer history lives in about.md but you have not
+                       chosen to state it on this site yet; asserting it here
+                       would publish it. Add as: "worksFor": { "@type": "Organization", "name": "..." }
+         "image"     - a portrait URL, once one exists.
+    -->
+    <!-- ==================== END DISCOVERY ==================== -->
+
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/x-icon" href="/favicon_jason-james.png">
     <!-- Google Fonts -->

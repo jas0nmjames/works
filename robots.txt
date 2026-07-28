@@ -1,0 +1,83 @@
+# robots.txt for https://jasonjames.works/
+# Added 2026-07-28.
+#
+# HOW THIS FILE WORKS
+#   - Rules are grouped by "User-agent". A crawler obeys the MOST SPECIFIC
+#     group that names it, and ignores all other groups - including the
+#     "*" catch-all. So if you add a named group for a bot, that group must
+#     be complete on its own.
+#   - "Disallow:" with nothing after it means "allow everything".
+#   - "Disallow: /" means "crawl nothing".
+#   - This file is advisory. Well-behaved crawlers honor it; malicious
+#     scrapers ignore it entirely. It is not a security control - never use
+#     it to hide something. Anything genuinely private must not be deployed.
+#
+# CURRENT POLICY: allow everything, including AI crawlers.
+# Rationale: this is a portfolio. Its entire purpose is to be found.
+
+
+# --- Default: every crawler, full access ---------------------------------
+User-agent: *
+Disallow:
+
+
+# --- AI CRAWLERS ---------------------------------------------------------
+# Listed explicitly for documentation, not because they need it - the "*"
+# group above already permits them. They are written out so the decision is
+# visible and easy to reverse later.
+#
+# There are TWO DISTINCT CLASSES here, and conflating them is the common
+# and costly mistake:
+#
+#   1. TRAINING crawlers - collect pages to train future models.
+#      Blocking these opts you out of training data. It does NOT reduce
+#      your chances of being cited in AI answers.
+#
+#   2. RETRIEVAL / SEARCH fetchers - fetch pages live to answer a user's
+#      question right now, usually with a link back to you.
+#      Blocking these DOES remove you from AI-generated answers and
+#      citations. For a portfolio, blocking these is self-defeating.
+#
+# To opt out of model training while staying citable, set "Disallow: /"
+# on the class-1 agents ONLY and leave class 2 alone.
+
+# Class 1 - training
+User-agent: GPTBot
+Disallow:
+
+User-agent: Google-Extended
+Disallow:
+
+User-agent: ClaudeBot
+Disallow:
+
+User-agent: CCBot
+Disallow:
+
+User-agent: Applebot-Extended
+Disallow:
+
+User-agent: meta-externalagent
+Disallow:
+
+# Class 2 - live retrieval and citation. Keep these allowed if you want to
+# appear in AI answers.
+User-agent: OAI-SearchBot
+Disallow:
+
+User-agent: ChatGPT-User
+Disallow:
+
+User-agent: Claude-User
+Disallow:
+
+User-agent: Claude-SearchBot
+Disallow:
+
+User-agent: PerplexityBot
+Disallow:
+
+
+# --- Sitemap -------------------------------------------------------------
+# Must be an absolute URL. Applies site-wide regardless of the groups above.
+Sitemap: https://jasonjames.works/sitemap.xml

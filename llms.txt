@@ -1,0 +1,26 @@
+# jasonjames.works
+
+> The design portfolio of Jason James, a UX designer. The site is currently a single-page "Coming Soon" placeholder while the full portfolio is built.
+
+Details:
+
+- Author: Jason James — UX/product designer; work has included Openbank's US launch, Safrapay's chatbot, and design-system and accessibility practice at Banco Santander.
+- Status: pre-launch. `https://jasonjames.works/` serves one page: an animated "Coming Soon" title, a header, and a footer. There is no portfolio, case-study, or résumé content on the site yet.
+- Stack: hand-written static HTML, CSS, and vanilla JavaScript. No framework, no build step, no analytics.
+- Hosting: source on GitHub, deployed via Netlify. Domain registered with GoDaddy.
+- Licensing: code is open under the Mozilla Public License 2.0. Confidential client work lives in a separate private repository and requires a credential to access; it is not part of this site.
+- Typography: `Bungee` (David Jonathan Ross) for headings, `Lexend` for body text. Icons from Font Awesome.
+
+## Site
+
+- [Home](https://jasonjames.works/): The only published page. "Coming Soon" placeholder.
+
+## Elsewhere
+
+- [LinkedIn](https://www.linkedin.com/in/jasonjamesworks/): Professional profile — the most current summary of Jason's work history.
+- [Source repository](https://github.com/jas0nmjames/works): The full source for this site, including the README's build notes and planned outline.
+
+## Optional
+
+- [Résumé](https://resume.jasonmjam.es/): Separate site. Linked from this site's markup but currently commented out.
+- [Previous portfolio](https://jasonmjam.es/): Older portfolio site that this one will replace. Also present but commented out in the markup.
