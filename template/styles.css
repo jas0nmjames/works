@@ -1,0 +1,332 @@
+
+
+:root {
+    /* CSS Custom Properties (Variables) - Colors */
+    --primary: white;
+    --secondary: #C4C6E2;
+    --accent: #E05B08;
+    --text: #000000;
+
+    /* CSS Custom Properties (Variables) - Fonts */
+
+    /*
+
+    --readex-pro-extra-light {
+        font-family: "Readex Pro", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 200;
+        font-style: normal;
+        font-variation-settings:
+            "HEXP" 0;
+    }
+    --readex-pro-light {
+        font-family: "Readex Pro", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 300;
+        font-style: normal;
+        font-variation-settings:
+            "HEXP" 0;
+    }
+    --readex-pro-regular {
+        font-family: "Readex Pro", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
+        font-variation-settings:
+            "HEXP" 0;
+    }
+    --readex-pro-medium {
+        font-family: "Readex Pro", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 500;
+        font-style: normal;
+        font-variation-settings:
+            "HEXP" 0;
+    }
+    --readex-pro-semi-bold {
+        font-family: "Readex Pro", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 600;
+        font-style: normal;
+        font-variation-settings:
+            "HEXP" 0;
+    }
+    --readex-pro-bold {
+        font-family: "Readex Pro", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 700;
+        font-style: normal;
+        font-variation-settings:
+            "HEXP" 0;
+    }
+    .bungee-regular {
+        font-family: "Bungee", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        }
+    .bungee-inline-regular {
+        font-family: "Bungee Inline", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        }
+    .bungee-shade-regular {
+        font-family: "Bungee Shade", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        }
+    .bungee-outline-regular {
+        font-family: "Bungee Outline", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        }
+    .bungee-hairline-regular {
+        font-family: "Bungee Hairline", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        }
+
+    */
+
+    @font-face { /* See https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face and https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Web_fonts */
+    font-family: "Bungee Layers Inline";
+    src:
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.woff2") format("woff2"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.woff") format("woff"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.eot") format("embedded-opentype");
+    }
+
+    @font-face {
+    font-family: "Bungee Layers Regular";
+    src:
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.woff2") format("woff2"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.woff") format("woff"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.eot") format("embedded-opentype");
+    }
+
+    @font-face {
+    font-family: "Bungee Layers Outline";
+    src:
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.woff2") format("woff2"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.woff") format("woff"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.eot") format("embedded-opentype");
+    }
+
+    @font-face {
+    font-family: "Bungee Layers Shade";
+    src:
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.woff2") format("woff2"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.woff") format("woff"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.eot") format("embedded-opentype");
+    }
+
+    @font-face {
+    font-family: "Lexend";
+    src: 
+        url("https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"),
+        url("assets/fonts/lexend/Lexend/Lexend-VariableFont_wght.ttf") format("ttf");
+    }
+
+    a { /* Claude code assisted me in creating this CSS */
+        color: #000;
+        text-decoration: none;
+        border-bottom: 0.125em solid #E05B08;
+        border-radius: 0.125em;
+        padding-bottom: 0.125em;
+    }
+
+    .icon {
+        color: var(--accent);
+    }
+}
+
+body {
+    background-color: var(--primary);
+    background-color: var(--secondary);
+    color: var(--text);
+    
+    font-family: "Readex Pro", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "HEXP" 0;
+
+    margin: 0;
+}
+
+h1 {
+    color: var(--accent);
+    font-family: "Bungee", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1rem;
+    margin: 1rem;
+}
+
+nav > ol, nav > ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li.crumb {
+    font-weight: 300;
+}
+
+li.crumb > i, li.crumb svg {
+    position: absolute;
+    transform: translate(-1.25rem, 3px);
+}
+
+section {
+    margin: 0 0;
+}
+
+article {
+    background-color: var(--secondary);
+    max-width: 768px;
+    padding: 0.5rem 1rem;
+}
+
+article > header {
+    margin: 0 1.25rem;
+}
+
+h2 {
+    font-size: 2.25rem;
+}
+
+h2.hidden {
+    margin: 0.375rem;
+}
+
+/*
+figure.bungee {
+    font-size: 2.25rem;
+    padding: 0;
+    white-space: normal;
+    max-width: 100%;
+}
+*/
+
+.multilayer {
+  margin: 0rem;
+  display: grid;
+}
+
+.bungee-layers-inline {
+  z-index: 4;
+  grid-row: 1;
+  grid-column: 1;
+  font-family: 'Bungee Layers Inline','Bungee Hairline', cursive;
+  font-weight: 400; /* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight */
+  /*font-size: clamp(2.5rem, 4.75rem, 7rem);*/   
+  color: var(--accent);
+}
+
+.bungee-layers-regular {
+  z-index: 3;
+  grid-row: 1;
+  grid-column: 1;
+  font-family: 'Bungee Layers Regular','Bungee', cursive;
+  font-weight: 400;
+  /*font-size: clamp(2.5rem, 4.75rem, 7rem);*/   
+  color: var(--primary);
+}
+
+.bungee-layers-outline {
+  z-index: 2;
+  grid-row: 1;
+  grid-column: 1;
+  font-family: 'Bungee Layers Outline', 'Bungee Outline', cursive;
+  font-weight: 400;
+  /*font-size: clamp(2.5rem, 4.75rem, 7rem);*/   
+  color: var(--accent);
+}
+
+.bungee-layers-shade {
+  z-index: 1;
+  grid-row: 1;
+  grid-column: 1;
+  font-family: 'Bungee Layers Shade', 'Bungee Shade', cursive;
+  font-weight: 400;
+  /*font-size: clamp(2.5rem, 4.75rem, 7rem);*/   
+  color: var(--text);
+}
+
+ul, ol {
+    padding-left: 1em;
+}
+
+.tag-list {
+    list-style-type: none;
+    padding: 0;      
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tag-list li {
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 2px solid var(--accent);
+    cursor: pointer;
+    font-family: "Bungee", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 0.75rem;
+}
+
+.tag-list a {
+    border: none;
+}
+
+video {
+    width: 100%;
+    height: auto;
+    margin: 1em 0;
+    border-radius: 8px;
+}
+
+.article-date {
+    font-weight: 300;
+}
+
+.article-body {
+    padding: 0 1em;
+}
+
+.summary, .outcomes, .video-summary {
+    box-sizing: content-box;
+    border: 4px solid var(--primary);
+    border-radius: 16px;
+    padding: 0px 16px;
+    margin: 20px 0;
+    position: relative;
+}
+
+.article-body {
+    padding: 0px 20px;
+}
+
+.typography-label {
+    font-family: "Readex Pro", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings:
+        "HEXP" 0;
+
+    font-size: 0.75rem;
+    text-transform: lowercase;
+    background-color: var(--secondary);
+    padding: 0 0.5em;
+}
+
+.typography-label-container {
+    position: absolute;
+    left: 1em;
+    transform: translateY(-60%);
+}
