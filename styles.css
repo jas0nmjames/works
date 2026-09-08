@@ -1,158 +1,199 @@
 :root {
-    --light-background-color: rgb(243 155 131 / 10% );
-    --light-primary-color: #222;
-    --dark-background-color: #222;
-    --dark-primary-color: #F39B83;
+    /* CSS Custom Properties (Variables) - Colors */
+    --primary: white;
+    --secondary: #C4C6E2;
+    --accent: #E05B08;
+    --text: #000000;
+
+    --kool-kombi: #FE5000; /* Hotwheels Pantone 021 */
+    --ford-mustang-boss-302: #7A2E42; /* Hotwheels Pantone 195 */
+    --nissan-fairlady-z: #202A44; /* Hotwheels Pantone 533 */
+    
+
+    @font-face { /* See https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face and https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Web_fonts */
+    font-family: "Bungee Layers Inline";
+    src:
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.woff2") format("woff2"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.woff") format("woff"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.eot") format("embedded-opentype");
+    }
+
+    @font-face {
+    font-family: "Bungee Layers Regular";
+    src:
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.woff2") format("woff2"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.woff") format("woff"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.eot") format("embedded-opentype");
+    }
+
+    @font-face {
+    font-family: "Bungee Layers Outline";
+    src:
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.woff2") format("woff2"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.woff") format("woff"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.eot") format("embedded-opentype");
+    }
+
+    @font-face {
+    font-family: "Bungee Layers Shade";
+    src:
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.woff2") format("woff2"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.woff") format("woff"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.eot") format("embedded-opentype");
+    }
+
+    @font-face {
+    font-family: "Lexend";
+    src: 
+        url("https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"),
+        url("assets/fonts/lexend/Lexend/Lexend-VariableFont_wght.ttf") format("ttf");
+    }
+
 }
-  
+
 html {
-    scroll-behavior: smooth;
+    background-color: var(--primary);
+    color: var(--text);
 }
 
-/* Screen-wide grid and typography base */
-body.screen {
-    min-height: 100svh;
-    margin: 0;
-    font-family: "Lexend", sans-serif;
+body {
+    font-family: "Readex Pro", sans-serif;
     font-optical-sizing: auto;
-    font-weight: 300;
-    font-style: normal;
-    font-size: 1.25em;
-    color: var(--light-primary-color);
-    /* background-color: var(--light-background-color); */
-    /* background: linear-gradient(rgb(243 155 131 / 5% ), rgb(243 155 131 / 25% )); */
-    background-color: linear-gradient(rgb(243 155 131 / 5% ), rgb(243 155 131 / 25% ));
-    display: grid;
-    place-items: stretch;
-}
-
-/* Main grid: header (top-left), hero fills, footer (bottom-right), then extras below */
-main.layout {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto 1fr auto auto; /* extras is the last row */
-    grid-template-areas:
-      "header ."
-      "hero   hero"
-      ".      footer"
-      "extras extras";
-    gap: clamp(12px, 2vmin, 28px);
-    padding: clamp(12px, 2vmin, 28px);
-}
-
-/* Header and footer positioning in corners */
-.site-header { 
-  grid-area: header; 
-  align-self: start; 
-  justify-self: start; 
-  text-align: left;
-}
-
-.site-footer { 
-  grid-area: footer; 
-  align-self: end; 
-  justify-self: end; 
-  text-align: right;
-  max-width: min(70ch, 38vw);
-}
-
-/* Hero center */
-.hero {
-  grid-area: hero;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding-inline: 2vmin;
-}
-
-/* Fit box that the title should fill */
-.hero-box {
-  width: 95vw;      /* ~95% of viewport width */
-  height: 80vh;     /* ~80% of viewport height */
-  max-width: 100%;
-  max-height: 100%;
-  display: grid;
-  place-items: center;
-  padding: 0;       /* avoid padding affecting fit math */
-  overflow: visible;
-}
-
-/* Typography */
-h1 {
-    font-family: "Bungee Tint", sans-serif;
     font-weight: 400;
     font-style: normal;
-    /* Start small; JS will grow it to fit both width & height */
-    font-size: 10px;
-    line-height: 0.9;
-    margin: 0;
+    font-variation-settings:
+        "HEXP" 0;
+    margin: 0 1em 1em 1em;
 }
 
-h2 {
-    font-family: "Bungee Tint", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 1em;
-    margin: auto;
-}
-
-/* h1 floating animation */
-
-@keyframes float {
-    0% { transform: translateY(0) rotate(0deg); text-shadow: none; }
-    50% { transform: translateY(-0.025em) rotate(-1.5deg); text-shadow: 2px 2px 5px rgba(187,45,20,0.3); }
-    100% { transform: translateY(0) rotate(0deg); text-shadow: none; }
-}
-
-.float {
+header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+}
+
+body > header {
+    border-bottom: 2px solid var(--accent);
+}
+
+h1 {
+    color: var(--accent);
+    font-family: "Bungee", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 6em;
+    margin: 0;
+    word-break: break-all;
+}
+
+menu {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
     align-items: center;
-    flex-wrap: wrap;       /* allow natural wrapping when width is tight */
-    white-space: normal;   /* allow wrapping */
-    line-height: 1;
-    margin: 0 16px 0 16px;
-    transform-origin: center;
 }
 
-.float span {
-    display: inline-block;
-    animation: float 3s ease-in-out infinite;
-    font-size: inherit;
-    margin: 0;
-    animation-delay: calc(var(--i) * 0.3s);
+menu button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    min-width: 44px;
+    min-height: 44px;
 }
 
-/* end h1 floating animation */
-
-/* Links and extras */
-p, header, footer {
-    margin: 0;
-    text-align: center;
+nav li {
+    font-weight: 300;
 }
 
 a {
-    color: var(--light-primary-color);
+    color: var(--text);
+    text-decoration: none;
 }
 
-.extras {
-    grid-area: extras;
-    margin: 1em 10% 3em 10%;
-    text-align: center;
+.icon {
+    color: var(--accent);
+    padding: 0;
 }
 
-/* Mobile: stack header / hero / footer cleanly */
-@media only screen and (max-width: 768px) {
-    main.layout {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr auto auto;
-        grid-template-areas:
-          "header"
-          "hero"
-          "footer"
-          "extras";
-    }
+button i, button svg {
+    font-size: 1.5em;
+}
 
-    .site-header { justify-self: start; text-align: left; }
-    .site-footer { justify-self: end; text-align: right; max-width: 100%; }
+.fa-sun-bright, .fa-moon-waxing-crescent {
+    color: var(--text);
+}
+
+#flavor-controls {
+    gap: 0;
+    margin: 0;
+    align-items: flex-start;
+    flex-flow: row wrap;
+    flex-wrap: wrap-reverse;
+}
+
+#flavor-controls > li {
+    margin: 0 -16px 0 0;
+    font-weight: 300;
+    border-radius: 24px 24px 0 0;
+    padding: 4px 24px;
+}
+
+.hand-crafted {
+    background-color: var(--accent);
+    border: 2px solid var(--accent);
+}
+
+.hand-crafted > a {
+    color: var(--primary);
+}
+
+.locally-generative {
+    border: 2px solid var(--ford-mustang-boss-302);
+    z-index: -1;
+}
+
+.locally-generative > a {
+    color: var(--ford-mustang-boss-302);
+}
+
+.generative {
+    border: 2px solid var(--nissan-fairlady-z);
+    z-index: -2;
+}
+
+.generative > a {
+    color: var(--nissan-fairlady-z);
+}
+
+.sentient {
+    border: 2px solid var(--kool-kombi);
+    z-index: -3;
+}
+
+.sentient > a {
+    color: var(--kool-kombi);
+}
+
+#hand-writing {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-flow: row wrap;
+    gap: 0.5em;
+    margin-left: 48px;
+    margin-top: 0.5em;
+}
+
+#hand-writing-1 {
+    width: 175px; /* original size is 350 x 58 pixels */
+    height: auto;
+}
+
+#hand-writing-2 {
+    width: 147.5px; /* original size is 350 x 58 pixels */
+    height: auto;
+}
+
+#hand-writing-3 {
+    width: 175.5px; /* original size is 350 x 58 pixels */
+    height: auto;
 }

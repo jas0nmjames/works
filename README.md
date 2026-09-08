@@ -2,6 +2,8 @@
 
 My portfolio hosted at https://jasonjames.works
 
+Confidential content lives in a separate, private repo. On the site, you'll need a password or other credential to access any confidential content.
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/543e3dda-da04-4872-8df8-fe9438b0767e/deploy-status)](https://app.netlify.com/sites/jasonjamesworks/deploys)
 
 ## tools

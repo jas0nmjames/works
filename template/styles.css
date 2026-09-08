@@ -1,4 +1,38 @@
+/* 
 
+Note: I wrote this CSS myself, even in this day and age.  I found surprising:
+
+1. Without turning anything on, VS Code's autocomplete was recommending CSS very accurately.  Sometimes it got in the way by visually obstructing where I was trying to type or more perniciously, it made reccomendations that got in the way of my thought process.
+
+2. I still referred heavily to MDN Docs when I wanted to see what my options were.  Google search's automatic AI mode got in my way by suggesting code even though I wasn't asking for it - I'd prefer using Claude Code for that.
+
+There are at least two instances where Google's code was more complicated than the direction I was heading in and I ended up using the cleaner code from my own thought process.
+
+For example, to hide something visually, but keep it accessible, it reccommended this pattern:
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+But I actually preferred, for the content I wanted to show in the accessibility tree but hide visually:
+
+content-visibility: hidden;
+
+And then for the content I wanted to show visually, but hide in the accessibility tree, the html attribute:
+
+aria-hidden="true"
+
+- Jason James, Tuesday, September 2, 2026
+
+*/
 
 :root {
     /* CSS Custom Properties (Variables) - Colors */
@@ -6,6 +40,11 @@
     --secondary: #C4C6E2;
     --accent: #E05B08;
     --text: #000000;
+
+    /* CSS Color, Light and Dark Mode Theming */
+    /* Thanks to https://medium.com/@cerutti.alexander/a-mostly-complete-guide-to-theme-switching-in-css-and-js-c4992d5fd357 */
+
+
 
     /* CSS Custom Properties (Variables) - Fonts */
 
@@ -126,32 +165,55 @@
         url("assets/fonts/lexend/Lexend/Lexend-VariableFont_wght.ttf") format("ttf");
     }
 
-    a { /* Claude code assisted me in creating this CSS */
-        color: #000;
-        text-decoration: none;
-        border-bottom: 0.125em solid #E05B08;
-        border-radius: 0.125em;
-        padding-bottom: 0.125em;
-    }
+    
+}
 
-    .icon {
-        color: var(--accent);
-    }
+html {
+    background-color: var(--primary);
+    color: var(--text);
 }
 
 body {
-    background-color: var(--primary);
-    background-color: var(--secondary);
-    color: var(--text);
-    
     font-family: "Readex Pro", sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
     font-variation-settings:
         "HEXP" 0;
-
     margin: 0;
+    max-width: 768px;
+}
+
+body > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.crumb a {
+    border-bottom: 2px solid var(--accent);
+    border-radius: 0.125em;
+    padding-bottom: 0.125em;
+}
+
+.icon {
+    color: var(--accent);
+}
+
+.fa-sun-bright, .fa-moon-waxing-crescent {
+    color: var(--text);
+}
+
+#theme-controls {
+    display: flex;
+    align-content: stretch;
+    gap: 0;
+    align-items: center;
 }
 
 h1 {
@@ -171,6 +233,7 @@ nav > ol, nav > ul {
 
 li.crumb {
     font-weight: 300;
+    font-size: 0.75rem;
 }
 
 li.crumb > i, li.crumb svg {
@@ -185,7 +248,8 @@ section {
 article {
     background-color: var(--secondary);
     max-width: 768px;
-    padding: 0.5rem 1rem;
+    padding: 1rem 1rem;
+    border-radius: 24px;
 }
 
 article > header {
@@ -279,26 +343,18 @@ ul, ol {
     font-size: 0.75rem;
 }
 
-.tag-list a {
-    border: none;
-}
-
 video {
     width: 100%;
     height: auto;
-    margin: 1em 0;
+    margin: 16px 0;
     border-radius: 8px;
 }
 
-.article-date {
+#article-date {
     font-weight: 300;
 }
 
-.article-body {
-    padding: 0 1em;
-}
-
-.summary, .outcomes, .video-summary {
+#summary, #outcomes, #video-summary {
     box-sizing: content-box;
     border: 4px solid var(--primary);
     border-radius: 16px;
@@ -307,7 +363,11 @@ video {
     position: relative;
 }
 
-.article-body {
+#video-summary {
+    margin-bottom: 0;
+}
+
+#article-body {
     padding: 0px 20px;
 }
 
