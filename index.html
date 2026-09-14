@@ -18,11 +18,13 @@
     <!-- Font Awesome Kit "jasonjames" -->
     <script src="https://kit.fontawesome.com/0e27cadf60.js" crossorigin="anonymous"></script>
 
+    <meta name="theme-color" content="#E05B08" />
 </head>
 <body>
+    <!-- <span class="watermark">jasonjames.works</span> -->
     <header>
         <menu id="flavor-controls">
-            <li class="hand-crafted"><a href="#">hand-crafted</a></li>
+            <li class="hand-crafted"><a href="#">hand-crafted&thinsp;<sup><small>1</small></sup></a></li>
             <li class="locally-generative"><a href="#">locally-generative</a></li>
             <li class="generative"><a href="#">generative</a></li>
             <li class="sentient"><a href="#">sentient</a></li>
@@ -57,19 +59,55 @@
         <img id="hand-writing-2" src="assets/hand-written-01-2.webp" alt="&amp; written in vanilla">
         <img id="hand-writing-3" src="assets/hand-written-01-3.webp" alt="html and css by yours truly.">
     </figure>
-    <a href="#" title="go back to the homepage">
-        <h1>jasonjames.works</h1>
-    </a>
-    <nav>
-        <ul>
-            <li><a href="#">case studies</a></li>
-            <li><a href="#">anecdotes</a></li>
-            <li><a href="#">playground</a></li>
-            <li><a href="https://jasonjames.design/" target="_blank" rel="noopener noreferrer">résumé</a> <i class="icon fa-solid fa-arrow-up-right-from-square"></i></li>
-        </ul>
+    <div class="wrapper">
+        <nav id="main-navigation">
+            <a href="#" title="go back to the homepage">
+                <h1>jason<br>james<br>.works</h1>
+            </a>
+            <ul>
+                <li>
+                    <a href="#">case studies&ensp;<i class="fa-regular fa-angle-right"></i></a>
+                    <span class="nav-sub-heading">big picture impact</span>
+                </li>
+                <li>
+                    <a href="#">anecdotes&ensp;<i class="fa-regular fa-angle-right"></i></a>
+                    <span class="nav-sub-heading">skills and deliverables</span>
+                </li>
+                <li>
+                    <a href="#">playground&ensp;<i class="fa-regular fa-angle-right"></i></a>
+                    <span class="nav-sub-heading">personal projects</span>
+                </li>
+                <li><a href="https://jasonjames.design/" target="_blank" rel="noopener noreferrer">résumé&ensp;</a><i class="icon fa-solid fa-arrow-up-right-from-square"></i></li>
+            </ul>
+            <aside>
+                <small>
+                    <p>Jason James is a digital designer with deep fintech &amp; banking experience, a background in the humanities and an MBA.</p>
+                <details>
+                    <summary><!--<sup>1</sup>&thinsp;-->Why a 'hand-crafted' version in 2026?
+                    </summary>
+                    <br>
+                    Whether large language models, front-end development or a conference room,
+                    <br><br>
+                    a deep understanding of the medium within which we work empowers us to <em>see the big picture
+                    while attending to the details that matter</em>.
+                    <br><br>
+                    I also just really enjoy understanding what's 'under the hood' of the systems I seek to shape.
+                    </details>
+            </aside>
+
+                </small>
+        </nav>
         
-    </nav>
-    <main>
-    </main>
+        <!--
+        <a id="billboard" href="#" title="go back to the homepage">
+            <span>jasonjames.works</span>
+        </a>
+        -->
+
+        <main>
+            <p>This is a test.</p>
+        </main>
+    </div>
+    <footer></footer>
 </body>
 </html>
