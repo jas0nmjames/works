@@ -94,23 +94,35 @@ body {
 
 /*
 main {
-    display: block;
     position: relative;
-    overflow: hidden;
-    flex: 1;
 }
+*/
 
-.watermark {
+/* I did get google LLM to help me with this */
+
+#watermark {
     font-family: "Bungee", sans-serif;
     font-weight: 100;
     font-style: normal;
     font-size: 72em;
-    z-index: 0;
-    position: absolute;
+    font-size: 42em;
+
+    position: fixed;
+    /* position: absolute; */
+    z-index: -1;
+    /* top: 50%; */
+    /* left: 50%; */
+    left: 66%;
+    top: 25%;
+    /* transform: translate(-50%, 50%); */
+    /* transform: translateX(-50%); */
+    transform: translate(-50%, -5%);
+
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+
     color: var(--accent-transparent-light);
-    /* transform: rotate(90deg);
 }
-*/
 
 menu {
     display: flex;
@@ -259,14 +271,6 @@ h1 {
     padding-left: 24px;
     line-height: 3rem;
 }
-
-/*
-h1:hover {
-    font-family: "Bungee Spice", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-*/
 
 #flavor-controls {
     display: flex;
