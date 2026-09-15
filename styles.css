@@ -10,12 +10,19 @@
     --text: #000000;
     --text-transparent: #00000025;
 
-    --kool-kombi: #FE5000; /* Hotwheels Pantone 021 */
-    --kool-kombi-transparent: #FE500025;
     --ford-mustang-boss-302: #7A2E42; /* Hotwheels Pantone 195 */
-    --ford-mustang-boss-302-transparent: #7A2E4225;
+    /* --ford-mustang-boss-302-transparent: #7A2E4225; */
+     --ford-mustang-boss-302-transparent: #DECBD0;
+
+     /* Thanks https://hexcalculator.org/color-opacity/ */
+    
     --nissan-fairlady-z: #202A44; /* Hotwheels Pantone 533 */
-    --nissan-fairlady-z-transparent: #202A4425;
+    /* --nissan-fairlady-z-transparent: #202A4425; */
+     --nissan-fairlady-z-transparent: #C7CAD0;
+
+     --kool-kombi: #FE5000; /* Hotwheels Pantone 021 */
+    /* --kool-kombi-transparent: #FE500025; */
+    --kool-kombi-transparent: #FFD3BF;
     
 
     @font-face { /* See https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face and https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Web_fonts */
@@ -57,6 +64,17 @@
         url("assets/fonts/lexend/Lexend/Lexend-VariableFont_wght.ttf") format("ttf");
     }
 
+    .bungee-spice-regular {
+        font-family: "Bungee Spice", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .bungee-tint-regular {
+        font-family: "Bungee Tint", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
 }
 
 html {
@@ -130,13 +148,6 @@ button {
     gap: 1em;
 }
 
-/* break point is 464px */
-@media (width <= 29em) {
-    .wrapper {
-        flex-flow: column wrap;
-    }
-}
-
 nav ul {
     display: flex;
     flex-direction: column;
@@ -167,25 +178,26 @@ nav li:hover {
     font-weight: 400;
     font-style: normal;
     font-size: 0.625em;
+    width: 15em; /* don't wrap */
 }
 
 /* I wasn't able to figure out how to curve the sub-heading with https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/textPath the way I wanted to quickly.  I'll try later with LLM assistance.  - Jason, September 14, 2026 */
 
 aside {
-    /* padding-left: 24px; */
+    padding-left: 12px;
     font-weight: 300;
-    max-width: 9em;
+    max-width: 20em;
 }
 
 aside p {
-    padding-left: 24px;
+    padding-left: 12px;
 }
 
 details {
     cursor:pointer;
     border-radius: 26px;
     background-color: var(--primary);
-    padding: 12px 24px;
+    padding: 12px;
 }
 
 details:hover {
@@ -196,10 +208,6 @@ summary::marker {
     color: var(--accent);
     /* content: "1 ";
     font-weight: 500; */
-}
-
-#main-navigation {
-    /* max-width: 18em; /* 288px max-width */
 }
 
 #billboard span {
@@ -252,6 +260,14 @@ h1 {
     line-height: 3rem;
 }
 
+/*
+h1:hover {
+    font-family: "Bungee Spice", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+*/
+
 #flavor-controls {
     display: flex;
     gap: 0;
@@ -282,8 +298,12 @@ h1 {
     color: var(--primary);
 }
 
+.hand-crafted:hover {
+    z-index: 5;
+}
+
 .locally-generative {
-    background-color: transparent;
+    /* background-color: transparent; */
     border: 2px solid var(--ford-mustang-boss-302);
     z-index: 3;
 }
@@ -293,7 +313,8 @@ h1 {
 }
 
 .locally-generative:hover {
-    background-color: var(--ford-mustang-boss-302-transparent)
+    /* background-color: var(--ford-mustang-boss-302-transparent); */
+    z-index: 5;
 }
 
 .generative {
@@ -306,7 +327,8 @@ h1 {
 }
 
 .generative:hover {
-    background-color: var(--nissan-fairlady-z-transparent)
+    /* background-color: var(--nissan-fairlady-z-transparent); */
+    z-index: 5;
 }
 
 .sentient {
@@ -319,7 +341,8 @@ h1 {
 }
 
 .sentient:hover {
-    background-color: var(--kool-kombi-transparent)
+    /* background-color: var(--kool-kombi-transparent); */
+    z-index: 5;
 }
 
 #hand-writing {
@@ -345,4 +368,28 @@ h1 {
 #hand-writing-3 {
     width: 175.5px; /* original size is 350 x 58 pixels */
     height: auto;
+}
+
+#about {
+    margin-top: 4px;
+    margin-bottom: -0.5em;
+    padding: 4px 24px;
+}
+
+#about-whois {
+    font-family: "Bungee Spice", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: smaller;
+}
+
+/* break point is 464px */
+@media (width <= 29em) {
+    .wrapper {
+        flex-flow: column wrap;
+    }
+    #main-navigation {
+        font-size: 1.2em;
+        margin-left: -24px; /* negative margin aligns nav with html body on mobile */
+    }
 }
