@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Synced Transcript Player</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #171a21;
+    --text: #b9c0cc;
+    --text-dim: #6b7280;
+    --active: #f5f7fa;
+    --active-bg: rgba(88, 133, 255, 0.22);
+    --sentence-bg: rgba(255, 255, 255, 0.035);
+    --accent: #5885ff;
+    --border: #262b36;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    line-height: 1.75;
+  }
+  .app { max-width: 720px; margin: 0 auto; padding: 24px 20px 160px; }
+  header { margin-bottom: 20px; }
+  h1 { font-size: 18px; font-weight: 600; color: var(--active); margin: 0 0 4px; }
+  .sub { font-size: 13px; color: var(--text-dim); }
+
+  .loader {
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 14px; margin: 16px 0 24px;
+    font-size: 13px;
+  }
+  .loader label { color: var(--text-dim); cursor: pointer; }
+  .loader input[type=file] { font-size: 12px; color: var(--text); max-width: 190px; }
+  .loader .spacer { flex: 1; }
+  .loader button {
+    background: transparent; border: 1px solid var(--border); color: var(--text);
+    border-radius: 8px; padding: 6px 12px; font-size: 12px; cursor: pointer;
+  }
+  .loader button:hover { border-color: var(--accent); color: var(--active); }
+
+  #transcript { font-size: 20px; }
+  .sentence { border-radius: 8px; transition: background 0.25s ease; padding: 1px 0; }
+  .sentence.active-sentence { background: var(--sentence-bg); }
+
+  .word {
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 0 1px;
+    transition: color 0.12s ease, background 0.12s ease;
+  }
+  .word:hover { color: var(--active); }
+  .word.active {
+    color: var(--active);
+    background: var(--active-bg);
+    box-shadow: 0 0 0 2px var(--active-bg);
+  }
+  .word.spoken { color: #8a93a3; }
+
+  .bar {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    background: rgba(18, 21, 27, 0.92);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+    padding: 14px 20px;
+  }
+  .bar-inner { max-width: 720px; margin: 0 auto; display: flex; align-items: center; gap: 14px; }
+  audio { width: 100%; height: 38px; }
+  .hint { font-size: 12px; color: var(--text-dim); margin-top: 8px; text-align: center; }
+  .follow-toggle {
+    font-size: 12px; color: var(--text-dim); cursor: pointer; user-select: none;
+    white-space: nowrap;
+  }
+  .follow-toggle input { vertical-align: middle; margin-right: 4px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>Synced Transcript Player</h1>
+    <div class="sub">Words highlight as audio plays &middot; click any word to jump there</div>
+  </header>
+
+  <div class="loader">
+    <label>Transcript JSON <input type="file" id="jsonInput" accept="application/json,.json" /></label>
+    <label>Audio <input type="file" id="audioInput" accept="audio/*" /></label>
+    <span class="spacer"></span>
+    <button id="demoBtn">Load demo</button>
+  </div>
+
+  <div id="transcript"></div>
+</div>
+
+<div class="bar">
+  <div class="bar-inner">
+    <audio id="audio" controls preload="metadata"></audio>
+    <label class="follow-toggle"><input type="checkbox" id="followChk" checked />follow</label>
+  </div>
+  <div class="hint" id="hint">Demo loaded — press play. (Silent placeholder audio drives the timing; load your own audio to hear real playback.)</div>
+</div>
+
+<script>
+"use strict";
+
+// ---- Built-in demo data ------------------------------------------------
+// A short synthetic transcript so the page demonstrates the effect with no
+// files. Timings are hand-made; replace by loading real WhisperX output.
+const DEMO = {
+  audio: null,
+  duration: 12,
+  words: [
+    { word: "This",      start: 0.30, end: 0.55 },
+    { word: "is",        start: 0.55, end: 0.72 },
+    { word: "a",         start: 0.72, end: 0.80 },
+    { word: "demo",      start: 0.80, end: 1.25 },
+    { word: "of",        start: 1.25, end: 1.40 },
+    { word: "word",      start: 1.40, end: 1.75 },
+    { word: "level",     start: 1.75, end: 2.10 },
+    { word: "highlighting.", start: 2.10, end: 2.85 },
+    { word: "Each",      start: 3.20, end: 3.50 },
+    { word: "word",      start: 3.50, end: 3.80 },
+    { word: "lights",    start: 3.80, end: 4.10 },
+    { word: "up",        start: 4.10, end: 4.30 },
+    { word: "exactly",   start: 4.30, end: 4.80 },
+    { word: "as",        start: 4.80, end: 4.95 },
+    { word: "it",        start: 4.95, end: 5.10 },
+    { word: "is",        start: 5.10, end: 5.28 },
+    { word: "spoken.",   start: 5.28, end: 5.90 },
+    { word: "Click",     start: 6.30, end: 6.65 },
+    { word: "any",       start: 6.65, end: 6.90 },
+    { word: "word",      start: 6.90, end: 7.20 },
+    { word: "to",        start: 7.20, end: 7.35 },
+    { word: "jump",      start: 7.35, end: 7.70 },
+    { word: "the",       start: 7.70, end: 7.85 },
+    { word: "audio",     start: 7.85, end: 8.25 },
+    { word: "right",     start: 8.25, end: 8.55 },
+    { word: "there.",    start: 8.55, end: 9.10 },
+    { word: "The",       start: 9.50, end: 9.68 },
+    { word: "transcript",start: 9.68, end: 10.25 },
+    { word: "scrolls",   start: 10.25, end: 10.70 },
+    { word: "to",        start: 10.70, end: 10.85 },
+    { word: "follow",    start: 10.85, end: 11.25 },
+    { word: "along.",    start: 11.25, end: 11.90 }
+  ]
+};
+
+const audio = document.getElementById("audio");
+const transcriptEl = document.getElementById("transcript");
+const hintEl = document.getElementById("hint");
+const followChk = document.getElementById("followChk");
+
+// Build a short silent WAV in-browser so the demo has something real to
+// play/scrub. No file to ship, no network request — just a 44-byte header
+// plus zeroed PCM samples (silence).
+function makeSilentWavUrl(durationSec, sampleRate) {
+  sampleRate = sampleRate || 8000;
+  const numSamples = Math.max(1, Math.ceil(durationSec * sampleRate));
+  const buffer = new ArrayBuffer(44 + numSamples * 2);
+  const view = new DataView(buffer);
+  const writeString = (offset, str) => {
+    for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
+  };
+  writeString(0, "RIFF");
+  view.setUint32(4, 36 + numSamples * 2, true);
+  writeString(8, "WAVE");
+  writeString(12, "fmt ");
+  view.setUint32(16, 16, true);       // PCM chunk size
+  view.setUint16(20, 1, true);        // format = PCM
+  view.setUint16(22, 1, true);        // channels = mono
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * 2, true); // byte rate
+  view.setUint16(32, 2, true);        // block align
+  view.setUint16(34, 16, true);       // bits per sample
+  writeString(36, "data");
+  view.setUint32(40, numSamples * 2, true);
+  // Sample bytes are already zero (silence) — ArrayBuffer is zero-initialized.
+  return URL.createObjectURL(new Blob([view], { type: "audio/wav" }));
+}
+
+function loadDemoAudio() {
+  const last = DEMO.words[DEMO.words.length - 1];
+  const dur = DEMO.duration || last.end + 1;
+  audio.src = makeSilentWavUrl(dur + 0.5);
+  audio.load();
+}
+
+let words = [];          // active word list
+let wordEls = [];        // matching DOM spans, index-aligned with words
+let starts = [];         // start times, index-aligned — for binary search
+let lastActive = -1;
+let userScrolling = false;
+let userScrollTimer = null;
+
+// ---- Render ------------------------------------------------------------
+// Group words into "sentences" (split after a token ending in . ? !) so we
+// can also softly highlight the current sentence, like Apple does.
+function render(data) {
+  words = data.words;
+  starts = words.map(w => w.start);
+  wordEls = [];
+  lastActive = -1;
+  transcriptEl.innerHTML = "";
+
+  let sentence = document.createElement("span");
+  sentence.className = "sentence";
+
+  words.forEach((w, i) => {
+    const span = document.createElement("span");
+    span.className = "word";
+    span.textContent = w.word.trim();
+    span.dataset.i = i;
+    span.addEventListener("click", () => seekToWord(i));
+    wordEls.push(span);
+    sentence.appendChild(span);
+    sentence.appendChild(document.createTextNode(" "));
+
+    if (/[.?!]["')\]]?$/.test(w.word.trim())) {
+      transcriptEl.appendChild(sentence);
+      transcriptEl.appendChild(document.createTextNode(" "));
+      sentence = document.createElement("span");
+      sentence.className = "sentence";
+    }
+  });
+  if (sentence.childNodes.length) transcriptEl.appendChild(sentence);
+}
+
+// ---- Core sync ---------------------------------------------------------
+// Binary search: largest index whose start <= t. Returns -1 before first word.
+function findWordIndex(t) {
+  let lo = 0, hi = starts.length - 1, ans = -1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (starts[mid] <= t) { ans = mid; lo = mid + 1; }
+    else { hi = mid - 1; }
+  }
+  // Guard: if t is past this word's end and there's a gap, still keep it
+  // highlighted until the next word starts (feels natural during pauses).
+  return ans;
+}
+
+function setActive(idx) {
+  if (idx === lastActive) return;
+
+  // Mark everything before idx as "spoken", idx as active.
+  if (idx >= 0) {
+    const cur = wordEls[idx];
+    cur.classList.remove("spoken");
+    cur.classList.add("active");
+
+    // sentence highlight
+    document.querySelectorAll(".sentence.active-sentence")
+      .forEach(s => s.classList.remove("active-sentence"));
+    if (cur.parentElement) cur.parentElement.classList.add("active-sentence");
+
+    if (followChk.checked && !userScrolling) {
+      const r = cur.getBoundingClientRect();
+      if (r.top < 90 || r.bottom > window.innerHeight - 160) {
+        cur.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  }
+
+  // Repaint spoken/active classes only where they changed.
+  if (lastActive >= 0 && wordEls[lastActive]) {
+    wordEls[lastActive].classList.remove("active");
+    if (lastActive < idx) wordEls[lastActive].classList.add("spoken");
+  }
+  // If we jumped backward, clear spoken flags after idx.
+  if (idx < lastActive) {
+    for (let j = idx + 1; j < wordEls.length; j++) {
+      wordEls[j].classList.remove("spoken", "active");
+    }
+  }
+  // If we jumped forward, mark everything up to idx as spoken.
+  if (idx > lastActive + 1) {
+    for (let j = 0; j < idx; j++) wordEls[j].classList.add("spoken");
+  }
+
+  lastActive = idx;
+}
+
+// requestAnimationFrame loop — smooth, unlike the ~4Hz 'timeupdate' event.
+function tick() {
+  if (!audio.paused && words.length) {
+    setActive(findWordIndex(audio.currentTime));
+  }
+  requestAnimationFrame(tick);
+}
+
+function seekToWord(i) {
+  audio.currentTime = words[i].start;
+  setActive(i);
+  if (audio.paused) audio.play().catch(() => {});
+}
+
+// Keep highlight correct while scrubbing the audio bar even when paused.
+audio.addEventListener("seeked", () => {
+  if (words.length) setActive(findWordIndex(audio.currentTime));
+});
+
+// Pause auto-scroll briefly when the user scrolls manually.
+window.addEventListener("scroll", () => {
+  userScrolling = true;
+  clearTimeout(userScrollTimer);
+  userScrollTimer = setTimeout(() => { userScrolling = false; }, 1200);
+}, { passive: true });
+
+// ---- File loading ------------------------------------------------------
+document.getElementById("jsonInput").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const data = JSON.parse(reader.result);
+      if (!Array.isArray(data.words)) throw new Error("JSON has no 'words' array");
+      render(data);
+      hintEl.textContent = "Loaded " + data.words.length + " words. Now load the matching audio.";
+    } catch (err) {
+      hintEl.textContent = "Could not read JSON: " + err.message;
+    }
+  };
+  reader.readAsText(file);
+});
+
+document.getElementById("audioInput").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  audio.src = URL.createObjectURL(file);
+  hintEl.textContent = "Audio loaded: " + file.name + ". Press play.";
+});
+
+document.getElementById("demoBtn").addEventListener("click", () => {
+  render(DEMO);
+  loadDemoAudio();
+  hintEl.textContent = "Demo loaded — press play. (Silent placeholder audio; load your own audio file to hear real playback.)";
+});
+
+// ---- Boot --------------------------------------------------------------
+render(DEMO);
+loadDemoAudio();
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>
