@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jason's Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <link rel="icon" type="image/x-icon" href="assets/favicon_jason-james.png">
 
     <!-- Google Fonts -->
@@ -21,7 +21,6 @@
     <meta name="theme-color" content="#E05B08" />
 </head>
 <body>
-    <!-- <span class="watermark">jasonjames.works</span> -->
     <header>
         <menu id="flavor-controls">
             <li class="hand-crafted"><a href="#">hand-crafted&thinsp;<sup><small>1</small></sup></a></li>
@@ -38,17 +37,17 @@
             </li>
             -->
             <li>
-                <button type="button">
+                <button type="button" class="theme-control-color">
                     <i class="icon fa-solid fa-brush fa-rotate-by fa-canvas-roomy" style="--fa-rotate-angle: 7.5deg;"></i>
                 </button>
             </li>
             <li>
-                <button type="button">
+                <button type="button" class="theme-control-light">
                     <i class="icon fa-regular fa-sun-bright fa-canvas-roomy"></i>
                 </button>
             </li>
             <li>
-                <button type="button">
+                <button type="button" class="theme-control-dark">
                     <i class="icon fa-solid fa-moon-waxing-crescent fa-canvas-roomy"></i>
                 </button>
             </li>
@@ -149,17 +148,17 @@
                     autoplay
                     loop
                     muted>
-                    <source src="template/assets/DJI_20260225_155209_457_video.mov" type="video/mp4">
+                    <source src="template-article/assets/DJI_20260225_155209_457_video.mov" type="video/mp4">
                     <track
                         label="English"
                         kind="captions"
                         srclang="en"
-                        src="template/assets/captions.vtt" />
+                        src="template-article/assets/captions.vtt" />
                     <track
                         label="Español"
                         kind="subtitles"
                         srclang="es"
-                        src="template/assets/subtitles_es.vtt" />
+                        src="template-article/assets/subtitles_es.vtt" />
                     Your browser cannot play this video.
                 </video>
             </section>
