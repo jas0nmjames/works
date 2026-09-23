@@ -560,16 +560,7 @@ video {
     border-radius: 4px;
 }
 
-img {
-    height: auto;
-    width: 100%;
-}
-
-figure {
-    margin: 0;
-}
-
-main, section, article, img {
+main, section, article {
     max-width: 100%;
 }
 
@@ -582,6 +573,16 @@ main, section, article, img {
     gap: 0.5em;
     justify-content: flex-start;
     position: relative;
+    width: 100%;
+}
+
+.image-grid figure {
+    margin: 0;
+}
+
+.image-grid img {
+    width: 100%;
+    height: auto;
 }
 
 #about article {
