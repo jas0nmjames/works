@@ -1,8 +1,6 @@
 :root {
-    /* CSS Custom Properties (Variables) - Colors */
-    --primary: white;
-    /* --primary: ghostwhite; */
-    /* --primary: snow; */
+       /* CSS Custom Properties (Variables) - Colors */
+    --primary: snow;
     --secondary: #C4C6E2;
     --accent: #E05B08;
     --accent-transparent: #E05B0825;
@@ -11,21 +9,76 @@
     --text: #000000;
     --text-transparent: #00000025;
 
+    /* 25% transparent equivalents with https://hexcalculator.org/color-opacity/ */
+
     --ford-mustang-boss-302: #7A2E42; /* Hotwheels Pantone 195 */
-    /* --ford-mustang-boss-302-transparent: #7A2E4225; */
-     --ford-mustang-boss-302-transparent: #DECBD0;
+    --ford-mustang-boss-302-transparent: #DECBD0;
 
-     /* Thanks https://hexcalculator.org/color-opacity/ */
-    
     --nissan-fairlady-z: #202A44; /* Hotwheels Pantone 533 */
-    /* --nissan-fairlady-z-transparent: #202A4425; */
-     --nissan-fairlady-z-transparent: #C7CAD0;
+    --nissan-fairlady-z-transparent: #C7CAD0;
 
-     --kool-kombi: #FE5000; /* Hotwheels Pantone 021 */
-    /* --kool-kombi-transparent: #FE500025; */
+    --kool-kombi: #FE5000; /* Hotwheels Pantone 021 */
     --kool-kombi-transparent: #FFD3BF;
-    
+}
 
+:root[data-theme="light"] {
+       /* CSS Custom Properties (Variables) - Colors */
+    --primary: snow;
+    --secondary: #C4C6E2;
+    --accent: #E05B08;
+    --accent-transparent: #E05B0825;
+    --accent-transparent-light: #E05B0812;
+    --accent-2: #F37CA0;
+    --text: #000000;
+    --text-transparent: #00000025;
+
+    /* 25% transparent equivalents with https://hexcalculator.org/color-opacity/ */
+
+    --ford-mustang-boss-302: #7A2E42; /* Hotwheels Pantone 195 */
+    --ford-mustang-boss-302-transparent: #DECBD0;
+
+    --nissan-fairlady-z: #202A44; /* Hotwheels Pantone 533 */
+    --nissan-fairlady-z-transparent: #C7CAD0;
+
+    --kool-kombi: #FE5000; /* Hotwheels Pantone 021 */
+    --kool-kombi-transparent: #FFD3BF;
+}
+
+:root[data-theme="black"] {
+    --primary: black;
+    --secondary: white;
+    --accent: white;
+    --accent-transparent: #FFFFFF25;
+    --accent-transparent-light: #FFFFFF12;
+    --accent-2: white;
+    --text: white;
+    --text-transparent: white;
+    --ford-mustang-boss-302: white;
+    --ford-mustang-boss-302-transparent: #FFFFFF25;
+    --nissan-fairlady-z: white;
+    --nissan-fairlady-z-transparent: #FFFFFF25;
+    --kool-kombi: white;
+    --kool-kombi-transparent: #FFFFFF25;
+}
+
+:root[data-theme="mono"] {
+    --primary: black;
+    --secondary: black;
+    --accent: black;
+    --accent-transparent: #00000025;
+    --accent-transparent-light: #00000012;
+    --accent-2: black;
+    --text: black;
+    --text-transparent: black;
+    --ford-mustang-boss-302: black;
+    --ford-mustang-boss-302-transparent: #00000025;
+    --nissan-fairlady-z: black;
+    --nissan-fairlady-z-transparent: #00000025;
+    --kool-kombi: black;
+    --kool-kombi-transparent: #00000025;
+}
+
+:root {
     @font-face { /* See https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face and https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Web_fonts */
     font-family: "Bungee Layers Inline";
     src:
@@ -446,6 +499,7 @@ video {
     height: auto;
     border-radius: 8px;
     margin: 0.5em 0 0.25em 0;
+    dynamic-range-limit: constrained; /* Thanks modern-css.com */
 }
 
 #video-summary {
