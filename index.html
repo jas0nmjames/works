@@ -7,6 +7,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jason's Portfolio</title>
+    <!-- [claude-color-modes] Color mode head script, built with assistance from Claude (Anthropic), September 24, 2026.
+         Search the repo for "claude-color-modes" to find every piece: styles.css (mode tokens,
+         no-JS fallbacks, switcher styles) and index.html (#theme-controls + button script at end of body).
+
+         Sets <html data-mode="light|mono|dark"> BEFORE the stylesheet loads, so the page
+         never flashes the wrong colors. It must stay inline, blocking, and above the
+         <link rel="stylesheet">. Don't defer it, make it a module, or move it to a file. -->
+    <script>
+    (function () {
+      var MODES = ['light', 'mono', 'dark'], KEY = 'theme-mode';
+      // The mode the visitor picked with a button, or null if they never picked one.
+      // try/catch: private browsing / blocked storage makes localStorage throw.
+      function saved() {
+        try { var m = localStorage.getItem(KEY); return MODES.indexOf(m) > -1 ? m : null; }
+        catch (e) { return null; }
+      }
+      // The mode the operating system is asking for. High contrast wins over dark.
+      function system() {
+        var is = function (q) { return window.matchMedia(q).matches; };
+        if (is('(prefers-contrast: more)') || is('(forced-colors: active)')) return 'mono';
+        if (is('(prefers-color-scheme: dark)')) return 'dark';
+        return 'light';
+      }
+      // Shared with the button script at the end of index.html
+      window.themeModes = { KEY: KEY, saved: saved, system: system };
+      // Saved choice first, otherwise follow the system
+      document.documentElement.dataset.mode = saved() || system();
+    })();
+    </script>
+    <!-- [/claude-color-modes] -->
     <link rel="stylesheet" href="/styles.css">
     <link rel="icon" type="image/x-icon" href="assets/favicon_jason-james.png">
 
@@ -28,7 +58,15 @@
             <li class="generative"><a href="#">generative</a></li>
             <li class="sentient"><a href="#">sentient</a></li>
         </menu>
-        <menu id="theme-controls">
+        <!-- [claude-color-modes] Color mode switcher. (changed: added data-theme-modes, role, aria-label, hidden)
+             - hidden: stays hidden without JavaScript (the page then follows system settings via CSS).
+               The button script at the end of <body> un-hides it.
+             - role="group" + aria-label: screen readers announce these three as one "Color mode" group.
+             - data-set-mode on each button: the mode that button switches to.
+             - aria-label on each button: the name screen readers announce (changed: was name="…", which isn't announced).
+             - aria-pressed is added by the script; true = current mode, and it drives the underline in styles.css.
+             - aria-hidden on the icons: they're decorative, the aria-label does the talking. -->
+        <menu id="theme-controls" data-theme-modes role="group" aria-label="Color mode" hidden>
             <!--
             <li>
                 <button type="button">
@@ -37,21 +75,22 @@
             </li>
             -->
             <li>
-                <button type="button" class="theme-control-color">
-                    <i class="icon fa-solid fa-brush fa-rotate-by fa-canvas-roomy" style="--fa-rotate-angle: 7.5deg;"></i>
+                <button type="button" class="theme-control-light" data-set-mode="light" aria-label="Light">
+                    <i class="icon fa-solid fa-brush fa-rotate-by fa-canvas-roomy" style="--fa-rotate-angle: 7.5deg;" aria-hidden="true"></i>
                 </button>
             </li>
             <li>
-                <button type="button" class="theme-control-light">
-                    <i class="icon fa-regular fa-sun-bright fa-canvas-roomy"></i>
+                <button type="button" class="theme-control-mono" data-set-mode="mono" aria-label="Black &amp; white">
+                    <i class="icon fa-regular fa-sun-bright fa-canvas-roomy" aria-hidden="true"></i>
                 </button>
             </li>
             <li>
-                <button type="button" class="theme-control-dark">
-                    <i class="icon fa-solid fa-moon-waxing-crescent fa-canvas-roomy"></i>
+                <button type="button" class="theme-control-dark" data-set-mode="dark" aria-label="Dark">
+                    <i class="icon fa-solid fa-moon-waxing-crescent fa-canvas-roomy" aria-hidden="true"></i>
                 </button>
             </li>
         </menu>
+        <!-- [/claude-color-modes] -->
     </header>
     <figure id="hand-writing">
         <img id="hand-writing-01" src="assets/hand-writing/01-arrow.webp" alt="arrow" width="28.5" height="18.5">
@@ -197,7 +236,8 @@
     <footer>
         <section id="credits">
             <div class="typography-label-container">
-                <h2 class="typography-label">Credits</h2>
+                <h2 class="typography-label">Colophon
+                </h2> <!-- Inspired by Naeem Noor's colophon (naeemnur.com) -->
             </div>
             <small>
                 <details><summary>Bungee</summary> by <a href="https://djr.com/bungee" target="_blank" rel="noopener noreferrer">David Jonathan Ross <i class="fa-solid fa-arrow-up-right-from-square"></i></a> “is a font family that celebrates urban signage...” &mdash; <a href="https://fonts.google.com/specimen/Bungee" target="_blank" rel="noopener noreferrer">Google Fonts <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
@@ -210,5 +250,53 @@
             </small>
         </section>
     </footer>
+    <!-- [claude-color-modes] Color mode button script. Runs after the page is parsed.
+         Uses window.themeModes from the head script. Wires up the #theme-controls buttons,
+         saves the choice, and follows live system changes until the visitor picks a mode. -->
+    <script>
+    (function () {
+      var tm = window.themeModes, root = document.documentElement;
+      var group = document.querySelector('[data-theme-modes]');
+      if (!tm || !group) return; // no head script or no switcher on this page: do nothing
+      var buttons = group.querySelectorAll('[data-set-mode]');
+      var themeColor = document.querySelector('meta[name="theme-color"]');
+
+      // Mark the current mode's button aria-pressed="true" (the CSS underlines it)
+      // and the others "false". Also recolor the browser UI (theme-color) to match
+      // the mode's --accent: orange in light, black in mono, white in dark.
+      function show() {
+        buttons.forEach(function (b) {
+          b.setAttribute('aria-pressed', String(b.dataset.setMode === root.dataset.mode));
+        });
+        if (themeColor) {
+          var accent = getComputedStyle(root).getPropertyValue('--accent').trim();
+          if (accent) themeColor.setAttribute('content', accent);
+        }
+      }
+
+      // Clicking a button switches mode right away and saves it, so it wins on future visits.
+      // try/catch: saving can throw when storage is blocked; the mode still switches for this page.
+      buttons.forEach(function (b) {
+        b.addEventListener('click', function () {
+          root.dataset.mode = b.dataset.setMode;
+          try { localStorage.setItem(tm.KEY, b.dataset.setMode); } catch (e) {}
+          show();
+        });
+      });
+
+      // Until the visitor picks a mode, follow the system live
+      // (e.g. the OS switches to dark at sunset, or high contrast is turned on).
+      ['(prefers-color-scheme: dark)', '(prefers-contrast: more)', '(forced-colors: active)']
+        .forEach(function (q) {
+          window.matchMedia(q).addEventListener('change', function () {
+            if (!tm.saved()) { root.dataset.mode = tm.system(); show(); }
+          });
+        });
+
+      group.hidden = false; // JS works, so reveal the switcher
+      show();
+    })();
+    </script>
+    <!-- [/claude-color-modes] -->
 </body>
 </html>

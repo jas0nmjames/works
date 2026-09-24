@@ -7,6 +7,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jason's Portfolio</title>
+    <!-- [claude-color-modes] Color mode head script, built with assistance from Claude (Anthropic), September 24, 2026.
+         Search the repo for "claude-color-modes" to find every piece: styles.css (mode tokens,
+         no-JS fallbacks, switcher styles) and index.html (#theme-controls + button script at end of body).
+
+         Sets <html data-mode="light|mono|dark"> BEFORE the stylesheet loads, so the page
+         never flashes the wrong colors. It must stay inline, blocking, and above the
+         <link rel="stylesheet">. Don't defer it, make it a module, or move it to a file. -->
+    <script>
+    (function () {
+      var MODES = ['light', 'mono', 'dark'], KEY = 'theme-mode';
+      // The mode the visitor picked with a button, or null if they never picked one.
+      // try/catch: private browsing / blocked storage makes localStorage throw.
+      function saved() {
+        try { var m = localStorage.getItem(KEY); return MODES.indexOf(m) > -1 ? m : null; }
+        catch (e) { return null; }
+      }
+      // The mode the operating system is asking for. High contrast wins over dark.
+      function system() {
+        var is = function (q) { return window.matchMedia(q).matches; };
+        if (is('(prefers-contrast: more)') || is('(forced-colors: active)')) return 'mono';
+        if (is('(prefers-color-scheme: dark)')) return 'dark';
+        return 'light';
+      }
+      // Shared with the button script at the end of index.html
+      window.themeModes = { KEY: KEY, saved: saved, system: system };
+      // Saved choice first, otherwise follow the system
+      document.documentElement.dataset.mode = saved() || system();
+    })();
+    </script>
+    <!-- [/claude-color-modes] -->
     <link rel="stylesheet" href="/styles.css">
     <link rel="icon" type="image/x-icon" href="assets/favicon_jason-james.png">
 
