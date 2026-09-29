@@ -634,6 +634,18 @@ video {
     height: auto;
 }
 
+/* yay! I wrote this section to change the border widths based on data-mode myself! - Jason, September 29, 2026 */
+
+:root[data-mode="mono"] .content-frame {
+    border: 3px solid var(--secondary);
+}
+
+:root[data-mode="dark"] .content-frame {
+    border: 2px solid var(--secondary);
+}
+
+/* end section */
+
 #colophon {
     padding: 0 1em;
     margin: 20px 0;
