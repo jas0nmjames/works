@@ -394,8 +394,8 @@ aside {
 details {
     border-radius: 26px;
     /* background-color: var(--primary); */
-    padding: 12px;
-    margin-left: -12px;
+    padding: 6px 12px;
+    margin: 4px -12px 4px -12px;
 }
 
 details:hover {
@@ -559,11 +559,7 @@ h1 {
     margin-bottom: -10px;
 }
 
-#about {
-    margin: 1em;
-    max-width: 100%;
-}
-
+/*
 #about-whois {
     color: var(--accent);
     font-family: "Bungee", sans-serif;
@@ -580,7 +576,6 @@ h1 {
     font-family: "Bungee", sans-serif;
     font-weight: 400;
     font-style: normal;
-    /* word-break: break-all; */
     overflow-wrap: break-word;
 }
 
@@ -593,6 +588,7 @@ h1 {
 #about p {
     font-size: 1.25rem;
 }
+*/
 
 main {
     position: relative;
@@ -627,7 +623,7 @@ video {
     dynamic-range-limit: constrained; /* Thanks modern-css.com */
 }
 
-#video-summary {
+.content-frame {
     box-sizing: content-box;
     border: 4px solid var(--secondary);
     border-radius: 16px;
@@ -638,28 +634,12 @@ video {
     height: auto;
 }
 
-#credits {
-    box-sizing: content-box;
-    border: 4px solid var(--secondary);
-    border-radius: 16px;
-    padding: 0px 16px;
+#colophon {
+    padding: 0 1em;
     margin: 20px 0;
-    /* margin: 20px 0 0 20px; */
-    position: relative;
-
-    margin-left: -4px;
-    margin-right: -4px;
 }
 
-#credits details {
-    border-radius: 8px;
-    padding: 4px 8px 4px 8px;
-    margin-left: -8px;
-    margin-top: 8px;
-    margin-right: -8px;
-}
-
-#credits details:hover {
+#colophon details:hover {
     background-color: var(--accent-transparent); /* [claude-color-modes] changed: was var(--secondary) — in dark/mono --secondary matches the text color, so the text disappeared on hover */
 }
 
@@ -778,9 +758,11 @@ main, section, article {
         font-size: 1.2em;
         max-width: 100%;
     }
+    /*
     footer details {
         margin-left: -12px;
     }
+    */
     .image-grid {
         grid-template-columns: 1fr;
         /* grid-auto-rows: auto; */
