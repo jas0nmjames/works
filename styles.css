@@ -559,7 +559,11 @@ h1 {
     margin-bottom: -10px;
 }
 
-/*
+#about {
+    margin: 1em;
+    max-width: 100%;
+}
+
 #about-whois {
     color: var(--accent);
     font-family: "Bungee", sans-serif;
@@ -576,6 +580,7 @@ h1 {
     font-family: "Bungee", sans-serif;
     font-weight: 400;
     font-style: normal;
+    /* word-break: break-all; */
     overflow-wrap: break-word;
 }
 
@@ -588,7 +593,6 @@ h1 {
 #about p {
     font-size: 1.25rem;
 }
-*/
 
 main {
     position: relative;
