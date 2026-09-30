@@ -1,5 +1,4 @@
 /* 
-
 Note: I wrote this CSS myself, even in this day and age.  I found surprising:
 
 1. Without turning anything on, VS Code's autocomplete was recommending CSS very accurately.  Sometimes it got in the way by visually obstructing where I was trying to type or more perniciously, it made reccomendations that got in the way of my thought process.
@@ -9,164 +8,192 @@ Note: I wrote this CSS myself, even in this day and age.  I found surprising:
 There are at least two instances where Google's code was more complicated than the direction I was heading in and I ended up using the cleaner code from my own thought process.
 
 For example, to hide something visually, but keep it accessible, it reccommended this pattern:
-
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
 
 But I actually preferred, for the content I wanted to show in the accessibility tree but hide visually:
-
-content-visibility: hidden;
+    content-visibility: hidden;
 
 And then for the content I wanted to show visually, but hide in the accessibility tree, the html attribute:
-
-aria-hidden="true"
+    aria-hidden="true"
 
 - Jason James, Tuesday, September 2, 2026
-
 */
 
+/*
 :root {
-    /* CSS Custom Properties (Variables) - Colors */
     --primary: snow;
     --secondary: #C4C6E2;
     --accent: #E05B08;
     --text: #000000;
-
-    /* CSS Color, Light and Dark Mode Theming */
-    /* Thanks to https://medium.com/@cerutti.alexander/a-mostly-complete-guide-to-theme-switching-in-css-and-js-c4992d5fd357 */
-
-
-
-    /* CSS Custom Properties (Variables) - Fonts */
-
-    /*
-
-    --readex-pro-extra-light {
-        font-family: "Readex Pro", sans-serif;
-        font-optical-sizing: auto;
-        font-weight: 200;
-        font-style: normal;
-        font-variation-settings:
-            "HEXP" 0;
-    }
-    --readex-pro-light {
-        font-family: "Readex Pro", sans-serif;
-        font-optical-sizing: auto;
-        font-weight: 300;
-        font-style: normal;
-        font-variation-settings:
-            "HEXP" 0;
-    }
-    --readex-pro-regular {
-        font-family: "Readex Pro", sans-serif;
-        font-optical-sizing: auto;
-        font-weight: 400;
-        font-style: normal;
-        font-variation-settings:
-            "HEXP" 0;
-    }
-    --readex-pro-medium {
-        font-family: "Readex Pro", sans-serif;
-        font-optical-sizing: auto;
-        font-weight: 500;
-        font-style: normal;
-        font-variation-settings:
-            "HEXP" 0;
-    }
-    --readex-pro-semi-bold {
-        font-family: "Readex Pro", sans-serif;
-        font-optical-sizing: auto;
-        font-weight: 600;
-        font-style: normal;
-        font-variation-settings:
-            "HEXP" 0;
-    }
-    --readex-pro-bold {
-        font-family: "Readex Pro", sans-serif;
-        font-optical-sizing: auto;
-        font-weight: 700;
-        font-style: normal;
-        font-variation-settings:
-            "HEXP" 0;
-    }
-    .bungee-regular {
-        font-family: "Bungee", sans-serif;
-        font-weight: 400;
-        font-style: normal;
-        }
-    .bungee-inline-regular {
-        font-family: "Bungee Inline", sans-serif;
-        font-weight: 400;
-        font-style: normal;
-        }
-    .bungee-shade-regular {
-        font-family: "Bungee Shade", sans-serif;
-        font-weight: 400;
-        font-style: normal;
-        }
-    .bungee-outline-regular {
-        font-family: "Bungee Outline", sans-serif;
-        font-weight: 400;
-        font-style: normal;
-        }
-    .bungee-hairline-regular {
-        font-family: "Bungee Hairline", sans-serif;
-        font-weight: 400;
-        font-style: normal;
-        }
-
-    */
-
-    @font-face { /* See https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face and https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Web_fonts */
-    font-family: "Bungee Layers Inline";
-    src:
-        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.woff2") format("woff2"),
-        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.woff") format("woff"),
-        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.eot") format("embedded-opentype");
-    }
-
-    @font-face {
-    font-family: "Bungee Layers Regular";
-    src:
-        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.woff2") format("woff2"),
-        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.woff") format("woff"),
-        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.eot") format("embedded-opentype");
-    }
-
-    @font-face {
-    font-family: "Bungee Layers Outline";
-    src:
-        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.woff2") format("woff2"),
-        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.woff") format("woff"),
-        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.eot") format("embedded-opentype");
-    }
-
-    @font-face {
-    font-family: "Bungee Layers Shade";
-    src:
-        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.woff2") format("woff2"),
-        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.woff") format("woff"),
-        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.eot") format("embedded-opentype");
-    }
-
-    @font-face {
-    font-family: "Lexend";
-    src: 
-        url("https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"),
-        url("assets/fonts/lexend/Lexend/Lexend-VariableFont_wght.ttf") format("ttf");
-    }
-
-    
 }
+*/
+
+/* [claude-color-modes] ================================================
+   Color mode system built with assistance from Claude (Anthropic), September 24, 2026.
+   Search the repo for "claude-color-modes" to find every piece of it:
+     - styles.css: mode token blocks (here), no-JS fallbacks, image filters,
+       #credits hover fix, #theme-controls switcher styles
+     - index.html + template-about/index.html: inline head script (sets data-mode before paint)
+     - index.html: #theme-controls markup + button script at the end of <body>
+
+   How it works:
+     <html data-mode="light|mono|dark"> is set by the inline script in <head>
+     before the stylesheet loads, so the right colors show on first paint.
+     Each mode below redefines the same custom properties (tokens), and every
+     component uses only var(--token), so everything switches together.
+     Mode is picked in this order: saved choice (localStorage "theme-mode")
+     → system high contrast/forced colors (mono) → system dark (dark) → light.
+   ===================================================================== */
+
+/* [claude-color-modes] Mode 1: light with full brand color (also the default
+   when nothing is set). Merged your duplicate :root and [data-theme="light"]
+   blocks into one selector list; values unchanged.
+   color-scheme tells the browser to draw native controls/scrollbars light. */
+:root, :root[data-mode="light"] {
+    color-scheme: light;
+       /* CSS Custom Properties (Variables) - Colors */
+    --primary: snow;
+    --secondary: #C4C6E2;
+    --accent: #E05B08;
+    --accent-transparent: #E05B0825;
+    --accent-transparent-light: #E05B0812;
+    --accent-2: #F37CA0;
+    --text: #000000;
+    --text-transparent: #00000025;
+
+    /* 25% transparent equivalents with https://hexcalculator.org/color-opacity/ */
+
+    --ford-mustang-boss-302: #7A2E42; /* Hotwheels Pantone 195 */
+    --ford-mustang-boss-302-transparent: #DECBD0;
+
+    --nissan-fairlady-z: #202A44; /* Hotwheels Pantone 533 */
+    --nissan-fairlady-z-transparent: #C7CAD0;
+
+    --kool-kombi: #FE5000; /* Hotwheels Pantone 021 */
+    --kool-kombi-transparent: #FFD3BF;
+}
+
+/* [claude-color-modes] Mode 3: dark. (changed: was :root[data-theme="black"])
+   Renamed to data-mode="dark" to match the spec and the "dark mode" button.
+   Your white-on-black values are kept except --text-transparent (see below).
+   Keep these values in sync with the no-JS dark fallback further down. */
+:root[data-mode="dark"] {
+    color-scheme: dark;
+    --primary: black;
+    --secondary: white;
+    --accent: white;
+    --accent-transparent: #FFFFFF25;
+    --accent-transparent-light: #FFFFFF12;
+    --accent-2: white;
+    --text: white;
+    --text-transparent: #FFFFFF25; /* [claude-color-modes] changed: was white — it's the sun/moon button hover fill, so solid white hid the white icon */
+    --ford-mustang-boss-302: white;
+    --ford-mustang-boss-302-transparent: #FFFFFF25;
+    --nissan-fairlady-z: white;
+    --nissan-fairlady-z-transparent: #FFFFFF25;
+    --kool-kombi: white;
+    --kool-kombi-transparent: #FFFFFF25;
+}
+
+/* [claude-color-modes] Mode 2: black & white. (changed: was :root[data-theme="mono"])
+   Light background, black everything else, no color anywhere.
+   Keep these values in sync with the no-JS mono fallback further down. */
+:root[data-mode="mono"] {
+    color-scheme: light;
+    --primary: snow; /* [claude-color-modes] changed: was black — html uses --primary as the page background, so black made black text on black; the spec says mono is light */
+    --secondary: black;
+    --accent: black;
+    --accent-transparent: #00000025;
+    --accent-transparent-light: #00000012;
+    --accent-2: black;
+    --text: black;
+    --text-transparent: #00000025; /* [claude-color-modes] changed: was black — it's the sun/moon button hover fill, so solid black hid the black icon */
+    --ford-mustang-boss-302: black;
+    --ford-mustang-boss-302-transparent: #00000025;
+    --nissan-fairlady-z: black;
+    --nissan-fairlady-z-transparent: #00000025;
+    --kool-kombi: black;
+    --kool-kombi-transparent: #00000025;
+}
+
+/* [claude-color-modes] Media in non-light modes.
+   Mono: photos and video go grayscale so no color shows.
+   Dark: the hand-writing images are black ink on a transparent background,
+   so they'd be invisible on black; invert() turns the ink white. */
+:root[data-mode="mono"] img,
+:root[data-mode="mono"] video {
+    filter: grayscale(1);
+}
+
+:root[data-mode="dark"] #hand-writing img {
+    filter: invert(1);
+}
+
+/* [claude-color-modes] No-JS fallbacks.
+   :not([data-mode]) means "the head script never ran" (JS disabled or blocked).
+   Then these media queries pick the mode from system settings instead.
+   With JS on, data-mode is always set, so these never apply.
+   ORDER MATTERS: the contrast block comes after the dark block so that
+   high contrast wins when the system is both dark and high contrast. */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-mode]) { /* same values as :root[data-mode="dark"] */
+        color-scheme: dark;
+        --primary: black;
+        --secondary: white;
+        --accent: white;
+        --accent-transparent: #FFFFFF25;
+        --accent-transparent-light: #FFFFFF12;
+        --accent-2: white;
+        --text: white;
+        --text-transparent: #FFFFFF25;
+        --ford-mustang-boss-302: white;
+        --ford-mustang-boss-302-transparent: #FFFFFF25;
+        --nissan-fairlady-z: white;
+        --nissan-fairlady-z-transparent: #FFFFFF25;
+        --kool-kombi: white;
+        --kool-kombi-transparent: #FFFFFF25;
+    }
+    :root:not([data-mode]) #hand-writing img {
+        filter: invert(1);
+    }
+}
+
+@media (prefers-contrast: more), (forced-colors: active) {
+    :root:not([data-mode]) { /* same values as :root[data-mode="mono"] */
+        color-scheme: light;
+        --primary: snow;
+        --secondary: black;
+        --accent: black;
+        --accent-transparent: #00000025;
+        --accent-transparent-light: #00000012;
+        --accent-2: black;
+        --text: black;
+        --text-transparent: #00000025;
+        --ford-mustang-boss-302: black;
+        --ford-mustang-boss-302-transparent: #00000025;
+        --nissan-fairlady-z: black;
+        --nissan-fairlady-z-transparent: #00000025;
+        --kool-kombi: black;
+        --kool-kombi-transparent: #00000025;
+    }
+    /* If the system is both dark and high contrast, this later rule replaces the dark invert(), so the hand-writing stays black on the light mono background */
+    :root:not([data-mode]) img,
+    :root:not([data-mode]) video,
+    :root:not([data-mode]) #hand-writing img {
+        filter: grayscale(1);
+    }
+}
+/* [/claude-color-modes] */
 
 html {
     background-color: var(--primary);
@@ -180,8 +207,8 @@ body {
     font-style: normal;
     font-variation-settings:
         "HEXP" 0;
-    margin: 0;
-    max-width: 768px;
+    /* margin: 0;
+    max-width: 768px; */
 }
 
 body > header {
@@ -247,7 +274,7 @@ section {
 
 article {
     background-color: var(--secondary);
-    max-width: 768px;
+    /* max-width: 768px; */
     padding: 1rem 1rem;
     border-radius: 24px;
 }
@@ -264,15 +291,6 @@ h2.hidden {
     margin: 0.375rem;
 }
 
-/*
-figure.bungee {
-    font-size: 2.25rem;
-    padding: 0;
-    white-space: normal;
-    max-width: 100%;
-}
-*/
-
 .multilayer {
   margin: 0rem;
   display: grid;
@@ -283,8 +301,7 @@ figure.bungee {
   grid-row: 1;
   grid-column: 1;
   font-family: 'Bungee Layers Inline','Bungee Hairline', cursive;
-  font-weight: 400; /* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight */
-  /*font-size: clamp(2.5rem, 4.75rem, 7rem);*/   
+  font-weight: 400; /* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight */  
   color: var(--accent);
 }
 
@@ -293,8 +310,7 @@ figure.bungee {
   grid-row: 1;
   grid-column: 1;
   font-family: 'Bungee Layers Regular','Bungee', cursive;
-  font-weight: 400;
-  /*font-size: clamp(2.5rem, 4.75rem, 7rem);*/   
+  font-weight: 400;  
   color: var(--primary);
 }
 
@@ -303,8 +319,7 @@ figure.bungee {
   grid-row: 1;
   grid-column: 1;
   font-family: 'Bungee Layers Outline', 'Bungee Outline', cursive;
-  font-weight: 400;
-  /*font-size: clamp(2.5rem, 4.75rem, 7rem);*/   
+  font-weight: 400; 
   color: var(--accent);
 }
 
@@ -313,8 +328,7 @@ figure.bungee {
   grid-row: 1;
   grid-column: 1;
   font-family: 'Bungee Layers Shade', 'Bungee Shade', cursive;
-  font-weight: 400;
-  /*font-size: clamp(2.5rem, 4.75rem, 7rem);*/   
+  font-weight: 400; 
   color: var(--text);
 }
 
@@ -389,4 +403,33 @@ video {
     position: absolute;
     left: 1em;
     transform: translateY(-60%);
+}
+
+.article-summary-card {
+    #summary {
+        margin: 1.5em 0 0.25em 0;
+    }
+    .multilayer {
+        margin-bottom: 0.25em;
+    }
+}
+
+#stats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1em;
+    font-size: 1.25rem;
+
+    .bungee-layers-regular {
+        font-size: 3rem;
+        margin: 0;
+        color: var(--accent);
+        line-height: 1;
+    }
+
+    .stats-label {
+        font-size: 0.75rem;
+        margin-top: 0;
+    }
 }

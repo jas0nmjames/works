@@ -8,4 +8,3 @@ I consulted the following when writing this template:
 - [W3Schools](https://www.w3schools.com/)
 - [Google Fonts](https://fonts.google.com/)
 - [Bungee](https://djr.com/bungee) Font by David Jonathan Ross
-

@@ -1,0 +1,392 @@
+/* 
+
+Note: I wrote this CSS myself, even in this day and age.  I found surprising:
+
+1. Without turning anything on, VS Code's autocomplete was recommending CSS very accurately.  Sometimes it got in the way by visually obstructing where I was trying to type or more perniciously, it made reccomendations that got in the way of my thought process.
+
+2. I still referred heavily to MDN Docs when I wanted to see what my options were.  Google search's automatic AI mode got in my way by suggesting code even though I wasn't asking for it - I'd prefer using Claude Code for that.
+
+There are at least two instances where Google's code was more complicated than the direction I was heading in and I ended up using the cleaner code from my own thought process.
+
+For example, to hide something visually, but keep it accessible, it reccommended this pattern:
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+But I actually preferred, for the content I wanted to show in the accessibility tree but hide visually:
+
+content-visibility: hidden;
+
+And then for the content I wanted to show visually, but hide in the accessibility tree, the html attribute:
+
+aria-hidden="true"
+
+- Jason James, Tuesday, September 2, 2026
+
+*/
+
+:root {
+    /* CSS Custom Properties (Variables) - Colors */
+    --primary: snow;
+    --secondary: #C4C6E2;
+    --accent: #E05B08;
+    --text: #000000;
+
+    /* CSS Color, Light and Dark Mode Theming */
+    /* Thanks to https://medium.com/@cerutti.alexander/a-mostly-complete-guide-to-theme-switching-in-css-and-js-c4992d5fd357 */
+
+
+
+    /* CSS Custom Properties (Variables) - Fonts */
+
+    /*
+
+    --readex-pro-extra-light {
+        font-family: "Readex Pro", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 200;
+        font-style: normal;
+        font-variation-settings:
+            "HEXP" 0;
+    }
+    --readex-pro-light {
+        font-family: "Readex Pro", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 300;
+        font-style: normal;
+        font-variation-settings:
+            "HEXP" 0;
+    }
+    --readex-pro-regular {
+        font-family: "Readex Pro", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
+        font-variation-settings:
+            "HEXP" 0;
+    }
+    --readex-pro-medium {
+        font-family: "Readex Pro", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 500;
+        font-style: normal;
+        font-variation-settings:
+            "HEXP" 0;
+    }
+    --readex-pro-semi-bold {
+        font-family: "Readex Pro", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 600;
+        font-style: normal;
+        font-variation-settings:
+            "HEXP" 0;
+    }
+    --readex-pro-bold {
+        font-family: "Readex Pro", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 700;
+        font-style: normal;
+        font-variation-settings:
+            "HEXP" 0;
+    }
+    .bungee-regular {
+        font-family: "Bungee", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        }
+    .bungee-inline-regular {
+        font-family: "Bungee Inline", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        }
+    .bungee-shade-regular {
+        font-family: "Bungee Shade", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        }
+    .bungee-outline-regular {
+        font-family: "Bungee Outline", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        }
+    .bungee-hairline-regular {
+        font-family: "Bungee Hairline", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        }
+
+    */
+
+    @font-face { /* See https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face and https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Web_fonts */
+    font-family: "Bungee Layers Inline";
+    src:
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.woff2") format("woff2"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.woff") format("woff"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.eot") format("embedded-opentype");
+    }
+
+    @font-face {
+    font-family: "Bungee Layers Regular";
+    src:
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.woff2") format("woff2"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.woff") format("woff"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.eot") format("embedded-opentype");
+    }
+
+    @font-face {
+    font-family: "Bungee Layers Outline";
+    src:
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.woff2") format("woff2"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.woff") format("woff"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.eot") format("embedded-opentype");
+    }
+
+    @font-face {
+    font-family: "Bungee Layers Shade";
+    src:
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.woff2") format("woff2"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.woff") format("woff"),
+        url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.eot") format("embedded-opentype");
+    }
+
+    @font-face {
+    font-family: "Lexend";
+    src: 
+        url("https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"),
+        url("assets/fonts/lexend/Lexend/Lexend-VariableFont_wght.ttf") format("ttf");
+    }
+
+    
+}
+
+html {
+    background-color: var(--primary);
+    color: var(--text);
+}
+
+body {
+    font-family: "Readex Pro", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "HEXP" 0;
+    margin: 0;
+    max-width: 768px;
+}
+
+body > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.crumb a {
+    border-bottom: 2px solid var(--accent);
+    border-radius: 0.125em;
+    padding-bottom: 0.125em;
+}
+
+.icon {
+    color: var(--accent);
+}
+
+.fa-sun-bright, .fa-moon-waxing-crescent {
+    color: var(--text);
+}
+
+#theme-controls {
+    display: flex;
+    align-content: stretch;
+    gap: 0;
+    align-items: center;
+}
+
+h1 {
+    color: var(--accent);
+    font-family: "Bungee", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1rem;
+    margin: 1rem;
+}
+
+nav > ol, nav > ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li.crumb {
+    font-weight: 300;
+    font-size: 0.75rem;
+}
+
+li.crumb > i, li.crumb svg {
+    position: absolute;
+    transform: translate(-1.25rem, 3px);
+}
+
+section {
+    margin: 0 0;
+}
+
+article {
+    background-color: var(--secondary);
+    max-width: 768px;
+    padding: 1rem 1rem;
+    border-radius: 24px;
+}
+
+article > header {
+    margin: 0 1.25rem;
+}
+
+h2 {
+    font-size: 2.25rem;
+}
+
+h2.hidden {
+    margin: 0.375rem;
+}
+
+/*
+figure.bungee {
+    font-size: 2.25rem;
+    padding: 0;
+    white-space: normal;
+    max-width: 100%;
+}
+*/
+
+.multilayer {
+  margin: 0rem;
+  display: grid;
+}
+
+.bungee-layers-inline {
+  z-index: 4;
+  grid-row: 1;
+  grid-column: 1;
+  font-family: 'Bungee Layers Inline','Bungee Hairline', cursive;
+  font-weight: 400; /* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight */
+  /*font-size: clamp(2.5rem, 4.75rem, 7rem);*/   
+  color: var(--accent);
+}
+
+.bungee-layers-regular {
+  z-index: 3;
+  grid-row: 1;
+  grid-column: 1;
+  font-family: 'Bungee Layers Regular','Bungee', cursive;
+  font-weight: 400;
+  /*font-size: clamp(2.5rem, 4.75rem, 7rem);*/   
+  color: var(--primary);
+}
+
+.bungee-layers-outline {
+  z-index: 2;
+  grid-row: 1;
+  grid-column: 1;
+  font-family: 'Bungee Layers Outline', 'Bungee Outline', cursive;
+  font-weight: 400;
+  /*font-size: clamp(2.5rem, 4.75rem, 7rem);*/   
+  color: var(--accent);
+}
+
+.bungee-layers-shade {
+  z-index: 1;
+  grid-row: 1;
+  grid-column: 1;
+  font-family: 'Bungee Layers Shade', 'Bungee Shade', cursive;
+  font-weight: 400;
+  /*font-size: clamp(2.5rem, 4.75rem, 7rem);*/   
+  color: var(--text);
+}
+
+ul, ol {
+    padding-left: 1em;
+}
+
+.tag-list {
+    list-style-type: none;
+    padding: 0;      
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tag-list li {
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 2px solid var(--accent);
+    cursor: pointer;
+    font-family: "Bungee", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 0.75rem;
+}
+
+video {
+    width: 100%;
+    height: auto;
+    margin: 16px 0;
+    border-radius: 8px;
+}
+
+#article-date {
+    font-weight: 300;
+}
+
+#summary, #outcomes, #video-summary {
+    box-sizing: content-box;
+    border: 4px solid var(--primary);
+    border-radius: 16px;
+    padding: 0px 16px;
+    margin: 20px 0;
+    position: relative;
+}
+
+#video-summary {
+    margin-bottom: 0;
+}
+
+#article-body {
+    padding: 0px 20px;
+}
+
+.typography-label {
+    font-family: "Readex Pro", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings:
+        "HEXP" 0;
+
+    font-size: 0.75rem;
+    text-transform: lowercase;
+    background-color: var(--secondary);
+    padding: 0 0.5em;
+}
+
+.typography-label-container {
+    position: absolute;
+    left: 1em;
+    transform: translateY(-60%);
+}
