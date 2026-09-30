@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jason James · Portfolio Connector for Claude</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5EDD8;
+    --cream-light: #FFF8E7;
+    --cream-dark: #E8DCC0;
+    --orange: #E85D2C;
+    --orange-deep: #C94418;
+    --peach: #F4A968;
+    --navy: #1A2744;
+    --navy-soft: #2E3E5C;
+    --ink: #141C30;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Readex Pro', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    font-weight: 400;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(232, 93, 44, 0.06) 0%, transparent 40%),
+      radial-gradient(circle at 80% 60%, rgba(244, 169, 104, 0.08) 0%, transparent 50%);
+  }
+
+  /* Subtle paper grain */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity: 0.5;
+    z-index: 1;
+    mix-blend-mode: multiply;
+  }
+
+  .display { font-family: 'Bungee', display; letter-spacing: 0.01em; line-height: 0.95; }
+
+  /* Layout */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Top bar */
+  .topbar {
+    padding: 1.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--navy-soft);
+  }
+
+  .topbar .wordmark {
+    font-family: 'Bungee', display;
+    color: var(--navy);
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+  }
+
+  .topbar .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--orange);
+    box-shadow: 0 0 0 3px rgba(232, 93, 44, 0.2);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(232, 93, 44, 0.2); }
+    50% { box-shadow: 0 0 0 6px rgba(232, 93, 44, 0.05); }
+  }
+
+  /* Hero */
+  .hero {
+    padding: 3rem 0 5rem;
+    position: relative;
+  }
+
+  .eyebrow {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--orange-deep);
+    margin-bottom: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 32px;
+    height: 2px;
+    background: var(--orange);
+  }
+
+  h1.hero-title {
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    margin-bottom: 1.5rem;
+    color: var(--navy);
+  }
+
+  h1.hero-title .accent {
+    color: var(--orange);
+    display: inline-block;
+    transform: rotate(-1.5deg);
+  }
+
+  .hero-lede {
+    font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+    max-width: 640px;
+    color: var(--navy-soft);
+    font-weight: 400;
+    margin-bottom: 3rem;
+  }
+
+  /* URL box */
+  .url-card {
+    background: var(--navy);
+    color: var(--cream-light);
+    border-radius: 8px;
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    max-width: 640px;
+    box-shadow:
+      0 0 0 1px rgba(26, 39, 68, 0.1),
+      12px 12px 0 var(--peach);
+    position: relative;
+  }
+
+  .url-label {
+    font-family: 'Bungee', display;
+    font-size: 0.75rem;
+    color: var(--peach);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .url-text {
+    font-family: 'SF Mono', ui-monospace, 'Menlo', monospace;
+    font-size: 1rem;
+    color: var(--cream-light);
+    flex: 1;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .copy-btn {
+    background: var(--orange);
+    color: var(--cream-light);
+    border: none;
+    padding: 0.55rem 1rem;
+    font-family: 'Bungee', display;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .copy-btn:hover {
+    background: var(--orange-deep);
+    transform: translateY(-1px);
+  }
+
+  .copy-btn.copied {
+    background: var(--navy-soft);
+  }
+
+  /* Section */
+  section {
+    padding: 5rem 0;
+    position: relative;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .section-num {
+    font-family: 'Bungee', display;
+    color: var(--peach);
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-family: 'Bungee', display;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    color: var(--navy);
+    letter-spacing: 0.01em;
+  }
+
+  .section-sub {
+    font-size: 1rem;
+    color: var(--navy-soft);
+    margin-left: auto;
+    max-width: 340px;
+    text-align: right;
+  }
+
+  /* Steps */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .step {
+    background: var(--cream-light);
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+    padding: 1.5rem 1.5rem 1.75rem;
+    position: relative;
+    transition: transform 0.2s ease;
+  }
+
+  .step:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  .step-num {
+    font-family: 'Bungee', display;
+    font-size: 2.25rem;
+    color: var(--orange);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .step-title {
+    font-weight: 600;
+    color: var(--navy);
+    font-size: 1rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .step-body {
+    font-size: 0.9rem;
+    color: var(--navy-soft);
+    line-height: 1.5;
+  }
+
+  /* Tools grid */
+  .tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .tool-pill {
+    font-family: 'Bungee', display;
+    font-size: 0.9rem;
+    padding: 0.8rem 1.25rem;
+    background: var(--cream-light);
+    color: var(--navy);
+    border: 2px dashed var(--ink);
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+    position: relative;
+    transform: rotate(var(--rot, 0deg));
+    transition: all 0.2s ease;
+    cursor: default;
+  }
+
+  .tool-pill:hover {
+    background: var(--orange);
+    color: var(--cream-light);
+    border-color: var(--orange-deep);
+    transform: rotate(0deg) scale(1.03);
+  }
+
+  .tool-pill:nth-child(1) { --rot: -1.2deg; }
+  .tool-pill:nth-child(2) { --rot: 0.8deg; }
+  .tool-pill:nth-child(3) { --rot: -0.5deg; }
+  .tool-pill:nth-child(4) { --rot: 1.4deg; }
+
+  .tool-desc {
+    margin-top: 2rem;
+    max-width: 720px;
+    color: var(--navy-soft);
+    font-size: 0.95rem;
+  }
+
+  .tool-desc code {
+    background: var(--cream-dark);
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    font-family: 'SF Mono', ui-monospace, monospace;
+    font-size: 0.85em;
+    color: var(--navy);
+  }
+
+  /* Prompts */
+  .prompts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .prompt {
+    background: var(--cream-light);
+    border-radius: 6px;
+    padding: 1.5rem;
+    border-left: 4px solid var(--orange);
+    position: relative;
+    transition: all 0.2s ease;
+  }
+
+  .prompt::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 6px;
+    border: 1px solid var(--cream-dark);
+    pointer-events: none;
+  }
+
+  .prompt:hover {
+    transform: translateY(-3px);
+    border-left-color: var(--peach);
+  }
+
+  .prompt-label {
+    font-family: 'Bungee', display;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--orange-deep);
+    margin-bottom: 0.75rem;
+  }
+
+  .prompt-text {
+    font-size: 1rem;
+    color: var(--navy);
+    font-style: italic;
+    line-height: 1.45;
+  }
+
+  /* Footer */
+  footer {
+    padding: 4rem 0 3rem;
+    border-top: 1px solid var(--cream-dark);
+    margin-top: 2rem;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--navy-soft);
+  }
+
+  .footer-inner a {
+    color: var(--orange-deep);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+
+  .footer-inner a:hover { border-bottom-color: var(--orange); }
+
+  /* Decorative stamp */
+  .stamp {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    font-family: 'Bungee', display;
+    font-size: 0.7rem;
+    color: var(--orange);
+    border: 2px solid var(--orange);
+    padding: 0.5rem 0.75rem;
+    transform: rotate(8deg);
+    opacity: 0.7;
+    letter-spacing: 0.1em;
+    background: rgba(245, 237, 216, 0.5);
+  }
+
+  @media (max-width: 640px) {
+    .section-sub { display: none; }
+    .url-card { flex-direction: column; align-items: stretch; }
+    .url-text { font-size: 0.85rem; }
+    .stamp { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header class="topbar">
+    <span class="wordmark">JJ · Works</span>
+    <span class="status"><span class="dot"></span>Connector Live</span>
+  </header>
+
+  <section class="hero">
+    <div class="stamp">V1 · BETA</div>
+    <div class="eyebrow">MCP Connector for Claude</div>
+    <h1 class="hero-title">A portfolio<br>that <span class="accent">answers back.</span></h1>
+    <p class="hero-lede">
+      Add this connector to Claude and ask it anything about my work. It pulls the right projects, the right context, and the right framing — on demand. No scrolling. No case-study hunt.
+    </p>
+
+    <div class="url-card">
+      <span class="url-label">MCP URL</span>
+      <span class="url-text" id="url">https://portfolio.jasonjames.works/mcp</span>
+      <button class="copy-btn" onclick="copyUrl()">Copy</button>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2>How to add it</h2>
+      <span class="section-sub">One-time setup. Works on Pro, Max, Team, Enterprise, and Free (1-connector limit).</span>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">Open Claude Settings</div>
+        <div class="step-body">Profile icon → Settings → Connectors</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Add custom connector</div>
+        <div class="step-body">Scroll to bottom of the Connectors panel.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Paste the URL</div>
+        <div class="step-body">Use the MCP URL above. Name it "Jason's Portfolio."</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-title">Toggle on in chat</div>
+        <div class="step-body">Click the + in any chat → Connectors → enable.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2>What it knows</h2>
+      <span class="section-sub">Four tools. Claude picks the right one for your question.</span>
+    </div>
+
+    <div class="tools">
+      <span class="tool-pill">search_projects</span>
+      <span class="tool-pill">get_project_details</span>
+      <span class="tool-pill">analyze_role_fit</span>
+      <span class="tool-pill">get_bio_context</span>
+    </div>
+
+    <p class="tool-desc">
+      Instead of loading my entire portfolio on every ask, Claude scopes each query. <code>search_projects</code> returns lightweight matches; <code>get_project_details</code> only pulls a full case study when Claude decides it's needed. <code>analyze_role_fit</code> takes a job description and returns the themes I should be pivoted on. <code>get_bio_context</code> surfaces targeted background — construction, AI, teaching — rather than a full bio dump.
+    </p>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2>Try asking</h2>
+      <span class="section-sub">Copy into Claude once the connector is on.</span>
+    </div>
+
+    <div class="prompts">
+      <div class="prompt">
+        <div class="prompt-label">Skill Probe</div>
+        <p class="prompt-text">"What's Jason's experience with conversation design and virtual assistants?"</p>
+      </div>
+      <div class="prompt">
+        <div class="prompt-label">Role Fit</div>
+        <p class="prompt-text">"Here's a JD for a Staff UX role at Autodesk — tell me the top three projects from his work that match."</p>
+      </div>
+      <div class="prompt">
+        <div class="prompt-label">Narrative</div>
+        <p class="prompt-text">"How does his construction background shape his approach to systems design?"</p>
+      </div>
+      <div class="prompt">
+        <div class="prompt-label">Deep Dive</div>
+        <p class="prompt-text">"Walk me through the Openbank US launch — what did Jason own, what did he hand off?"</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <span>Built by Jason James · Fayetteville, GA</span>
+      <span>
+        <a href="https://jasonjames.works">jasonjames.works</a> ·
+        <a href="https://github.com/jas0nmjames">GitHub</a> ·
+        <a href="#">Source</a>
+      </span>
+    </div>
+  </footer>
+</div>
+
+<script>
+  function copyUrl() {
+    const url = document.getElementById('url').textContent;
+    const btn = document.querySelector('.copy-btn');
+    navigator.clipboard.writeText(url).then(() => {
+      btn.textContent = 'Copied';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+      }, 1600);
+    });
+  }
+</script>
+
+</body>
+</html>

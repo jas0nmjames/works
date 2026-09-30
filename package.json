@@ -1,0 +1,24 @@
+{
+  "name": "works",
+  "version": "1.0.0",
+  "description": "My portfolio hosted at https://jasonjames.works",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jas0nmjames/works.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jas0nmjames/works/issues"
+  },
+  "homepage": "https://github.com/jas0nmjames/works#readme",
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.6"
+  }
+}
