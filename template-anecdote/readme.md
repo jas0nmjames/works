@@ -8,7 +8,8 @@
 
 `styles.css` defines the light / mono / dark tokens (`:root[data-mode="..."]`) and the switcher styles (search `claude-color-modes`). Things worth knowing:
 
-- The article card uses `--card-bg` and `--card-frame`, not `--secondary` / `--primary`. In mono and dark, `--secondary` is the same color as the text, so a `--secondary` card hides the text.
+- The article card uses local tokens on `<article>` (`--card-bg`, `--card-frame`, `--card-frame-width`, `--title-fill`, `--extra-layers`, `--tag-shadow`) rather than `--secondary` / `--primary` directly. In mono and dark, `--secondary` is the same color as the text, so a `--secondary` card hides the text.
+- Mono and dark follow the Sketch designs: thinner frames (3px mono, 2px dark, vs 4px in light), a single solid title layer in the text color (the outline / inline / shade layers are hidden), and a hard offset shadow on the tags. To change any of these, edit the token blocks right after the `article` rule in `styles.css`, including the no-JS fallbacks in the two media queries below it.
 - The switcher buttons are deliberately the same size as the original icon links (24&times;22px, no gap) so the header stays compact. Add a transparent hit area rather than padding if you need bigger touch targets.
 - In Windows forced-colors mode the underline for the current mode is re-colored with `CanvasText`, because forced colors strips backgrounds.
 - The switcher code is shared with the homepage as copies: head script, buttons and button script live in `_includes/theme-*.njk`.
