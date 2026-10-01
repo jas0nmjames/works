@@ -1,0 +1,7 @@
+# Netlify build settings. These override the same fields in the Netlify UI.
+[build]
+  command = "npm run build"   # runs `eleventy` (see package.json scripts)
+  publish = "_site"           # Eleventy's output folder
+
+[build.environment]
+  NODE_VERSION = "22"         # Eleventy 3 needs Node 18+

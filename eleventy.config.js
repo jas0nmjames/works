@@ -28,14 +28,24 @@ module.exports = function (eleventyConfig) {
     DateTime.fromJSDate(d, { zone: TZ }).toLocaleString(DateTime.DATE_FULL, { locale: "en-US" })
   );
 
+  // Keep private and internal files out of the published site. Without this Eleventy renders
+  // every .md file it finds, including drafts in "working folder" and the READMEs.
+  // (Globs are case sensitive, hence both spellings of README.)
+  eleventyConfig.ignores.add("working folder/**");
+  eleventyConfig.ignores.add("**/README.md");
+  eleventyConfig.ignores.add("**/readme.md");
+
   // Eleventy only outputs templates by default; without these, CSS, images and video 404 under --serve.
   eleventyConfig.addPassthroughCopy("styles.css");
   eleventyConfig.addPassthroughCopy("assets"); // includes per-anecdote media in assets/anecdotes/<slug>/
   eleventyConfig.addPassthroughCopy("llms.txt");
   eleventyConfig.addPassthroughCopy("robots.txt");
   eleventyConfig.addPassthroughCopy("sitemap.xml");
-  // Per-page stylesheets and assets in nested folders
-  eleventyConfig.addPassthroughCopy("**/*.css");
-  eleventyConfig.addPassthroughCopy("**/assets/**");
-  eleventyConfig.addPassthroughCopy("**/*.{vtt,mov,mp4,webp,jpg,png,svg}");
+  // Per-page stylesheets and media. These are limited to the public folders ON PURPOSE:
+  // `ignores` above only affects templates, not passthrough copies, so a catch-all glob like
+  // "**/assets/**" would publish private files from "working folder/assets/" (PDFs, recordings).
+  const MEDIA = "{css,vtt,mov,mp4,webp,jpg,png,svg}";
+  eleventyConfig.addPassthroughCopy(`template-*/**/*.${MEDIA}`);
+  eleventyConfig.addPassthroughCopy("template-*/assets/**");
+  eleventyConfig.addPassthroughCopy(`collections/**/*.${MEDIA}`);
 };

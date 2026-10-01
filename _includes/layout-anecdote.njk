@@ -15,7 +15,7 @@ title: anecdote
     <meta name="theme-color" content="#E05B08" />
     {# Absolute path: this layout renders at many URL depths. Stylesheet is copied through by eleventy.config.js. #}
     <link rel="stylesheet" href="/template-anecdote/styles.css">
-    <link rel="icon" type="image/x-icon" href="/favicon_jason-james.png">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon_jason-james.png">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,7 +47,8 @@ title: anecdote
                     <ol>
                         <li class="crumb">
                             <i class="fa-solid fa-up-left icon"></i> 
-                            <a href="/collections/anecdotes/">anecdotes</a>
+                            {# The anecdotes list page is built from anecdotes.md at /anecdotes/ (there is no /collections/anecdotes/ page). #}
+                            <a href="/anecdotes/">anecdotes</a>
                         </li>
                     </ol>
                 </nav>

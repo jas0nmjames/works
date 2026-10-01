@@ -6,7 +6,7 @@ Details:
 
 - Author: Jason James — UX/product designer; work has included Openbank's US launch, Safrapay's chatbot, and design-system and accessibility practice at Banco Santander.
 - Status: pre-launch. `https://jasonjames.works/` serves one page: an animated "Coming Soon" title, a header, and a footer. There is no portfolio, case-study, or résumé content on the site yet.
-- Stack: hand-written static HTML, CSS, and vanilla JavaScript. No framework, no build step, no analytics.
+- Stack: hand-written HTML, CSS, and vanilla JavaScript, assembled at build time by the Eleventy static site generator. No front-end framework, no analytics.
 - Hosting: source on GitHub, deployed via Netlify. Domain registered with GoDaddy.
 - Licensing: code is open under the Mozilla Public License 2.0. Confidential client work lives in a separate private repository and requires a credential to access; it is not part of this site.
 - Typography: `Bungee` (David Jonathan Ross) for headings, `Lexend` for body text. Icons from Font Awesome.
