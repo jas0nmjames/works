@@ -1,0 +1,27 @@
+{# The brush / sun / moon switcher. Copy of the #theme-controls menu in index.html. #}
+        <!-- [claude-color-modes] Color mode switcher. 
+             - hidden: stays hidden without JavaScript (the page then follows system settings via CSS).
+               The button script at the end of <body> un-hides it.
+             - role="group" + aria-label: screen readers announce these three as one "Color mode" group.
+             - data-set-mode on each button: the mode that button switches to.
+             - aria-label on each button: the name screen readers announce (changed: was name="…", which isn't announced).
+             - aria-pressed is added by the script; true = current mode, and it drives the underline in the stylesheet.
+             - aria-hidden on the icons: they're decorative, the aria-label does the talking. -->
+        <menu id="theme-controls" data-theme-modes role="group" aria-label="Color mode" hidden>
+            <li>
+                <button type="button" class="theme-control-light" data-set-mode="light" aria-label="Light">
+                    <i class="icon fa-solid fa-brush fa-rotate-by fa-canvas-roomy" style="--fa-rotate-angle: 7.5deg;" aria-hidden="true"></i>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="theme-control-mono" data-set-mode="mono" aria-label="Black &amp; white">
+                    <i class="icon fa-regular fa-sun-bright fa-canvas-roomy" aria-hidden="true"></i>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="theme-control-dark" data-set-mode="dark" aria-label="Dark">
+                    <i class="icon fa-solid fa-moon-waxing-crescent fa-canvas-roomy" aria-hidden="true"></i>
+                </button>
+            </li>
+        </menu>
+        <!-- [/claude-color-modes] -->

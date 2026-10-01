@@ -236,12 +236,96 @@ a {
     color: var(--text);
 }
 
+/* [claude-color-modes] Color mode switcher (brush / sun / moon). Same behavior as the
+   homepage's styles.css, but sized for this template's simplified header: the buttons
+   match the original icon links' size and spacing (no 1.5em icon bump, no padding) and are scoped to
+   #theme-controls so no other button on the page is affected.
+   The underline marks the current mode; the button script sets aria-pressed and
+   this CSS draws from it, so what you see and what a screen reader announces agree. */
 #theme-controls {
     display: flex;
     align-content: stretch;
     gap: 0;
     align-items: center;
+    list-style: none; /* the buttons sit in <li>s */
+    padding-left: 0;
 }
+
+/* flex <li>s drop the extra line-box height an inline button would add, so the row is exactly as tall as the buttons */
+#theme-controls li {
+    display: flex;
+}
+
+/* display:flex above would override the hidden attribute, so hide it explicitly (JS off) */
+#theme-controls[hidden] {
+    display: none;
+}
+
+#theme-controls button {
+    position: relative; /* anchors the ::after underline */
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit; /* buttons default to a smaller font; inherit keeps the icons and line height the same as the old <a> links */
+    color: var(--text); /* sun/moon underline uses currentColor, so it follows the mode */
+    /* Sized like the original <a> icon links (24px wide, 22px tall, no gap) so the header
+       keeps its original height and spacing. No 44px minimum or padding here on purpose. */
+    width: 24px;
+    height: 22px;
+    margin: 0;
+    padding: 0;
+    border-radius: 26px;
+}
+
+#theme-controls button:hover {
+    background-color: var(--accent-transparent);
+}
+
+/* Sun and moon icons are --text colored, so they get the --text based hover instead */
+#theme-controls button:has(.fa-sun-bright):hover,
+#theme-controls button:has(.fa-moon-waxing-crescent):hover {
+    background-color: var(--text-transparent);
+}
+
+/* Underline for the current mode: a 1em x 2px bar with fully rounded ends, centered
+   under the icon. Absolutely positioned so the button doesn't resize when pressed.
+   It's a background (not a border) so the rounded ends render; inactive buttons get
+   no ::after at all, which keeps Windows forced-colors mode from drawing stray lines. */
+#theme-controls button[aria-pressed="true"]::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -5px; /* the 24px icon overflows the 22px button by 2px; this leaves a small gap under it */
+    width: 1em;
+    height: 2px;
+    background: currentColor;
+    border-radius: 999px;
+}
+
+/* The brush icon is drawn in --accent, so its underline matches: orange in light, black in mono, white in dark */
+#theme-controls button[data-set-mode="light"]::after {
+    background: var(--accent);
+}
+
+/* [claude-color-modes] Windows forced-colors mode strips author backgrounds, which would make
+   the bar above vanish. (It used to be a border, which survives forced colors; changing it to a
+   filled bar for the rounded ends introduced this gap.) forced-color-adjust: none lets this one
+   bar keep its color, and CanvasText is the system text color, so it stays visible in any
+   forced palette. Inactive buttons still get no ::after at all. */
+@media (forced-colors: active) {
+    #theme-controls button[aria-pressed="true"]::after {
+        forced-color-adjust: none;
+        background: CanvasText;
+    }
+}
+
+/* Visible keyboard focus */
+#theme-controls button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+/* [/claude-color-modes] */
 
 h1 {
     color: var(--accent);
@@ -272,12 +356,42 @@ section {
     margin: 0 0;
 }
 
+/* [claude-color-modes] The article card uses two local tokens instead of --secondary/--primary directly.
+   In light mode --secondary is lavender and --primary is snow, so a lavender card with snow
+   frames works. In mono and dark, --secondary equals the text color (black / white), so a
+   --secondary card hid all the text. There the card takes the page background (--primary)
+   and the frames use --secondary, like .content-frame on the homepage. */
 article {
-    background-color: var(--secondary);
+    --card-bg: var(--secondary);
+    --card-frame: var(--primary);
+    background-color: var(--card-bg);
     /* max-width: 768px; */
     padding: 1rem 1rem;
     border-radius: 24px;
 }
+
+:root[data-mode="mono"] article,
+:root[data-mode="dark"] article {
+    --card-bg: var(--primary);
+    --card-frame: var(--secondary);
+}
+
+/* No-JS fallbacks: same two overrides when the head script never set data-mode
+   (mirrors the media queries near the top of this file) */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-mode]) article {
+        --card-bg: var(--primary);
+        --card-frame: var(--secondary);
+    }
+}
+
+@media (prefers-contrast: more), (forced-colors: active) {
+    :root:not([data-mode]) article {
+        --card-bg: var(--primary);
+        --card-frame: var(--secondary);
+    }
+}
+/* [/claude-color-modes] */
 
 article > header {
     margin: 0 1.25rem;
@@ -370,7 +484,7 @@ video {
 
 #summary, #outcomes, #video-summary {
     box-sizing: content-box;
-    border: 4px solid var(--primary);
+    border: 4px solid var(--card-frame);
     border-radius: 16px;
     padding: 0px 16px;
     margin: 20px 0;
@@ -395,7 +509,7 @@ video {
 
     font-size: 0.75rem;
     text-transform: lowercase;
-    background-color: var(--secondary);
+    background-color: var(--card-bg); /* hides the frame line behind the label, so it must match the card */
     padding: 0 0.5em;
 }
 

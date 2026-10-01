@@ -10,6 +10,9 @@ title: anecdote
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jason's Portfolio</title>
+    {# Color mode head script: must stay inline and above the stylesheet so the right mode paints first. #}
+    {% include "theme-head.njk" %}
+    <meta name="theme-color" content="#E05B08" />
     {# Absolute path: this layout renders at many URL depths. Stylesheet is copied through by eleventy.config.js. #}
     <link rel="stylesheet" href="/template-anecdote/styles.css">
     <link rel="icon" type="image/x-icon" href="/favicon_jason-james.png">
@@ -34,16 +37,8 @@ title: anecdote
         <a href="/" title="go back to the homepage">
             <h1>jasonjames.works</h1>
         </a>
-        <menu id="theme-controls">
-            <a href="#"><i class="icon fa-solid fa-brush fa-rotate-by fa-canvas-roomy" style="--fa-rotate-angle: 7.5deg;"></i></a>
-            <a href="#"><i class="icon fa-regular fa-sun-bright fa-canvas-roomy"></i></a>
-            <a href="#"><i class="icon fa-solid fa-moon-waxing-crescent fa-canvas-roomy"></i></a>
-
-            <!--
-            <i class="fa-solid fa-slash-forward icon"></i>
-            <a href="#"><i class="fa-solid fa-moon-over-sun icon"></i></a>
-            -->
-        </menu>
+        {# Full color-mode switcher (light / black & white / dark); same markup and behavior as the homepage. #}
+        {% include "theme-controls.njk" %}
     </header>
     <main>
         <article>
@@ -69,14 +64,17 @@ title: anecdote
                     </span>
                 </h2>
                 {# Use page.date (not front-matter `date`): eleventy.config.js parses it as Eastern Time, and the filters format it in Eastern. #}
-                <p id="article-date"><time datetime="{{ page.date | isoDate }}">{{ page.date | displayDate }}</time> <a href="#video-summary"><i class="fa-regular fa-tv-retro icon"></i></a></p>
-                {# Tags come from front matter. "anecdote" is only the collection marker, so it is not shown. Links are placeholders until tag pages exist. #}
+                <p id="article-date"><time datetime="{{ page.date | isoDate }}">{{ page.date | displayDate }}</time>{#- TV icon jumps to the video, so only show it when this anecdote has one. #}
+                {%- if video %} <a href="#video-summary" aria-label="Jump to video summary"><i class="fa-regular fa-tv-retro icon"></i></a>{% endif %}</p>
+                {# Tags come from front matter (they must be a YAML list, not a single string). "anecdote" is only the collection marker, so it is not shown. Links are placeholders until tag pages exist. #}
                 <ul class="tag-list">
                     {%- for tag in tags %}{% if tag != "anecdote" %}
                     <li><a href="">{{ tag }}</a></li>
                     {%- endif %}{% endfor %}
                 </ul>
             </header>
+            {#- Summary and outcomes are optional: an anecdote without them skips the whole boxed section instead of showing an empty frame. #}
+            {%- if summary %}
             <section id="summary">
                 <div class="typography-label-container">
                     <h2 class="typography-label">Summary</h2>
@@ -84,10 +82,12 @@ title: anecdote
                 {# `summary` comes from front matter #}
                 <p>{{ summary }}</p>
             </section>
+            {%- endif %}
             <section id="article-body">
                 {# `content` is the rendered markdown body of the anecdote; `safe` stops it being HTML-escaped. #}
                 {{ content | safe }}
             </section>
+            {%- if outcomes %}
             <section id="outcomes">
                 <div class="typography-label-container">
                     <h2 class="typography-label">Outcomes</h2>
@@ -99,6 +99,7 @@ title: anecdote
                     {%- endfor %}
                 </ul>
             </section>
+            {%- endif %}
             {#- Optional: the section only renders when the anecdote sets a `video:` block in front matter
                 (src, plus optional captions / subtitles_es). Files live in assets/anecdotes/<slug>/. #}
             {%- if video %}
@@ -125,5 +126,7 @@ title: anecdote
             {%- endif %}
         </article>
     </main>
+    {# Button script for the switcher above; needs window.themeModes from the head script. #}
+    {% include "theme-script.njk" %}
 </body>
 </html>

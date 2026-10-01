@@ -3,6 +3,8 @@ const { DateTime } = require("luxon");
 module.exports = function (eleventyConfig) {
   // Dates are authored and displayed as Eastern Time. YAML turns `date: 2026-10-01`
   // into a Date at UTC midnight, so reinterpret its wall-clock fields as Eastern.
+  // Write dates as `2026-10-01` or `2026-10-01T14:30:00` (no offset). An explicit offset such
+  // as `-04:00` would be read as UTC first and then mislabeled as Eastern.
   const TZ = "America/New_York";
   // Only affects `page.date`, so templates must print page.date rather than front-matter `date`.
   eleventyConfig.addDateParsing((value) => {
