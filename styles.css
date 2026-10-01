@@ -266,13 +266,13 @@ menu button:hover {
    The underline shows the current mode. It's driven by aria-pressed, which the
    button script sets, so what you see and what a screen reader announces
    can't disagree.
-   Underline = a 2px line with rounded ends, drawn by a ::after pseudo-element.
-   (A plain border-bottom can't have rounded ends.) It's absolutely positioned,
-   so the button doesn't change size when it's pressed.
-   The line is a border-top, not a background, because Windows forced-colors mode
-   removes backgrounds but keeps borders. Inactive buttons get NO ::after at all
-   (not a transparent one), because forced-colors mode paints transparent
-   borders as visible lines. */
+   Underline = a 1em x 2px bar with fully rounded ends, drawn by a ::after pseudo-element
+   and centered under the icon. (A plain border-bottom can't have rounded ends.) It's
+   absolutely positioned, so the button doesn't change size when it's pressed.
+   It's a filled bar (background + border-radius), not a border, so the ends can be round;
+   the forced-colors rule below keeps it visible in Windows high contrast. Inactive buttons
+   get NO ::after at all (not a transparent one), because forced-colors mode paints
+   transparent borders as visible lines. */
 /* The "menu { display: flex }" rule above would override the hidden attribute,
    so this makes hidden actually hide the switcher when JS is off */
 #theme-controls[hidden] {
@@ -289,18 +289,31 @@ menu button:hover {
 #theme-controls button[aria-pressed="true"]::after {
     content: "";
     position: absolute;
-    left: 8px;   /* line up with the icon, inside the button's padding */
-    right: 8px;
+    left: 50%;   /* center the short line under the icon */
+    transform: translateX(-50%);
     bottom: 2px;
-    height: 0;
-    border-top: 2px solid currentColor;
-    border-radius: 1px; /* half the 2px thickness = fully rounded ends */
+    width: 1em;
+    height: 2px;
+    background: currentColor; /* a filled bar (not a border) so the pill-shaped ends actually render */
+    border-radius: 999px;     /* fully rounded ends */
 }
 
 /* The brush icon is drawn in --accent (see .icon), so its underline matches it:
    orange in light, black in mono, white in dark */
 #theme-controls button[data-set-mode="light"]::after {
-    border-top-color: var(--accent);
+    background: var(--accent);
+}
+
+/* [claude-color-modes] Windows forced-colors mode strips author backgrounds, which would make
+   the bar above vanish. (It used to be a border, which survives forced colors; changing it to a
+   filled bar for the rounded ends introduced this gap.) forced-color-adjust: none lets this one
+   bar keep its color, and CanvasText is the system text color, so it stays visible in any
+   forced palette. Inactive buttons still get no ::after at all. */
+@media (forced-colors: active) {
+    #theme-controls button[aria-pressed="true"]::after {
+        forced-color-adjust: none;
+        background: CanvasText;
+    }
 }
 
 /* Visible keyboard focus. Uses --accent, which is black in mono and white in dark */
@@ -394,8 +407,8 @@ aside {
 details {
     border-radius: 26px;
     /* background-color: var(--primary); */
-    padding: 12px;
-    margin-left: -12px;
+    padding: 6px 12px;
+    margin: 4px -12px 4px -12px;
 }
 
 details:hover {
@@ -627,7 +640,7 @@ video {
     dynamic-range-limit: constrained; /* Thanks modern-css.com */
 }
 
-#video-summary {
+.content-frame {
     box-sizing: content-box;
     border: 4px solid var(--secondary);
     border-radius: 16px;
@@ -638,28 +651,24 @@ video {
     height: auto;
 }
 
-#credits {
-    box-sizing: content-box;
-    border: 4px solid var(--secondary);
-    border-radius: 16px;
-    padding: 0px 16px;
+/* yay! I wrote this section to change the border widths based on data-mode myself! - Jason, September 29, 2026 */
+
+:root[data-mode="mono"] .content-frame {
+    border: 3px solid var(--secondary);
+}
+
+:root[data-mode="dark"] .content-frame {
+    border: 2px solid var(--secondary);
+}
+
+/* end section */
+
+#colophon {
+    padding: 0 1em;
     margin: 20px 0;
-    /* margin: 20px 0 0 20px; */
-    position: relative;
-
-    margin-left: -4px;
-    margin-right: -4px;
 }
 
-#credits details {
-    border-radius: 8px;
-    padding: 4px 8px 4px 8px;
-    margin-left: -8px;
-    margin-top: 8px;
-    margin-right: -8px;
-}
-
-#credits details:hover {
+#colophon details:hover {
     background-color: var(--accent-transparent); /* [claude-color-modes] changed: was var(--secondary) — in dark/mono --secondary matches the text color, so the text disappeared on hover */
 }
 
@@ -778,9 +787,11 @@ main, section, article {
         font-size: 1.2em;
         max-width: 100%;
     }
+    /*
     footer details {
         margin-left: -12px;
     }
+    */
     .image-grid {
         grid-template-columns: 1fr;
         /* grid-auto-rows: auto; */

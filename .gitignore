@@ -1,2 +1,6 @@
 # ignore mac only DS Store files
 .DS_Store
+
+# Eleventy build output and installed dependencies: Netlify rebuilds both
+_site/
+node_modules/

@@ -1,0 +1,31 @@
+{# Included in <head> BEFORE the stylesheet link. Copy of the head script in index.html. #}
+    <!-- [claude-color-modes] Color mode head script, built with assistance from Claude (Anthropic), September 24, 2026.
+         Search the repo for "claude-color-modes" to find every piece: template-anecdote/styles.css and styles.css (mode tokens,
+         no-JS fallbacks, switcher styles) and the _includes/theme-*.njk partials (head script, #theme-controls markup, button script).
+
+         Sets <html data-mode="light|mono|dark"> BEFORE the stylesheet loads, so the page
+         never flashes the wrong colors. It must stay inline, blocking, and above the
+         <link rel="stylesheet">. Don't defer it, make it a module, or move it to a file. -->
+    <script>
+    (function () {
+      var MODES = ['light', 'mono', 'dark'], KEY = 'theme-mode';
+      // The mode the visitor picked with a button, or null if they never picked one.
+      // try/catch: private browsing / blocked storage makes localStorage throw.
+      function saved() {
+        try { var m = localStorage.getItem(KEY); return MODES.indexOf(m) > -1 ? m : null; }
+        catch (e) { return null; }
+      }
+      // The mode the operating system is asking for. High contrast wins over dark.
+      function system() {
+        var is = function (q) { return window.matchMedia(q).matches; };
+        if (is('(prefers-contrast: more)') || is('(forced-colors: active)')) return 'mono';
+        if (is('(prefers-color-scheme: dark)')) return 'dark';
+        return 'light';
+      }
+      // Shared with the button script (_includes/theme-script.njk)
+      window.themeModes = { KEY: KEY, saved: saved, system: system };
+      // Saved choice first, otherwise follow the system
+      document.documentElement.dataset.mode = saved() || system();
+    })();
+    </script>
+    <!-- [/claude-color-modes] -->
