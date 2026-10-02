@@ -431,6 +431,35 @@ h2.hidden {
     margin: 0.375rem;
 }
 
+/* The four layer fonts for the multilayer title. The layout only loads this stylesheet (not /styles.css, which
+   has the same declarations), so without these the names below are undefined and each layer silently falls
+   back to a different Google Bungee face with different glyph widths. Absolute URLs, since this renders at many depths.
+   font-display: block holds the title invisible for a moment instead of showing mismatched fallback layers. */
+@font-face {
+  font-family: "Bungee Layers Inline";
+  src: url("/assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.woff2") format("woff2"),
+       url("/assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.woff") format("woff");
+  font-display: block;
+}
+@font-face {
+  font-family: "Bungee Layers Regular";
+  src: url("/assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.woff2") format("woff2"),
+       url("/assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.woff") format("woff");
+  font-display: block;
+}
+@font-face {
+  font-family: "Bungee Layers Outline";
+  src: url("/assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.woff2") format("woff2"),
+       url("/assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.woff") format("woff");
+  font-display: block;
+}
+@font-face {
+  font-family: "Bungee Layers Shade";
+  src: url("/assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.woff2") format("woff2"),
+       url("/assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.woff") format("woff");
+  font-display: block;
+}
+
 .multilayer {
   margin: 0rem;
   display: grid;

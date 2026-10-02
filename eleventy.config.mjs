@@ -1,6 +1,11 @@
-const { DateTime } = require("luxon");
+// [claude-esm-config] This file was renamed from eleventy.config.js to .mjs and converted from CommonJS
+// (require / module.exports) to ESM (import / export default). The image plugin is ESM, and a single
+// file can't mix the two styles ("Cannot use import statement outside a module"). The .mjs extension
+// makes Node treat it as ESM without changing "type" in package.json.
+import { DateTime } from "luxon";
+import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 
-module.exports = function (eleventyConfig) {
+export default function (eleventyConfig) {
   // Dates are authored and displayed as Eastern Time. YAML turns `date: 2026-10-01`
   // into a Date at UTC midnight, so reinterpret its wall-clock fields as Eastern.
   // Write dates as `2026-10-01` or `2026-10-01T14:30:00` (no offset). An explicit offset such
@@ -48,4 +53,10 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy(`template-*/**/*.${MEDIA}`);
   eleventyConfig.addPassthroughCopy("template-*/assets/**");
   eleventyConfig.addPassthroughCopy(`collections/**/*.${MEDIA}`);
-};
+
+  // [claude-image-plugin] Added at Jason's request (the plugin choice and docs link are his).
+  // Rewrites every <img> in the built pages: generates resized AVIF/WebP/JPEG versions into _site/img/
+  // and wraps them in <picture>. Markdown image syntax is unchanged. Registered inside the single config
+  // function above; a second `export default` would have been ignored. Add alt text to every image.
+  eleventyConfig.addPlugin(eleventyImageTransformPlugin);
+}

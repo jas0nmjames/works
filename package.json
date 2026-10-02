@@ -22,6 +22,7 @@
   "homepage": "https://github.com/jas0nmjames/works#readme",
   "dependencies": {
     "@11ty/eleventy": "^3.1.6",
+    "@11ty/eleventy-img": "^7.0.0",
     "luxon": "^3.7.2"
   }
 }
