@@ -4,3 +4,6 @@
 # Eleventy build output and installed dependencies: Netlify rebuilds both
 _site/
 node_modules/
+
+# Eleventy image plugin cache (re-created on build; keeps repeat builds fast)
+.cache/
