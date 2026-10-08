@@ -696,3 +696,54 @@ video {
     max-width: 32em;
     line-height: 1.5;
 }
+
+/* [claude-story-mobile] Mobile layout built with assistance from Claude (Anthropic), October 8, 2026.
+   Only adds overrides for small screens; none of the desktop rules above were changed.
+   Search the repo for "claude-story-mobile" to find it.
+   Mobile: stack the hero and gallery in a single column */
+@media (width <= 48em) {
+    .story .hero {
+        display: flex;              /* was a 12-column grid with fixed 90px rows */
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .tagline {
+        font-size: 3.5rem;          /* 6rem fits only a few letters per line on a phone */
+    }
+
+    .story .hero > .article-summary-card {
+        margin-bottom: 3rem;        /* room for the .cta, which hangs 4em below the card */
+    }
+
+    #stats {
+        row-gap: 0;                 /* stats wrap onto two rows here; the label's own bottom margin is enough space */
+    }
+
+    .story .hero > #video-summary {
+        width: auto;               /* was 8rem; now full width like the card */
+        transform: none;            /* drop the 10deg tilt */
+    }
+
+    .image-gallery {
+        display: flex;              /* was an 18 × 16 grid collage */
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .image-gallery .image-1 {
+        width: 100%;                /* was width: auto; height: 100% for the grid cell */
+        height: auto;
+    }
+
+    .image-gallery .image-2 figcaption {
+        writing-mode: horizontal-tb; /* vertical caption hung off the right edge and caused sideways scroll */
+        position: static;
+        margin-right: 0;
+    }
+
+    .image-gallery .image-2 figcaption .fa-rotate-90 {
+        transform: none;            /* the arrow was rotated to suit vertical text */
+    }
+}
+/* [/claude-story-mobile] */
