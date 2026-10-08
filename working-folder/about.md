@@ -45,4 +45,6 @@ Thanks John Meada
 
 ### Sketch & Fajitas
 
+[Jason teaching symbols in Sketch](https://www.instagram.com/p/B7Hvw_EjoPn/?utm_source=ig_web_button_share_sheet&stkn=MzRlODBiNWFlZA==)
+
 ### Eunoia

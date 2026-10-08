@@ -1,0 +1,698 @@
+:root, :root[data-mode="light"] {
+    color-scheme: light;
+       /* CSS Custom Properties (Variables) - Colors */
+    --primary: snow;
+    --secondary: #C4C6E2;
+    --accent: #E05B08;
+    --accent-transparent: #E05B0825;
+    --accent-transparent-light: #E05B0812;
+    --accent-2: #F37CA0;
+    --text: #000000;
+    --text-transparent: #00000025;
+
+    /* 25% transparent equivalents with https://hexcalculator.org/color-opacity/ */
+
+    --ford-mustang-boss-302: #7A2E42; /* Hotwheels Pantone 195 */
+    --ford-mustang-boss-302-transparent: #DECBD0;
+
+    --nissan-fairlady-z: #202A44; /* Hotwheels Pantone 533 */
+    --nissan-fairlady-z-transparent: #C7CAD0;
+
+    --kool-kombi: #FE5000; /* Hotwheels Pantone 021 */
+    --kool-kombi-transparent: #FFD3BF;
+}
+
+:root[data-mode="dark"] {
+    color-scheme: dark;
+    --primary: black;
+    --secondary: white;
+    --accent: white;
+    --accent-transparent: #FFFFFF25;
+    --accent-transparent-light: #FFFFFF12;
+    --accent-2: white;
+    --text: white;
+    --text-transparent: #FFFFFF25; /* [claude-color-modes] changed: was white — it's the sun/moon button hover fill, so solid white hid the white icon */
+    --ford-mustang-boss-302: white;
+    --ford-mustang-boss-302-transparent: #FFFFFF25;
+    --nissan-fairlady-z: white;
+    --nissan-fairlady-z-transparent: #FFFFFF25;
+    --kool-kombi: white;
+    --kool-kombi-transparent: #FFFFFF25;
+}
+:root[data-mode="mono"] {
+    color-scheme: light;
+    --primary: snow; /* [claude-color-modes] changed: was black — html uses --primary as the page background, so black made black text on black; the spec says mono is light */
+    --secondary: black;
+    --accent: black;
+    --accent-transparent: #00000025;
+    --accent-transparent-light: #00000012;
+    --accent-2: black;
+    --text: black;
+    --text-transparent: #00000025; /* [claude-color-modes] changed: was black — it's the sun/moon button hover fill, so solid black hid the black icon */
+    --ford-mustang-boss-302: black;
+    --ford-mustang-boss-302-transparent: #00000025;
+    --nissan-fairlady-z: black;
+    --nissan-fairlady-z-transparent: #00000025;
+    --kool-kombi: black;
+    --kool-kombi-transparent: #00000025;
+}
+
+:root[data-mode="mono"] img,
+:root[data-mode="mono"] video {
+    filter: grayscale(1);
+}
+
+:root[data-mode="dark"] #hand-writing img {
+    filter: invert(1);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-mode]) { /* same values as :root[data-mode="dark"] */
+        color-scheme: dark;
+        --primary: black;
+        --secondary: white;
+        --accent: white;
+        --accent-transparent: #FFFFFF25;
+        --accent-transparent-light: #FFFFFF12;
+        --accent-2: white;
+        --text: white;
+        --text-transparent: #FFFFFF25;
+        --ford-mustang-boss-302: white;
+        --ford-mustang-boss-302-transparent: #FFFFFF25;
+        --nissan-fairlady-z: white;
+        --nissan-fairlady-z-transparent: #FFFFFF25;
+        --kool-kombi: white;
+        --kool-kombi-transparent: #FFFFFF25;
+    }
+    :root:not([data-mode]) #hand-writing img {
+        filter: invert(1);
+    }
+}
+
+@media (prefers-contrast: more), (forced-colors: active) {
+    :root:not([data-mode]) { /* same values as :root[data-mode="mono"] */
+        color-scheme: light;
+        --primary: snow;
+        --secondary: black;
+        --accent: black;
+        --accent-transparent: #00000025;
+        --accent-transparent-light: #00000012;
+        --accent-2: black;
+        --text: black;
+        --text-transparent: #00000025;
+        --ford-mustang-boss-302: black;
+        --ford-mustang-boss-302-transparent: #00000025;
+        --nissan-fairlady-z: black;
+        --nissan-fairlady-z-transparent: #00000025;
+        --kool-kombi: black;
+        --kool-kombi-transparent: #00000025;
+    }
+    /* If the system is both dark and high contrast, this later rule replaces the dark invert(), so the hand-writing stays black on the light mono background */
+    :root:not([data-mode]) img,
+    :root:not([data-mode]) video,
+    :root:not([data-mode]) #hand-writing img {
+        filter: grayscale(1);
+    }
+}
+
+html {
+    background-color: var(--primary);
+    color: var(--text);
+}
+
+body {
+    font-family: "Readex Pro", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "HEXP" 0;
+    /* margin: 0;
+    max-width: 768px; */
+}
+
+body > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.crumb a {
+    border-bottom: 2px solid var(--accent);
+    border-radius: 0.125em;
+    padding-bottom: 0.125em;
+}
+
+.icon {
+    color: var(--accent);
+}
+
+.fa-sun-bright, .fa-moon-waxing-crescent {
+    color: var(--text);
+}
+
+#theme-controls {
+    display: flex;
+    align-content: stretch;
+    gap: 0;
+    align-items: center;
+    list-style: none; /* the buttons sit in <li>s */
+    padding-left: 0;
+}
+
+#theme-controls li {
+    display: flex;
+}
+
+/* display:flex above would override the hidden attribute, so hide it explicitly (JS off) */
+#theme-controls[hidden] {
+    display: none;
+}
+
+#theme-controls button {
+    position: relative; /* anchors the ::after underline */
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit; /* buttons default to a smaller font; inherit keeps the icons and line height the same as the old <a> links */
+    color: var(--text); /* sun/moon underline uses currentColor, so it follows the mode */
+    /* Sized like the original <a> icon links (24px wide, 22px tall, no gap) so the header
+       keeps its original height and spacing. No 44px minimum or padding here on purpose. */
+    width: 24px;
+    height: 22px;
+    margin: 0;
+    padding: 0;
+    border-radius: 26px;
+}
+
+#theme-controls button:hover {
+    background-color: var(--accent-transparent);
+}
+
+/* Sun and moon icons are --text colored, so they get the --text based hover instead */
+#theme-controls button:has(.fa-sun-bright):hover,
+#theme-controls button:has(.fa-moon-waxing-crescent):hover {
+    background-color: var(--text-transparent);
+}
+
+/* Underline for the current mode: a 1em x 2px bar with fully rounded ends, centered
+   under the icon. Absolutely positioned so the button doesn't resize when pressed.
+   It's a background (not a border) so the rounded ends render; inactive buttons get
+   no ::after at all, which keeps Windows forced-colors mode from drawing stray lines. */
+#theme-controls button[aria-pressed="true"]::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -5px; /* the 24px icon overflows the 22px button by 2px; this leaves a small gap under it */
+    width: 1em;
+    height: 2px;
+    background: currentColor;
+    border-radius: 999px;
+}
+
+/* The brush icon is drawn in --accent, so its underline matches: orange in light, black in mono, white in dark */
+#theme-controls button[data-set-mode="light"]::after {
+    background: var(--accent);
+}
+
+/* [claude-color-modes] Windows forced-colors mode strips author backgrounds, which would make
+   the bar above vanish. (It used to be a border, which survives forced colors; changing it to a
+   filled bar for the rounded ends introduced this gap.) forced-color-adjust: none lets this one
+   bar keep its color, and CanvasText is the system text color, so it stays visible in any
+   forced palette. Inactive buttons still get no ::after at all. */
+@media (forced-colors: active) {
+    #theme-controls button[aria-pressed="true"]::after {
+        forced-color-adjust: none;
+        background: CanvasText;
+    }
+}
+
+/* Visible keyboard focus */
+#theme-controls button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+h1 {
+    color: var(--accent);
+    font-family: "Bungee", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1rem;
+    margin: 1rem;
+}
+
+nav > ol, nav > ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li.crumb {
+    font-weight: 300;
+    font-size: 0.75rem;
+}
+
+li.crumb > i, li.crumb svg {
+    position: absolute;
+    transform: translate(-1.25rem, 3px);
+}
+
+section {
+    margin: 0 0;
+}
+
+.article-summary-card {
+    --card-bg: var(--secondary);
+    --card-frame: var(--primary);
+    --card-frame-width: 4px;
+    --title-fill: var(--primary);
+    --extra-layers: block;
+    --tag-shadow: none;
+    background-color: var(--card-bg);
+    /* max-width: 768px; */
+    padding: 1rem 1rem;
+    border-radius: 24px;
+}
+
+:root[data-mode="mono"] .article-summary-card,
+:root[data-mode="dark"] .article-summary-card {
+    --card-bg: var(--primary);
+    --card-frame: var(--secondary);
+    --title-fill: var(--text);
+    --extra-layers: none;
+    --tag-shadow: -2px 2px 0 var(--text);
+}
+
+:root[data-mode="mono"] .article-summary-card { --card-frame-width: 3px; }
+:root[data-mode="dark"] .article-summary-card { --card-frame-width: 2px; }
+
+/* No-JS fallbacks: the same overrides when the head script never set data-mode
+   (mirrors the media queries near the top of this file). The contrast block comes last so
+   high contrast wins over dark, as it does there. */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-mode]) .article-summary-card {
+        --card-bg: var(--primary);
+        --card-frame: var(--secondary);
+        --card-frame-width: 2px;
+        --title-fill: var(--text);
+        --extra-layers: none;
+        --tag-shadow: -2px 2px 0 var(--text);
+    }
+}
+
+@media (prefers-contrast: more), (forced-colors: active) {
+    :root:not([data-mode]) .article-summary-card {
+        --card-bg: var(--primary);
+        --card-frame: var(--secondary);
+        --card-frame-width: 3px;
+        --title-fill: var(--text);
+        --extra-layers: none;
+        --tag-shadow: -2px 2px 0 var(--text);
+    }
+}
+/* [/claude-color-modes] */
+
+.article-summary-card > header {
+    margin: 0 1.25rem;
+}
+
+h2 {
+    font-size: 2.25rem;
+}
+
+h2.hidden {
+    margin: 0.375rem;
+}
+
+/* The four layer fonts for the multilayer title. The layout only loads this stylesheet (not /styles.css, which
+   has the same declarations), so without these the names below are undefined and each layer silently falls
+   back to a different Google Bungee face with different glyph widths. Absolute URLs, since this renders at many depths.
+   font-display: block holds the title invisible for a moment instead of showing mismatched fallback layers. */
+@font-face {
+  font-family: "Bungee Layers Inline";
+  src: url("/assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.woff2") format("woff2"),
+       url("/assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.woff") format("woff");
+  font-display: block;
+}
+@font-face {
+  font-family: "Bungee Layers Regular";
+  src: url("/assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.woff2") format("woff2"),
+       url("/assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.woff") format("woff");
+  font-display: block;
+}
+@font-face {
+  font-family: "Bungee Layers Outline";
+  src: url("/assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.woff2") format("woff2"),
+       url("/assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.woff") format("woff");
+  font-display: block;
+}
+@font-face {
+  font-family: "Bungee Layers Shade";
+  src: url("/assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.woff2") format("woff2"),
+       url("/assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.woff") format("woff");
+  font-display: block;
+}
+
+.multilayer {
+  margin: 0rem;
+  display: grid;
+}
+
+.bungee-layers-inline {
+  z-index: 4;
+  grid-row: 1;
+  grid-column: 1;
+  font-family: 'Bungee Layers Inline','Bungee Hairline', cursive;
+  font-weight: 400; /* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight */  
+  color: var(--accent);
+  display: var(--extra-layers); /* hidden in mono and dark, see the article tokens above */
+}
+
+.bungee-layers-regular {
+  z-index: 3;
+  grid-row: 1;
+  grid-column: 1;
+  font-family: 'Bungee Layers Regular','Bungee', cursive;
+  font-weight: 400;  
+  color: var(--title-fill); /* snow in light; the text color in mono and dark, where it is the only layer shown */
+}
+
+.bungee-layers-outline {
+  z-index: 2;
+  grid-row: 1;
+  grid-column: 1;
+  font-family: 'Bungee Layers Outline', 'Bungee Outline', cursive;
+  font-weight: 400; 
+  color: var(--accent);
+  display: var(--extra-layers);
+}
+
+.bungee-layers-shade {
+  z-index: 1;
+  grid-row: 1;
+  grid-column: 1;
+  font-family: 'Bungee Layers Shade', 'Bungee Shade', cursive;
+  font-weight: 400; 
+  color: var(--text);
+  display: var(--extra-layers);
+}
+
+ul, ol {
+    padding-left: 1em;
+}
+
+.tag-list {
+    list-style-type: none;
+    padding: 0;      
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tag-list li {
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 2px solid var(--accent);
+    box-shadow: var(--tag-shadow); /* hard offset shadow in mono and dark only; none in light */
+    cursor: pointer;
+    font-family: "Bungee", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 0.75rem;
+}
+
+video {
+    width: 100%;
+    height: auto;
+    margin: 16px 0;
+    border-radius: 8px;
+}
+
+#article-date {
+    font-weight: 300;
+}
+
+#summary, #outcomes, #video-summary {
+    box-sizing: content-box;
+    border: var(--card-frame-width) solid var(--card-frame);
+    border-radius: 16px;
+    padding: 0px 16px;
+    margin: 20px 0;
+    position: relative;
+}
+
+#video-summary {
+    margin-bottom: 0;
+}
+
+#article-body {
+    padding: 0px 20px;
+}
+
+.typography-label {
+    font-family: "Readex Pro", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings:
+        "HEXP" 0;
+
+    font-size: 0.75rem;
+    text-transform: lowercase;
+    background-color: var(--card-bg); /* hides the frame line behind the label, so it must match the card */
+    padding: 0 0.5em;
+}
+
+.typography-label-container {
+    position: absolute;
+    left: 1em;
+    transform: translateY(-60%);
+}
+
+.article-summary-card {
+    #summary {
+        margin: 1.5em 0 0.25em 0;
+    }
+    .multilayer {
+        margin-bottom: 0.25em;
+    }
+}
+
+#stats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1em;
+    font-size: 1.25rem;
+
+    .bungee-layers-regular {
+        font-size: 3rem;
+        margin: 0;
+        color: var(--accent);
+        line-height: 1;
+    }
+
+    .stats-label {
+        font-size: 0.75rem;
+        margin-top: 0;
+    }
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.story-list {
+    max-width: 1024px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+}
+
+.story {
+    
+}
+
+.story .hero {
+    display: grid;
+    /* see https://css-tricks.com/complete-guide-css-grid-layout/ */
+    grid-template-columns: repeat(12,1fr);
+    grid-template-rows: repeat(11,90px);
+    gap: 0 1.5rem;
+    align-items: start;
+}
+
+.story .hero > hgroup {
+    grid-column: 1 / 8;
+    display: flex;
+    flex-direction: column;
+}
+
+.story .hero h1 {
+    font-family: "Readex Pro", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings:
+        "HEXP" 0;
+    color: var(--text);
+    font-size: 1rem;
+    margin: 0;
+}
+
+.story .hero .image-gallery a {
+    text-decoration: underline wavy var(--accent) 1.25px;
+}
+
+.tagline {
+    color: var(--accent);
+    font-family: "Bungee", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 6rem;
+    line-height: 1;
+    margin: 0.5rem 0 0 0;
+    overflow-wrap: break-word;
+}
+
+.story .hero > .article-summary-card {
+    grid-column: 8 / 13;
+    position: relative;
+}
+
+.article-summary-card > .cta {
+    grid-column: 1 / 13;
+    text-align: center;
+    font-size: 1rem;
+    font-family: "Readex Pro", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings:
+        "HEXP" 0;
+
+    text-decoration: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: 32px;
+    color: var(--primary);
+    background-color: var(--accent);
+
+    transform: rotate(2.5deg);
+    position: absolute;
+    right: 0;
+    bottom: -4em;
+}
+
+.story .hero > #video-summary {
+    grid-column: 10 / 12;
+    grid-row: 8;
+    width: 8rem;
+    /* width: 100%; */
+    height: auto;
+    border-radius: 24px;
+    border: 2px solid var(--secondary);
+    padding: 0 8px;
+    transform: rotate(10deg);
+}
+
+.story .hero #video-summary .typography-label-container {
+    background-color: var(--primary);
+}
+
+.story .hero #video-summary .typography-label {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 0.75rem;
+}
+
+.story .hero video {
+    margin: 8px 0 4px 0;
+    border-radius: 16px;
+}
+
+.story .hero figure {
+    margin: 0;
+}
+
+.image-gallery {
+    grid-column: 1 / 10;
+    grid-row: 6 / 13;
+    display: grid;
+    /* grid-template-columns: subgrid;
+    grid-template-rows: subgrid; */
+    grid-template-columns: repeat(18,1fr);
+    grid-template-rows: repeat(16,36px);
+}
+
+.image-gallery img {
+    border-radius: 8px 0 8px 0;
+    width: 100%;
+    height: auto;
+}
+
+.image-gallery .image-1 {
+    width: auto;
+    height: 100%;
+    z-index: 4;
+    grid-column: 1 / 8;
+    grid-row: 1 / 17;
+    position: relative;
+}
+
+.image-gallery .image-1 img {
+    /* I got help with cropping this from Claude */
+    aspect-ratio: 288 / 500;
+    object-fit: cover;
+}
+
+.image-gallery .image-2 {
+    width: 100%;
+    height: auto;
+    z-index: 2;
+    grid-column: 8 / 14;
+    grid-row: 3 / 8;
+    position: relative;
+}
+
+.image-gallery .image-2 img {
+    border-radius: 4px;
+}
+
+.image-gallery .image-2 figcaption {
+    writing-mode: vertical-rl;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-right: -1.75em;
+}
+
+.image-gallery .image-3 {
+    /* width: 30em; */
+    width: 100%;
+    height: auto;
+    z-index: 3;
+    grid-column: 10 / 18;
+    grid-row: 7 / 15;
+}
+
+.image-gallery figcaption {
+    font-size: 0.75em;
+    font-weight: 300;
+}
+
+.story .content {
+    max-width: 32em;
+    line-height: 1.5;
+}
