@@ -37,7 +37,7 @@ Each content type is a folder in `collections/`. A data file in each folder (`<f
 | About | `collections/about/` | `/about/<slug>/` | `_includes/layout-about.njk` | `/about/`, every section in full (`_includes/layout-about-list.njk`) |
 | Note (off for now) | `collections/notes/` | not published | `_includes/layout-about.njk` | not published |
 
-- **Shared shell:** every layout builds on `_includes/layout-base.njk` (head, the jasonjames.works heading, the color mode picker and its script).
+- **Shared shell:** every layout builds on `_includes/layout-base.njk`: the homepage's frame (site-version tabs and color mode picker on top, Version 1's side nav on the left) around a content column at most 1024px wide, the story template's width. `frame.css` styles the frame; on phones the side nav becomes one row of links.
 - **Cards:** list pages and tag pages show each item as `_includes/article-card.njk`, two columns on desktop and one on mobile.
 - **Tags:** every tag links to `/tags/<tag>/`, which lists the case studies, anecdotes, playground items and about sections that share it (`tags.njk`). A case study's tags jump to the `#anecdotes` section.
 - **Case study → anecdotes:** a case study lists every anecdote tagged with its `project:` value (for example `project: Openbank`).

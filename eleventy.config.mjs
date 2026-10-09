@@ -62,6 +62,7 @@ export default function (eleventyConfig) {
   // The template stylesheets stay in working-folder (the one copy you edit) and are published under
   // /css/. Only these two files are copied; nothing else in working-folder is published.
   // (changed: replaced the "template-*/**" copies, which pointed at folders that moved into working-folder)
+  eleventyConfig.addPassthroughCopy("frame.css"); // header, side nav and content column on every Eleventy page
   eleventyConfig.addPassthroughCopy({
     "working-folder/template-article/styles.css": "css/article.css",
     "working-folder/template-story/styles.css": "css/story.css",

@@ -75,7 +75,7 @@ stylesheet: /css/story.css
                 {%- set related = collections.anecdote | withTag(project) | newestFirst if project else [] %}
                 {%- if related.length %}
                 <section class="related-anecdotes" id="anecdotes">
-                    <h2 class="list-label">anecdotes</h2>
+                    <h2 class="collection-subtitle">Anecdotes</h2>
                     <div class="card-grid">
                         {%- for item in related %}
                         {%- set card = item | toCard %}

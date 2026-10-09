@@ -1,0 +1,227 @@
+/* [claude-site-structure] The page frame for every Eleventy page, built with assistance from Claude (Anthropic),
+   October 8, 2026. Styles the markup in _includes/layout-base.njk:
+     #site-header     - the site-version tabs (#flavor-controls) and the theme picker, with the orange line under them
+     .site-frame      - the side nav and the content column, side by side
+     #site-nav        - Version 1's side nav: the jason / james / .works title and the section links
+     .site-content    - the page itself, at most 1024px wide (the story template's width)
+   The version tabs and nav are copied from the homepage's rules in styles.css (#flavor-controls,
+   #main-navigation, nav li, .nav-sub-heading). Every selector here starts with an id or one of these
+   classes, so it can't reach into the pages, and this file loads after each page's own stylesheet.
+   The theme picker's own styles (#theme-controls) are already in every page stylesheet. */
+
+/* Header and frame share one width: the side nav plus a 1024px content column, centered.
+   Wider screens leave space on both sides (for future full-bleed pictures and annotations). */
+#site-header, .site-frame {
+    box-sizing: border-box;
+    max-width: calc(1024px + 10rem + 1.5rem + 2rem); /* content + side nav + gap + side padding */
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+#site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding-top: 8px;
+    border-bottom: 2px solid var(--accent);
+}
+
+/* Site-version tabs, as on the homepage */
+#flavor-controls {
+    display: flex;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    align-items: flex-start;
+    flex-flow: row wrap;
+    flex-wrap: wrap-reverse;
+}
+
+#flavor-controls > li {
+    margin: -4px -16px 0 0;
+    font-family: "Readex Pro", sans-serif;
+    font-weight: 300;
+    border-radius: 24px 24px 0 0;
+    padding: 4px 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#flavor-controls > li:hover {
+    transform: scale(1.05) translate(-2px, 2px);
+    z-index: 5;
+}
+
+#flavor-controls a {
+    text-decoration: none;
+}
+
+#flavor-controls .hand-crafted {
+    background-color: var(--accent);
+    border: 2px solid var(--accent);
+    z-index: 4;
+}
+
+#flavor-controls .hand-crafted > a {
+    color: var(--primary);
+}
+
+#flavor-controls .locally-generative {
+    border: 2px solid var(--ford-mustang-boss-302);
+    z-index: 3;
+}
+
+#flavor-controls .locally-generative > a {
+    color: var(--ford-mustang-boss-302);
+}
+
+#flavor-controls .generative {
+    border: 2px solid var(--nissan-fairlady-z);
+    z-index: 2;
+}
+
+#flavor-controls .generative > a {
+    color: var(--nissan-fairlady-z);
+}
+
+#flavor-controls .sentient {
+    border: 2px solid var(--kool-kombi);
+    z-index: 1;
+}
+
+#flavor-controls .sentient > a {
+    color: var(--kool-kombi);
+}
+
+/* Side nav beside the content */
+.site-frame {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+#site-nav {
+    flex: 0 0 10rem;
+    margin-top: 1.5rem;
+    font-family: "Readex Pro", sans-serif;
+}
+
+#site-nav .site-title-link {
+    text-decoration: none;
+}
+
+/* Same Bungee title as the homepage, sized so each word stays on its own line */
+#site-nav .site-title {
+    color: var(--accent);
+    font-family: "Bungee", sans-serif;
+    font-weight: 400;
+    font-size: 2rem;
+    line-height: 1;
+    margin: 0 0 1.5rem 0;
+}
+
+#site-nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    align-items: start;
+}
+
+#site-nav li {
+    font-weight: 300;
+    border-radius: 26px;
+    padding: 12px 16px;
+    position: relative;
+    margin-left: -16px;
+}
+
+#site-nav li:hover {
+    background-color: var(--accent-transparent);
+}
+
+#site-nav a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+/* The section the current page belongs to */
+#site-nav a[aria-current="page"] {
+    font-weight: 400;
+    text-decoration: underline 2px var(--accent);
+    text-underline-offset: 4px;
+}
+
+#site-nav .nav-sub-heading {
+    position: absolute;
+    left: 0;
+    transform: translate(5em, 2.25em);
+    color: var(--accent);
+    font-family: "Bungee", sans-serif;
+    font-weight: 400;
+    font-size: 0.625em;
+    white-space: nowrap;
+}
+
+.site-content {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 1024px;
+}
+
+/* Phones and small tablets: no side column. The title goes on one line, and the section links
+   become one wrapping row above the page. */
+@media (width <= 64em) {
+    /* The pages bring their own side padding, so the frame drops its own (two layers squeezed the cards) */
+    #site-header, .site-frame {
+        padding: 0;
+    }
+
+    .site-frame {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    #site-nav {
+        flex: none;
+        margin-top: 1rem;
+    }
+
+    #site-nav .site-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+
+    #site-nav .site-title br {
+        display: none;
+    }
+
+    #site-nav ul {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0;
+        margin-left: -12px; /* lines the link text up with the title */
+    }
+
+    #site-nav li {
+        padding: 6px 12px;
+        margin-left: 0;
+    }
+
+    #site-nav .nav-sub-heading,
+    #site-nav .fa-angle-right {
+        display: none;
+    }
+
+    .site-content {
+        max-width: none;
+    }
+}
+/* [/claude-site-structure] */

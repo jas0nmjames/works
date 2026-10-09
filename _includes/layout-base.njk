@@ -1,9 +1,13 @@
 {#- [claude-site-structure] Shared page shell, built with assistance from Claude (Anthropic), October 8, 2026.
-    Every layout (article, story, about, list, tags) sets `layout: layout-base.njk` and a `stylesheet`
-    in its own front matter, then this file wraps its markup with:
+    Every layout (article, story, about, list, tags, playground) sets `layout: layout-base.njk` and a
+    `stylesheet` in its own front matter, then this file wraps its markup in the homepage's frame:
       - the color mode head script (above the stylesheet, so the right mode paints first)
-      - the jasonjames.works heading and the brush / sun / moon theme picker
-      - the theme picker's button script at the end of <body>
+      - the header: the site-version tabs (#flavor-controls) and the brush / sun / moon theme picker
+      - the side nav: the jason / james / .works title and the section links (no bio; that stays on the homepage)
+      - the page's own markup in a content column at most 1024px wide (the story template's width)
+      - the theme picker's button script at the end of the page
+    The frame is styled by /frame.css, loaded after the page's stylesheet. On phones the side nav becomes
+    one row of links under a one-line title.
     The homepage (index.html) keeps its own copies of these, since it isn't a Nunjucks page. -#}
 <!DOCTYPE html>
 <html
@@ -19,6 +23,8 @@
     <meta name="theme-color" content="#E05B08" />
     {# Absolute path: pages render at many URL depths. `stylesheet` comes from the layout's front matter. #}
     <link rel="stylesheet" href="{{ stylesheet }}">
+    {# The header, side nav and content column. After the page stylesheet, so its rules win where they overlap. #}
+    <link rel="stylesheet" href="/frame.css">
     <link rel="icon" type="image/x-icon" href="/assets/favicon_jason-james.png">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,14 +41,51 @@
 
 </head>
 <body>
-    <header>
-        <a href="/" title="go back to the homepage">
-            <h1>jasonjames.works</h1>
-        </a>
+    <header id="site-header">
+        {# Site versions, copied from the homepage's header. Only Version 1 (hand-crafted) exists so far. #}
+        <menu id="flavor-controls" aria-label="Site versions">
+            <li class="hand-crafted"><a href="/">hand-crafted&thinsp;<sup><small>1</small></sup></a></li>
+            <li class="locally-generative"><a href="#">locally-generative</a></li>
+            <li class="generative"><a href="#">generative</a></li>
+            <li class="sentient"><a href="#">sentient</a></li>
+        </menu>
         {# Full color-mode switcher (light / black & white / dark); same markup and behavior as the homepage. #}
         {% include "theme-controls.njk" %}
     </header>
-    {{ content | safe }}
+    <div class="site-frame">
+        {#- Version 1's side nav, from the homepage's #main-navigation (without the bio).
+            aria-current marks the section this page belongs to. #}
+        {%- set section = page.url.split("/")[1] if page.url else "" %}
+        <nav id="site-nav" aria-label="Main">
+            <a href="/" title="go back to the homepage" class="site-title-link">
+                <h1 class="site-title">jason<br>james<br>.works</h1>
+            </a>
+            <ul>
+                <li>
+                    <a href="/case-studies/"{% if section == "case-studies" %} aria-current="page"{% endif %}>case studies&ensp;<i class="fa-regular fa-angle-right"></i></a>
+                    <span class="nav-sub-heading">big picture impact</span>
+                </li>
+                <li>
+                    <a href="/anecdotes/"{% if section == "anecdotes" %} aria-current="page"{% endif %}>anecdotes&ensp;<i class="fa-regular fa-angle-right"></i></a>
+                    <span class="nav-sub-heading">skills and deliverables</span>
+                </li>
+                <li>
+                    <a href="/playground/"{% if section == "playground" %} aria-current="page"{% endif %}>playground&ensp;<i class="fa-regular fa-angle-right"></i></a>
+                    <span class="nav-sub-heading">personal projects</span>
+                </li>
+                <li>
+                    <a href="/about/"{% if section == "about" %} aria-current="page"{% endif %}>about me&ensp;<i class="fa-regular fa-angle-right"></i></a>
+                    <span class="nav-sub-heading"><abbr title="who is">WHOIS</abbr> jason</span>
+                </li>
+                <li>
+                    <a href="https://jasonjames.design/" target="_blank" rel="noopener noreferrer">résumé&ensp;</a><i class="icon fa-solid fa-arrow-up-right-from-square"></i>
+                </li>
+            </ul>
+        </nav>
+        <div class="site-content">
+            {{ content | safe }}
+        </div>
+    </div>
     {# Button script for the switcher above; needs window.themeModes from the head script. #}
     {% include "theme-script.njk" %}
 </body>

@@ -831,13 +831,6 @@ main, section, article {
    from Claude (Anthropic), October 8, 2026. Follows the about mock: sections in two staggered columns.
    Each section spans two rows and starts one row below the one before it (--row is set in the layout),
    so the right column's sections start part way down the left column's, and vice versa. */
-/* The jasonjames.works heading from _includes/layout-base.njk, sized like it is on the article and
-   story pages. (The homepage's own header has no h1, so this only reaches about pages.) */
-body > header h1 {
-    font-size: 1rem;
-    margin: 1rem;
-}
-
 #about.about-list {
     flex: 1 1 auto;    /* main is a flex row on this stylesheet; let the list fill it */
     min-width: 0;
@@ -869,26 +862,15 @@ body > header h1 {
     font-size: 3.5rem;
 }
 
-/* Understated page heading, in the style of the "tl;dr" and "video summary" labels:
-   small lowercase text sitting on a line that runs to the right edge.
-   (#about h2.list-label beats the big pink #about h2 rule above.) */
-.list-label, #about h2.list-label {
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-    margin: 0 0 1.5rem 0;
-    font-family: "Readex Pro", sans-serif;
-    font-weight: 300;
-    font-size: 0.75rem;
-    line-height: normal;
-    text-transform: lowercase;
+/* Page heading: black Bungee, like the list pages.
+   (#about h2.collection-title beats the big pink #about h2 rule above.) */
+#about h2.collection-title {
     color: var(--text);
-}
-
-.list-label::after {
-    content: "";
-    flex: 1;
-    border-top: 2px solid var(--secondary);
+    font-family: "Bungee", sans-serif;
+    font-weight: 400;
+    font-size: 3rem;
+    line-height: 1;
+    margin: 0 0 1.5rem 0;
 }
 
 @media (width <= 48em) {

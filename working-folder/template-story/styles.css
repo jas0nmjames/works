@@ -750,7 +750,7 @@ video {
 
 /* [claude-site-structure] Anecdote cards listed under a case study (project: in its front matter),
    added with assistance from Claude (Anthropic), October 8, 2026.
-   Same card grid and label as the list pages (see the end of template-article/styles.css). */
+   Same card grid and black Bungee heading as the list pages (see the end of template-article/styles.css). */
 .related-anecdotes {
     display: flex;
     flex-direction: column;
@@ -766,22 +766,13 @@ video {
     gap: 1.5rem;
 }
 
-.list-label {
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-    margin: 0;
-    font-family: "Readex Pro", sans-serif;
-    font-weight: 300;
-    font-size: 0.75rem;
-    text-transform: lowercase;
+.collection-subtitle {
     color: var(--text);
-}
-
-.list-label::after {
-    content: "";
-    flex: 1;
-    border-top: 2px solid var(--secondary);
+    font-family: "Bungee", sans-serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 1;
+    margin: 0;
 }
 
 @media (width <= 48em) {

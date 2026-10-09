@@ -9,7 +9,7 @@ stylesheet: /styles.css
 ---
     <main>
         <section id="about" class="about-list">
-            <h2 class="list-label">{{ title }}</h2>
+            <h2 class="collection-title">{{ title }}</h2>
             {{ content | safe }}
             <div class="about-grid">
             {%- for item in collections.about | byOrder %}

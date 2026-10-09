@@ -16,13 +16,13 @@ stylesheet: /css/article.css
 eleventyExcludeFromCollections: true
 ---
     <main class="card-list">
-        {# Understated heading: the tag itself, shown as a tag chip. #}
-        <h2 class="list-label">tagged <span class="tag-chip">{{ tag.name }}</span></h2>
+        <p class="collection-kicker">tagged</p>
+        <h2 class="collection-title">{{ tag.name }}</h2>
         {%- for type in contentTypes %}
         {%- set matches = collections[type.tag] | withTag(tag.name) | newestFirst %}
         {%- if matches.length %}
         <section id="{{ type.id }}" class="card-list-section">
-            <h3 class="list-label">{{ type.heading }}</h3>
+            <h3 class="collection-subtitle">{{ type.heading }}</h3>
             <div class="card-grid">
                 {%- for item in matches %}
                 {%- set card = item | toCard %}
