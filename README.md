@@ -1,17 +1,14 @@
-# works
+# jasonjames.works
 
-My portfolio hosted at https://jasonjames.works
-
-Confidential content lives in a separate, private repo. On the site, you'll need a password or other credential to access any confidential content.
+My portfolio at https://jasonjames.works/
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/543e3dda-da04-4872-8df8-fe9438b0767e/deploy-status)](https://app.netlify.com/sites/jasonjamesworks/deploys)
 
-## tools
-
-- Code repository on [GitHub](https://github.com/jas0nmjames/works).
-- Domain registered with [GoDaddy](https://www.godaddy.com/).
-- Deployed with [Netlify](https://www.netlify.com).
-- [Privacy-friendly](https://plausible.io/privacy-focused-web-analytics) analytics by [Plausible](https://plausible.io/).
+- Repository on [GitHub](https://github.com/jas0nmjames/works).
+- Static site generated with [Eleventy](https://www.11ty.dev/)
+- Deployed with [Netlify](https://www.netlify.com)
+- [Privacy-friendly](https://plausible.io/privacy-focused-web-analytics) analytics *will be* by [Plausible](https://plausible.io/)
+- Domain managed by [GoDaddy](https://www.godaddy.com/)
 
 ## developing
 
@@ -79,20 +76,25 @@ How it was calculated (so it can be updated):
 
 Caveats: Anthropic has not published per-prompt figures for Claude, so Google's numbers (from May 2025 data) are only a proxy. Model training, hardware manufacturing, and local work such as Eleventy builds and browser previews are not counted. Source: [Google, "Measuring the environmental impact of AI inference"](https://cloud.google.com/blog/products/infrastructure/measuring-the-environmental-impact-of-ai-inference).
 
-## thanks
+## Project Notes
+
+### Attributions
 
 - `h1` is [Bungee](https://djr.com/bungee) by David Jonathan Ross ([Google Fonts](https://fonts.google.com/specimen/Bungee))
-- `p` is [Lexend](https://www.lexend.com/), a "variable font empirically shown to significantly improve reading-proficiency." ([Google Fonts](https://fonts.google.com/specimen/Lexend)).
+- `p` is [Lexend](https://www.lexend.com/), a "variable font empirically shown to significantly improve reading-proficiency." ([Google Fonts](https://fonts.google.com/specimen/Lexend))
 
+### To-Do List
 
----
-# built-with-eleventy notes
+- [x] Original design by me (in Sketch) to refresh UI toolkit beyond day-to-day Figma use
+- [x] Original code written in vanilla HTML & CSS by me to refresh those skills.
+- [ ] (Optional) Store and embed non-public content from https://github.com/jas0nmjames/works-private.  Originally, "Confidential content [was going to live] in a separate, private repo. On the site, you'd need a password or other credential to access any confidential content." But I decided against having the bulk of my case studies behind a password.  Content in the public repo will be sanitized.
+- [ ] Privacy-friendly analytics by Plausible or similar.
 
-A personal portfolio and résumé site built with eleventy.
+<!-- 
 
-## outline
+### Project outline
 
-### discovery
+#### discovery
 
 1. Me
 	2. What is my purpose? To bring healing by facilitating belonging 
@@ -114,7 +116,7 @@ A personal portfolio and résumé site built with eleventy.
 6. What are companies looking for?
 7. What are recruiters looking for?
 
-### projects
+#### projects
 
 - tools
 	- figma
@@ -171,7 +173,7 @@ A personal portfolio and résumé site built with eleventy.
 	- nps, etc.
 	- prevention of development iteration (before you even get to “build and test” or “fail fast”)
 
-## Features
+#### Features
 
 - Highlight visual design
 - Scannability
@@ -181,3 +183,4 @@ A personal portfolio and résumé site built with eleventy.
 		- Custom database 
 		- GPT-4 Fall back?
 
+-->

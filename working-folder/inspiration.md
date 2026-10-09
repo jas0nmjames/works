@@ -1,5 +1,13 @@
 # Inspiration
 
+## Products
+
+### Yoto
+
+![]()
+
+Yoto cofounder [Ben Drury on the Design Better Podcast](https://designbetterpodcast.com/p/ben-drury)
+
 ## Talks & Podcasts
 
 - ~~Design as Repair - first encountered at the conference~~

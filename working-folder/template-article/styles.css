@@ -606,3 +606,9 @@ video {
         margin-top: 0;
     }
 }
+
+@media (width <= 48em) {
+    #stats {
+        row-gap: 0;
+    }
+}
