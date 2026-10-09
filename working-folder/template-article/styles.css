@@ -541,7 +541,7 @@ video {
     font-weight: 300;
 }
 
-#summary, #outcomes, #video-summary {
+#summary, .summary, #outcomes, #video-summary { /* [claude-site-structure] added .summary: list pages repeat cards, and an id can only be used once per page */
     box-sizing: content-box;
     border: var(--card-frame-width) solid var(--card-frame);
     border-radius: 16px;
@@ -579,7 +579,7 @@ video {
 }
 
 .article-summary-card {
-    #summary {
+    #summary, .summary {
         margin: 1.5em 0 0.25em 0;
     }
     .multilayer {
@@ -587,7 +587,7 @@ video {
     }
 }
 
-#stats {
+#stats, .stats {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -608,7 +608,185 @@ video {
 }
 
 @media (width <= 48em) {
-    #stats {
+    #stats, .stats {
         row-gap: 0;
     }
 }
+/* [claude-site-structure] Card lists (list pages and tag pages) and the playground page,
+   added with assistance from Claude (Anthropic), October 8, 2026. */
+
+/* Same width and centering as the story page (.story-list) */
+.card-list, .playground {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Two columns of cards, each about as wide as the summary card on a story page.
+   Left aligned, so a list with one card still only takes one column. */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 25rem));
+    justify-content: start;
+    align-items: start;
+    gap: 1.5rem;
+}
+
+.card-list-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Understated list headings, in the style of the "tl;dr" and "video summary" labels:
+   small lowercase text sitting on a frame line that runs to the right edge */
+.list-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin: 0;
+    font-family: "Readex Pro", sans-serif;
+    font-weight: 300;
+    font-size: 0.75rem;
+    text-transform: lowercase;
+    color: var(--text);
+}
+
+.list-label::after {
+    content: "";
+    flex: 1;
+    border-top: 2px solid var(--secondary);
+}
+
+/* The tag on a tag page's heading, drawn like the tags on the cards */
+.tag-chip {
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 2px solid var(--accent);
+    font-family: "Bungee", sans-serif;
+    font-size: 0.75rem;
+    text-transform: none;
+}
+
+/* Playground (_includes/layout-playground.njk) */
+.playground-header h2 {
+    color: var(--accent);
+    font-family: "Bungee", sans-serif;
+    font-weight: 400;
+    font-size: 4rem;
+    line-height: 1;
+    margin: 0;
+}
+
+.playground-header p {
+    margin: 0.5rem 0 0 0;
+}
+
+.playground-item {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3rem;
+    align-items: start;
+    margin-top: 4rem;
+}
+
+/* The image goes on the right: move the image column after the other one */
+.playground-item.media-right > :first-child {
+    order: 2;
+}
+
+/* Caption above the image, date running up the left side of it */
+.playground-figure {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+        ". caption"
+        "date image";
+    column-gap: 0.5rem;
+    row-gap: 0.25rem;
+}
+
+.playground-figure figcaption {
+    grid-area: caption;
+    font-size: 0.75rem;
+    font-weight: 300;
+}
+
+.playground-date {
+    grid-area: date;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 0.75rem;
+    font-weight: 300;
+}
+
+.playground-figure > img, .playground-figure > picture, .playground-figure > .image-placeholder {
+    grid-area: image;
+}
+
+.playground img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px var(--text-transparent);
+}
+
+/* Stands in for a screenshot until the item's image.src is filled in */
+.image-placeholder {
+    aspect-ratio: 16 / 10;
+    border-radius: 8px;
+    background-color: var(--text-transparent);
+}
+
+.playground-title {
+    color: var(--accent);
+    font-family: "Bungee", sans-serif;
+    font-weight: 400;
+    font-size: 2rem;
+    line-height: 1.1;
+    margin: 0 0 1rem 0;
+}
+
+.playground-media .tag-list {
+    margin-bottom: 1rem;
+}
+
+.playground-text {
+    align-self: center;
+}
+
+/* The item's body inside a playground card, lined up with the card's header */
+.card-body {
+    margin: 1rem 1.25rem 0 1.25rem;
+    font-size: 0.875rem;
+}
+
+.playground-link {
+    margin: 0.75rem 1.25rem 0 1.25rem;
+}
+
+@media (width <= 48em) {
+    .card-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .playground-header h2 {
+        font-size: 2.5rem;
+    }
+
+    /* One column, image first */
+    .playground-item {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.5rem;
+        margin-top: 2.5rem;
+    }
+
+    .playground-item.media-right > :first-child {
+        order: 0;
+    }
+}
+/* [/claude-site-structure] */

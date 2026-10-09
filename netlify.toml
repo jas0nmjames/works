@@ -5,3 +5,15 @@
 
 [build.environment]
   NODE_VERSION = "22"         # Eleventy 3 needs Node 18+
+
+# [claude-site-structure] Items moved from /collections/<type>/<slug>/ to /<type>/<slug>/ (October 8, 2026).
+# These keep old links working. 301 = permanent, so search engines update too.
+[[redirects]]
+  from = "/collections/anecdotes/*"
+  to = "/anecdotes/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/collections/case-studies/*"
+  to = "/case-studies/:splat"
+  status = 301

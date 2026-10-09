@@ -1,0 +1,98 @@
+---
+# [claude-site-structure] changed: renamed from layout-anecdote.njk, so other content types can use it later.
+# The <head>, site header and theme picker moved to layout-base.njk; this file is only the article itself.
+# Markup mirrors working-folder/template-article/index.html. If you change one, change the other.
+layout: layout-base.njk
+stylesheet: /css/article.css
+# Breadcrumb back to the list page. A content type other than anecdotes can override these in its folder data file.
+crumb:
+  label: anecdotes
+  href: /anecdotes/
+---
+    <main>
+        <article>
+            <header>
+                <nav class="crumbs">
+                    <ol>
+                        <li class="crumb">
+                            <i class="fa-solid fa-up-left icon"></i>
+                            <a href="{{ crumb.href }}">{{ crumb.label }}</a>
+                        </li>
+                    </ol>
+                </nav>
+                {# Accessible title for screen readers; the multilayer h2 below is aria-hidden. #}
+                <h2 class="hidden" style="content-visibility: hidden;">{{ title }}</h2>
+                <h2 class="multilayer" aria-hidden="true">
+                    <span class="bungee-layers-inline">{{ title }}
+                    </span>
+                    <span class="bungee-layers-regular">{{ title }}
+                    </span>
+                    <span class="bungee-layers-outline">{{ title }}
+                    </span>
+                    <span class="bungee-layers-shade">{{ title }}
+                    </span>
+                </h2>
+                {# Use page.date (not front-matter `date`): eleventy.config.mjs parses it as Eastern Time, and the filters format it in Eastern. #}
+                <p id="article-date"><time datetime="{{ page.date | isoDate }}">{{ page.date | displayDate }}</time>{#- TV icon jumps to the video, so only show it when this article has one. #}
+                {%- if video %} <a href="#video-summary" aria-label="Jump to video summary"><i class="fa-regular fa-tv-retro icon"></i></a>{% endif %}</p>
+                {# Tags come from front matter (a YAML list). topicTags drops the collection marker ("anecdote").
+                   Each tag opens its tag page, which lists the anecdotes and case studies that share it. #}
+                <ul class="tag-list">
+                    {%- for tag in tags | topicTags %}
+                    <li><a href="/tags/{{ tag | slugify }}/">{{ tag }}</a></li>
+                    {%- endfor %}
+                </ul>
+            </header>
+            {#- Summary and outcomes are optional: an article without them skips the whole boxed section instead of showing an empty frame. #}
+            {%- if summary %}
+            <section id="summary">
+                <div class="typography-label-container">
+                    <h2 class="typography-label">Summary</h2>
+                </div>
+                {# `summary` comes from front matter; `safe` allows a link or quote in it. #}
+                <p>{{ summary | safe }}</p>
+            </section>
+            {%- endif %}
+            <section id="article-body">
+                {# `content` is the rendered markdown body of the article; `safe` stops it being HTML-escaped. #}
+                {{ content | safe }}
+            </section>
+            {%- if outcomes %}
+            <section id="outcomes">
+                <div class="typography-label-container">
+                    <h2 class="typography-label">Outcomes</h2>
+                </div>
+                {# `outcomes` is a YAML list in front matter; one <li> per entry. #}
+                <ul>
+                    {%- for outcome in outcomes %}
+                    <li>{{ outcome }}</li>
+                    {%- endfor %}
+                </ul>
+            </section>
+            {%- endif %}
+            {#- Optional: the section only renders when the article sets a `video:` block in front matter
+                (src, plus optional captions / subtitles_es). Files live in assets/anecdotes/<slug>/. #}
+            {%- if video %}
+            <section id="video-summary">
+                <div class="typography-label-container">
+                    <h2 class="typography-label">Video Summary</h2>
+                </div>
+                <video
+                    controls
+                    preload="metadata"
+                    autoplay
+                    loop
+                    muted>
+                    <source src="{{ video.src }}">
+                    {%- if video.captions %}
+                    <track label="English" kind="captions" srclang="en" src="{{ video.captions }}" default />
+                    {%- endif %}
+                    {%- if video.subtitles_es %}
+                    <track label="Español" kind="subtitles" srclang="es" src="{{ video.subtitles_es }}" />
+                    {%- endif %}
+                    Your browser cannot play this video.
+                </video>
+            </section>
+            {%- endif %}
+        </article>
+    </main>

@@ -1,11 +1,9 @@
 ---
-layout: layout-anecdote.njk
 title: Securing UX Training for the Team
 date: 2023-10-01
 date published: Created
 date updated: Last Modified
 tags:
-  - anecdote
   - Santander Bank
   - leading without authority
   - UX Operations

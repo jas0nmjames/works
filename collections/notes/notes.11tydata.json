@@ -1,0 +1,6 @@
+{
+  "layout": "layout-about.njk",
+  "tags": ["note"],
+  "permalink": false,
+  "eleventyExcludeFromCollections": true
+}

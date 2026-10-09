@@ -1,0 +1,17 @@
+---
+# [claude-site-structure] About layout (one about section on its own page), built with assistance from Claude (Anthropic), October 8, 2026.
+# Markup mirrors working-folder/template-about/index.html; the section itself is _includes/about-section.njk.
+# Front matter it reads: title, heading, subheading, date, tags (all but title optional). Images and the
+# image grid go in the markdown body as HTML, as in the template.
+layout: layout-base.njk
+stylesheet: /styles.css
+---
+    <main>
+        <section id="about">
+            {%- set section = {
+                title: title, heading: heading, subheading: subheading, tags: tags, content: content,
+                date: page.date if date else null
+            } %}
+            {% include "about-section.njk" %}
+        </section>
+    </main>

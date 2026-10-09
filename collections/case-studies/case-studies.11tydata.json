@@ -1,0 +1,5 @@
+{
+  "layout": "layout-story.njk",
+  "tags": ["case-study"],
+  "permalink": "/case-studies/{{ page.fileSlug }}/"
+}

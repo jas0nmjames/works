@@ -1,0 +1,23 @@
+---
+# [claude-site-structure] Search records for Algolia, built with assistance from Claude (Anthropic), October 8, 2026.
+# Writes /search-index.json: one record per case study, anecdote, playground and about item.
+# Algolia can import this file as-is (objectID is the page URL, so re-imports update records in place).
+# Nothing reads it yet; it's here so search can be added later without changing the content structure.
+permalink: /search-index.json
+eleventyExcludeFromCollections: true
+---
+{%- set records = [] %}
+{%- for type in typeTags %}
+{%- for item in collections[type] %}
+{%- set records = (records.push({
+    objectID: item | itemUrl,
+    url: item | itemUrl,
+    type: type,
+    title: item.data.title,
+    tags: item.data.tags | topicTags,
+    summary: item.data.summary | striptags if item.data.summary else "",
+    date: item.date | isoDate
+}), records) %}
+{%- endfor %}
+{%- endfor %}
+{{ records | dump(2) | safe }}

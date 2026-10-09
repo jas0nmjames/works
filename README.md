@@ -20,20 +20,45 @@ npm start      # eleventy --serve, live reload at http://localhost:8080
 npm run build  # one-off build into _site/
 ```
 
-- `eleventy.config.js` copies static files (CSS, `assets/`, media) into `_site/` and sets up dates (below). Without it Eleventy only outputs templates, and CSS, images and video 404.
+- `eleventy.config.mjs` copies static files (CSS, `assets/`, media) into `_site/` and sets up dates (below). Without it Eleventy only outputs templates, and CSS, images and video 404.
 - `_site/` is build output.
+
+### content structure
+
+<!-- [claude-site-structure] Written with assistance from Claude (Anthropic), October 8, 2026. -->
+
+Each content type is a folder in `collections/`. A data file in each folder (`<folder>.11tydata.json`) sets the layout, the URL and the collection tag, so a new item is just a markdown file in the right folder.
+
+| Type | Folder | Item URL | Layout | List page |
+|---|---|---|---|---|
+| Case study ("story") | `collections/case-studies/` | `/case-studies/<slug>/` | `_includes/layout-story.njk` | `/case-studies/` (cards) |
+| Anecdote | `collections/anecdotes/` | `/anecdotes/<slug>/` | `_includes/layout-article.njk` | `/anecdotes/` (cards) |
+| Playground | `collections/playgrounds/` | none: `/playground/#<slug>` | — | `/playground/` (`_includes/layout-playground.njk`) |
+| About | `collections/about/` | `/about/<slug>/` | `_includes/layout-about.njk` | `/about/`, every section in full (`_includes/layout-about-list.njk`) |
+| Note (off for now) | `collections/notes/` | not published | `_includes/layout-about.njk` | not published |
+
+- **Shared shell:** every layout builds on `_includes/layout-base.njk` (head, the jasonjames.works heading, the color mode picker and its script).
+- **Cards:** list pages and tag pages show each item as `_includes/article-card.njk`, two columns on desktop and one on mobile.
+- **Tags:** every tag links to `/tags/<tag>/`, which lists the case studies, anecdotes, playground items and about sections that share it (`tags.njk`). A case study's tags jump to the `#anecdotes` section.
+- **Case study → anecdotes:** a case study lists every anecdote tagged with its `project:` value (for example `project: Openbank`).
+- **Stylesheets:** the template stylesheets in `working-folder/template-article/` and `working-folder/template-story/` are published as `/css/article.css` and `/css/story.css`. Edit them there. About pages use the root `styles.css`; the playground page uses `/css/article.css`. Nothing else in `working-folder/` is published.
+- **Order:** playground items and about sections are placed by `order:` in their front matter (1 is first). On `/about/`, odd numbers sit in the right column and even numbers in the left, as in the mock.
+- **Playground items:** `style: card` shows an image beside the article card (with the markdown body inside the card); `style: prototype` shows a heading and screenshot beside the body text. `media: left|right` picks the image's side. Leave `image.src` empty and a gray box holds the screenshot's place.
+- **Drafts:** add `draft: true` to any item. It shows under `npm start` but is left out of `npm run build`, so it never reaches the live site.
+- **Notes** are switched off: `collections/notes/notes.11tydata.json` and `notes.md` say how to turn them back on.
+- **Search:** `/search-index.json` (from `search-index.njk`) has one record per item, ready to import into Algolia.
+- **Old URLs:** `/collections/<type>/<slug>/` redirects to the new URLs (`netlify.toml`).
 
 ### writing an anecdote
 
-Add a markdown file to `collections/anecdotes/`. The layout is `_includes/layout-anecdote.njk`.
+Add a markdown file to `collections/anecdotes/`. The layout and the "anecdote" tag come from `collections/anecdotes/anecdotes.11tydata.json`.
 
 ```yaml
 ---
-layout: layout-anecdote.njk
 title: Securing UX Training for the Team
 date: 2023-10-01          # Eastern Time, see "dates" below
-tags:                     # must be a list; "anecdote" is the collection marker and is hidden
-  - anecdote
+tags:                     # must be a list
+  - Openbank              # matches a case study's `project:`, so this anecdote is listed under it
   - Santander Bank
 summary: One-sentence summary (optional; the summary box is hidden without it)
 outcomes:                 # optional list; the outcomes box is hidden without it
@@ -48,14 +73,13 @@ The markdown body becomes the article text.
 
 - **Video files** live in `assets/anecdotes/<slug>/`. `.mp4` (H.264) plays in the most browsers; the current `summary.mov` should be converted.
 - **Dates** are written and displayed as Eastern Time. Use `2026-10-01` or `2026-10-01T14:30:00` (no `-04:00` offset). Templates must print `page.date` (with the `displayDate` / `isoDate` filters), not the raw front-matter `date`, because only `page.date` gets the Eastern handling.
-- **Tag links** are placeholders (`href=""`) until tag pages exist.
 
 ### color modes
 
 The brush / sun / moon buttons switch between light, black & white (mono), and dark. The mode is stored on `<html data-mode="...">`, saved in `localStorage` (`theme-mode`), and defaults to the system setting (high contrast means mono). Search the repo for `claude-color-modes` to find every piece.
 
 - Homepage: inline in `index.html` plus `styles.css`.
-- Anecdote pages: partials in `_includes/` (`theme-head.njk` goes in `<head>` above the stylesheet, `theme-controls.njk` is the buttons, `theme-script.njk` goes at the end of `<body>`) plus `template-anecdote/styles.css`. These are copies of the homepage code, so a change to one needs the same change in the other.
+- Every other page: partials in `_includes/` (`theme-head.njk` goes in `<head>` above the stylesheet, `theme-controls.njk` is the buttons, `theme-script.njk` goes at the end of `<body>`), included once by `layout-base.njk`. These are copies of the homepage code, so a change to one needs the same change in the other.
 
 ## environmental usage
 

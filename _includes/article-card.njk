@@ -1,0 +1,77 @@
+{#- [claude-site-structure] One article card, built with assistance from Claude (Anthropic), October 8, 2026.
+    Markup mirrors working-folder/template-article-card/index.html. If you change one, change the other.
+
+    Set `card` before including this file. The toCard filter (eleventy.config.mjs) builds it from a collection item:
+      {% set card = item | toCard %}
+      {% include "article-card.njk" %}
+
+    Keys: title, url, tags, plus these optional ones:
+      label     - breadcrumb text instead of the content type's name, e.g. "generative experiment"
+      summary   - the TL;DR text (HTML allowed)
+      stats     - list of { value, label }; shown as big numbers under the summary
+      body      - extra HTML under the TL;DR box (playground cards pass the item's markdown body)
+      cta       - { label, href }; the tilted orange button (the story hero card uses it)
+      tagAnchor - appended to every tag link, e.g. "#anecdotes" to jump to that section of the tag page
+
+    The summary and stats use classes rather than the template's id="summary" / id="stats":
+    a list page shows many cards, and an id can only be used once per page. -#}
+{#- The breadcrumb comes from the item's content type (contentTypes in eleventy.config.mjs). #}
+{%- set kind = null %}
+{%- for type in contentTypes %}{% if type.tag in (card.tags or []) and not kind %}{% set kind = type %}{% endif %}{% endfor %}
+<article class="article-summary-card">
+    <header>
+        {%- if kind %}
+        <nav class="crumbs">
+            <ol>
+                <li class="crumb">
+                    <i class="fa-solid {{ kind.icon }} icon"></i>
+                    <a href="{{ kind.href }}">{{ card.label or kind.label }}</a>
+                </li>
+            </ol>
+        </nav>
+        {%- endif %}
+        {# The title links to the full page. The first h2 is for screen readers; the multilayer one is visual only. #}
+        <a href="{{ card.url }}">
+            <h2 class="hidden" style="content-visibility: hidden;">{{ card.title }}</h2>
+            <h2 class="multilayer" aria-hidden="true">
+                <span class="bungee-layers-inline">{{ card.title }}</span>
+                <span class="bungee-layers-regular">{{ card.title }}</span>
+                <span class="bungee-layers-outline">{{ card.title }}</span>
+                <span class="bungee-layers-shade">{{ card.title }}</span>
+            </h2>
+        </a>
+        <ul class="tag-list">
+            {%- for tag in card.tags | topicTags %}
+            <li><a href="/tags/{{ tag | slugify }}/{{ card.tagAnchor }}">{{ tag }}</a></li>
+            {%- endfor %}
+        </ul>
+    </header>
+    {%- if card.summary or card.stats %}
+    <section class="summary">
+        <div class="typography-label-container">
+            <h2 class="typography-label">TL&semi;DR</h2>
+        </div>
+        {%- if card.summary %}
+        <p>{{ card.summary | safe }}</p>
+        {%- endif %}
+        {%- if card.stats %}
+        <section class="stats">
+            {%- for stat in card.stats %}
+            <div>
+                <p class="bungee-layers-regular">{{ stat.value }}</p>
+                <p class="stats-label">{{ stat.label }}</p>
+            </div>
+            {%- endfor %}
+        </section>
+        {%- endif %}
+    </section>
+    {%- endif %}
+    {%- if card.body %}
+    <div class="card-body">
+        {{ card.body | safe }}
+    </div>
+    {%- endif %}
+    {%- if card.cta %}
+    <a href="{{ card.cta.href }}" class="cta">{{ card.cta.label }}&ensp;<i class="fa-regular fa-angle-right"></i></a>
+    {%- endif %}
+</article>

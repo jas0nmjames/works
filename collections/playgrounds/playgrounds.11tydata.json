@@ -1,0 +1,7 @@
+{
+  "tags": ["playground"],
+  "permalink": false,
+  "eleventyComputed": {
+    "cardUrl": "/playground/#{{ page.fileSlug }}"
+  }
+}

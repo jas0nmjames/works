@@ -1,0 +1,30 @@
+---
+# [claude-site-structure] The /about/ page, built with assistance from Claude (Anthropic), October 8, 2026.
+# Follows Jason's about mock (October 2026): every section from collections/about/ in full, in `order:`,
+# in two staggered columns on desktop (one column on mobile).
+# Odd `order:` numbers sit in the right column and even ones in the left, as in the mock; set `side: left|right`
+# on an item to override. Each section starts one row below the previous one, which makes the stagger.
+layout: layout-base.njk
+stylesheet: /styles.css
+---
+    <main>
+        <section id="about" class="about-list">
+            <h2 class="list-label">{{ title }}</h2>
+            {{ content | safe }}
+            <div class="about-grid">
+            {%- for item in collections.about | byOrder %}
+            {%- set number = item.data.order or loop.index %}
+            {%- set side = item.data.side or ("right" if number is odd else "left") %}
+            {%- set section = {
+                id: item.fileSlug,
+                class: "about-section about-" + side,
+                style: "--row: " + loop.index,
+                title: item.data.title, heading: item.data.heading, subheading: item.data.subheading,
+                tags: item.data.tags, content: item.content,
+                date: item.date if item.data.date else null
+            } %}
+            {% include "about-section.njk" %}
+            {%- endfor %}
+            </div>
+        </section>
+    </main>

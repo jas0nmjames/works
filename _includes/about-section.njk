@@ -1,0 +1,32 @@
+{#- [claude-site-structure] One about section, built with assistance from Claude (Anthropic), October 8, 2026.
+    Markup mirrors the <article> in working-folder/template-about/index.html. If you change one, change the other.
+    Used by layout-about.njk (one section per page) and layout-about-list.njk (every section on /about/).
+
+    Set `section` before including this file:
+      title      - plain text title (used for the <title> and cards)
+      heading    - optional HTML version of the title for the big heading, e.g. <abbr title="In Real Life">IRL</abbr> Builder
+      subheading - optional line above the heading (HTML allowed, e.g. a map link with coordinates)
+      date       - optional; only shown when the item sets `date:` in front matter
+      tags, content
+      id, class, style - optional attributes for the <article> (the list page uses them to place each section) -#}
+<article{% if section.id %} id="{{ section.id }}"{% endif %}{% if section.class %} class="{{ section.class }}"{% endif %}{% if section.style %} style="{{ section.style }}"{% endif %}>
+    <hgroup>
+        {%- if section.subheading %}
+        <p class="subheading">{{ section.subheading | safe }}</p>
+        {%- endif %}
+        <h2>{{ (section.heading or section.title) | safe }}</h2>
+    </hgroup>
+    {%- if section.date %}
+    <p><time datetime="{{ section.date | isoDate }}">{{ section.date | displayDate }}</time></p>
+    {%- endif %}
+    {%- set topics = section.tags | topicTags %}
+    {%- if topics.length %}
+    {# Each tag opens its tag page (every content type that shares it). #}
+    <ul class="tag-list">
+        {%- for tag in topics %}
+        <li><a href="/tags/{{ tag | slugify }}/">{{ tag }}</a></li>
+        {%- endfor %}
+    </ul>
+    {%- endif %}
+    {{ section.content | safe }}
+</article>

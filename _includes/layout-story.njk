@@ -1,0 +1,89 @@
+---
+# [claude-site-structure] Case study ("story") layout, built with assistance from Claude (Anthropic), October 8, 2026.
+# Markup mirrors working-folder/template-story/index.html. If you change one, change the other.
+# Front matter it reads: title, tagline, tags, summary, stats, video, gallery, project, cta (all but title optional).
+layout: layout-base.njk
+stylesheet: /css/story.css
+---
+    <div class="wrapper">
+        <main class="story-list">
+            <article class="story">
+                <section class="hero">
+                    <hgroup>
+                        <h1>{{ title }}</h1>
+                        {%- if tagline %}
+                        <p class="tagline">{{ tagline }}</p>
+                        {%- endif %}
+                    </hgroup>
+                    {#- The summary card is the same partial the list pages use. Its tags jump to the anecdotes
+                        section of each tag page (clicking "Openbank" lists the Openbank anecdotes). #}
+                    {%- set card = {
+                        title: title, url: page.url, tags: tags, summary: summary, stats: stats,
+                        tagAnchor: "#anecdotes",
+                        cta: cta or { label: "Case Study & Video Summary", href: "#case-study" }
+                    } %}
+                    {% include "article-card.njk" %}
+                    {#- Optional: same `video:` block as an article (src, plus optional captions / subtitles_es). #}
+                    {%- if video %}
+                    <section id="video-summary">
+                        <div class="typography-label-container">
+                            <h2 class="typography-label">Video Summary</h2>
+                        </div>
+                        <video
+                            controls
+                            preload="metadata"
+                            autoplay
+                            loop
+                            muted>
+                            <source src="{{ video.src }}">
+                            {%- if video.captions %}
+                            <track label="English" kind="captions" srclang="en" src="{{ video.captions }}" default />
+                            {%- endif %}
+                            {%- if video.subtitles_es %}
+                            <track label="Español" kind="subtitles" srclang="es" src="{{ video.subtitles_es }}" />
+                            {%- endif %}
+                            Your browser cannot play this video.
+                        </video>
+                    </section>
+                    {%- endif %}
+                    {#- Optional: `gallery:` is a list of up to three images. They get the classes image-1, image-2
+                        and image-3, which place them in the collage. caption and source_url are optional. #}
+                    {%- if gallery %}
+                    <section class="image-gallery">
+                        {%- for image in gallery %}
+                        <figure class="image-{{ loop.index }}">
+                            <img src="{{ image.src }}" alt="{{ image.alt }}"{% if image.title %} title="{{ image.title }}"{% endif %} />
+                            {%- if image.caption %}
+                            <figcaption> Source:
+                                <cite>{% if image.source_url %}<a href="{{ image.source_url }}" target="_blank" rel="noopener">{{ image.caption }}</a>{% else %}{{ image.caption }}{% endif %}</cite>
+                                {%- if image.source_url %}
+                                {#- image-2's caption runs vertically, so its arrow is turned to match. #}
+                                <i class="icon fa-solid fa-arrow-up-right-from-square{% if loop.index == 2 %} fa-rotate-90{% endif %}"></i>
+                                {%- endif %}
+                            </figcaption>
+                            {%- endif %}
+                        </figure>
+                        {%- endfor %}
+                    </section>
+                    {%- endif %}
+                </section>
+                <section class="content" id="case-study">
+                    {# `content` is the rendered markdown body of the case study. #}
+                    {{ content | safe }}
+                </section>
+                {#- Anecdotes tagged with this case study's `project:` value (e.g. project: Openbank), newest first. #}
+                {%- set related = collections.anecdote | withTag(project) | newestFirst if project else [] %}
+                {%- if related.length %}
+                <section class="related-anecdotes" id="anecdotes">
+                    <h2 class="list-label">anecdotes</h2>
+                    <div class="card-grid">
+                        {%- for item in related %}
+                        {%- set card = item | toCard %}
+                        {% include "article-card.njk" %}
+                        {%- endfor %}
+                    </div>
+                </section>
+                {%- endif %}
+            </article>
+        </main>
+    </div>

@@ -1,0 +1,5 @@
+{
+  "layout": "layout-article.njk",
+  "tags": ["anecdote"],
+  "permalink": "/anecdotes/{{ page.fileSlug }}/"
+}

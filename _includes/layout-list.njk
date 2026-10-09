@@ -1,0 +1,21 @@
+---
+# [claude-site-structure] List page layout, built with assistance from Claude (Anthropic), October 8, 2026.
+# Shows one article card per item in a collection, newest first, two columns on desktop and one on mobile.
+# The list page sets `listOf` to a collection name: anecdote, case-study, note or about.
+# Any markdown body on the list page is shown above the cards as an introduction.
+layout: layout-base.njk
+stylesheet: /css/article.css
+---
+    <main class="card-list">
+        {# Understated heading, styled like the "TL;DR" / "video summary" labels on a frame line. #}
+        <h2 class="list-label">{{ title }}</h2>
+        {{ content | safe }}
+        <div class="card-grid">
+            {%- for item in collections[listOf] | newestFirst %}
+            {%- set card = item | toCard %}
+            {% include "article-card.njk" %}
+            {%- else %}
+            <p>Nothing here yet.</p>
+            {%- endfor %}
+        </div>
+    </main>

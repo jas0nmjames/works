@@ -1,0 +1,73 @@
+---
+# [claude-site-structure] Playground page layout, built with assistance from Claude (Anthropic), October 8, 2026.
+# Follows Jason's playground mock (October 2026). Lists every item in collections/playgrounds/ by `order:`.
+# Items have no pages of their own; each is a section here with an id, so /playground/#dut-dut links to it.
+# Two item styles, set with `style:` in the item's front matter:
+#   card      - image (with caption and a vertical date) on one side, the article card on the other.
+#               The item's markdown body goes inside the card, under the TL;DR box.
+#   prototype - heading + screenshot on one side, the markdown body beside it.
+# `media: left|right` picks the image's side; without it, items alternate.
+layout: layout-base.njk
+stylesheet: /css/article.css
+---
+    <main class="playground">
+        <hgroup class="playground-header">
+            <h2>{{ title }}</h2>
+            {%- if subtitle %}
+            <p>{{ subtitle }}</p>
+            {%- endif %}
+        </hgroup>
+        {{ content | safe }}
+        {%- for item in collections.playground | byOrder %}
+        {%- set image = item.data.image or {} %}
+        {%- set media = item.data.media or ("left" if loop.index is odd else "right") %}
+        <section class="playground-item playground-{{ item.data.style or 'prototype' }} media-{{ media }}" id="{{ item.fileSlug }}">
+            {#- The screenshot, or a gray box until one is added (`image.src` in the item's front matter). #}
+            {%- set picture %}
+                {%- if image.src %}
+                <img src="{{ image.src }}" alt="{{ image.alt }}" />
+                {%- else %}
+                <div class="image-placeholder" aria-hidden="true"></div>
+                {%- endif %}
+            {%- endset %}
+            {%- if item.data.style == "card" %}
+            <figure class="playground-figure">
+                {%- if image.caption %}
+                <figcaption>{{ image.caption }}</figcaption>
+                {%- endif %}
+                {#- Only items with a `date:` in front matter show one (otherwise Eleventy would use the file's date). #}
+                {%- if item.data.date %}
+                <time class="playground-date" datetime="{{ item.date | isoDate }}">{{ item.date | monthYear }}</time>
+                {%- endif %}
+                {{ picture | safe }}
+            </figure>
+            <div class="playground-card">
+                {%- set card = item | toCard({ body: item.content }) %}
+                {% include "article-card.njk" %}
+                {%- if item.data.link %}
+                <p class="playground-link"><a href="{{ item.data.link }}" target="_blank" rel="noopener">see it live&ensp;<i class="fa-regular fa-angle-right"></i></a></p>
+                {%- endif %}
+            </div>
+            {%- else %}
+            <div class="playground-media">
+                <h3 class="playground-title">{{ item.data.title }}</h3>
+                {%- set topics = item.data.tags | topicTags %}
+                {%- if topics.length %}
+                <ul class="tag-list">
+                    {%- for tag in topics %}
+                    <li><a href="/tags/{{ tag | slugify }}/">{{ tag }}</a></li>
+                    {%- endfor %}
+                </ul>
+                {%- endif %}
+                {{ picture | safe }}
+            </div>
+            <div class="playground-text">
+                {{ item.content | safe }}
+                {%- if item.data.link %}
+                <p class="playground-link"><a href="{{ item.data.link }}" target="_blank" rel="noopener">see it live&ensp;<i class="fa-regular fa-angle-right"></i></a></p>
+                {%- endif %}
+            </div>
+            {%- endif %}
+        </section>
+        {%- endfor %}
+    </main>

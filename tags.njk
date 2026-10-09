@@ -1,0 +1,35 @@
+---
+# [claude-site-structure] Tag pages, built with assistance from Claude (Anthropic), October 8, 2026.
+# Makes one page per topic tag at /tags/<tag>/ (collections.tagList is built in eleventy.config.mjs).
+# Each content type gets its own section with an anchor (#case-studies, #anecdotes, #playground, #about),
+# in the order of contentTypes in eleventy.config.mjs, and empty sections are skipped.
+# A case study's tags link straight to #anecdotes.
+pagination:
+  data: collections.tagList
+  size: 1
+  alias: tag
+permalink: "/tags/{{ tag.slug }}/"
+eleventyComputed:
+  title: "{{ tag.name }}"
+layout: layout-base.njk
+stylesheet: /css/article.css
+eleventyExcludeFromCollections: true
+---
+    <main class="card-list">
+        {# Understated heading: the tag itself, shown as a tag chip. #}
+        <h2 class="list-label">tagged <span class="tag-chip">{{ tag.name }}</span></h2>
+        {%- for type in contentTypes %}
+        {%- set matches = collections[type.tag] | withTag(tag.name) | newestFirst %}
+        {%- if matches.length %}
+        <section id="{{ type.id }}" class="card-list-section">
+            <h3 class="list-label">{{ type.heading }}</h3>
+            <div class="card-grid">
+                {%- for item in matches %}
+                {%- set card = item | toCard %}
+                {% include "article-card.njk" %}
+                {%- endfor %}
+            </div>
+        </section>
+        {%- endif %}
+        {%- endfor %}
+    </main>

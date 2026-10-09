@@ -1,9 +1,7 @@
 ---
-layout: layout-anecdote.njk
 title: Representing the US in new Global Design Ways of Working
 date: 2026-10-08
 tags:
-  - anecdote
   - Openbank
   - Global Design
   - relationships

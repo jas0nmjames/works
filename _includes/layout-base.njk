@@ -1,0 +1,49 @@
+{#- [claude-site-structure] Shared page shell, built with assistance from Claude (Anthropic), October 8, 2026.
+    Every layout (article, story, about, list, tags) sets `layout: layout-base.njk` and a `stylesheet`
+    in its own front matter, then this file wraps its markup with:
+      - the color mode head script (above the stylesheet, so the right mode paints first)
+      - the jasonjames.works heading and the brush / sun / moon theme picker
+      - the theme picker's button script at the end of <body>
+    The homepage (index.html) keeps its own copies of these, since it isn't a Nunjucks page. -#}
+<!DOCTYPE html>
+<html
+    lang="en-US"
+    dir="ltr"
+    translate="yes">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if title %}{{ title }} · {% endif %}Jason's Portfolio</title>
+    {# Color mode head script: must stay inline and above the stylesheet so the right mode paints first. #}
+    {% include "theme-head.njk" %}
+    <meta name="theme-color" content="#E05B08" />
+    {# Absolute path: pages render at many URL depths. `stylesheet` comes from the layout's front matter. #}
+    <link rel="stylesheet" href="{{ stylesheet }}">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon_jason-james.png">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Hairline&family=Bungee+Inline&family=Bungee+Outline&family=Bungee+Shade&family=Bungee+Spice&family=Bungee+Tint&family=Readex+Pro:wght@160..700&display=swap" rel="stylesheet">
+
+    <!-- Programmatically Generated Bungee Font-->
+    <link rel="stylesheet" href="https://bungee-project.djr.com/resources/web/bungee.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://bungee-project.djr.com/resources/web/bungee.js"></script>
+
+    <!-- Font Awesome Kit "jasonjames" -->
+    <script src="https://kit.fontawesome.com/0e27cadf60.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <header>
+        <a href="/" title="go back to the homepage">
+            <h1>jasonjames.works</h1>
+        </a>
+        {# Full color-mode switcher (light / black & white / dark); same markup and behavior as the homepage. #}
+        {% include "theme-controls.njk" %}
+    </header>
+    {{ content | safe }}
+    {# Button script for the switcher above; needs window.themeModes from the head script. #}
+    {% include "theme-script.njk" %}
+</body>
+</html>

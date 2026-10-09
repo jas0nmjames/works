@@ -1,9 +1,7 @@
 ---
-layout: layout-anecdote.njk
 title: This is a test anecdote!
 date: 2026-10-01
 tags:
-  - anecdote
   - testing
 summary: We're kicking the tires.
 outcomes:
