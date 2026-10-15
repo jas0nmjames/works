@@ -155,39 +155,40 @@
 }
 /* [/claude-color-modes] */
 
-:root {
-    @font-face { /* See https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face and https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Web_fonts */
+/* [claude] These four @font-face rules used to sit inside the :root {} block below. @font-face can't be nested in a style rule, so browsers ignored them and the Bungee Layers fonts never loaded on the homepage. - October 15, 2026 */
+@font-face { /* See https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face and https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Web_fonts */
     font-family: "Bungee Layers Inline";
     src:
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.woff2") format("woff2"),
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.woff") format("woff"),
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.eot") format("embedded-opentype");
-    }
+}
 
-    @font-face {
+@font-face {
     font-family: "Bungee Layers Regular";
     src:
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.woff2") format("woff2"),
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.woff") format("woff"),
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.eot") format("embedded-opentype");
-    }
+}
 
-    @font-face {
+@font-face {
     font-family: "Bungee Layers Outline";
     src:
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.woff2") format("woff2"),
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.woff") format("woff"),
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.eot") format("embedded-opentype");
-    }
+}
 
-    @font-face {
+@font-face {
     font-family: "Bungee Layers Shade";
     src:
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.woff2") format("woff2"),
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.woff") format("woff"),
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.eot") format("embedded-opentype");
-    }
+}
 
+:root {
     @font-face {
     font-family: "Lexend";
     src: 
@@ -757,6 +758,167 @@ main, section, article {
     grid-column: 2 / 3;
     grid-row: 2 / 4;
 }
+
+/* article summary card */
+
+/* Ported from working-folder/template-article/styles.css (used by template-article-card).
+   The template styles bare `article`; here everything is scoped to .article-summary-card so other
+   articles on the site (e.g. #about article) aren't affected.
+   Per-mode look as local tokens, same values as the template:
+   --card-bg / --card-frame: lavender card with snow frames in light; in mono and dark the card takes
+     the page background and the frames use --secondary.
+   --title-fill / --extra-layers: 4 stacked Bungee layers in light, one solid layer in mono and dark.
+   --tag-shadow: hard offset shadow on the tags in mono and dark only. */
+.article-summary-card {
+    --card-bg: var(--secondary);
+    --card-frame: var(--primary);
+    --card-frame-width: 4px;
+    --title-fill: var(--primary);
+    --extra-layers: block;
+    --tag-shadow: none;
+    background-color: var(--card-bg);
+    padding: 1rem 1rem;
+    border-radius: 24px;
+}
+
+:root[data-mode="mono"] .article-summary-card,
+:root[data-mode="dark"] .article-summary-card {
+    --card-bg: var(--primary);
+    --card-frame: var(--secondary);
+    --title-fill: var(--text);
+    --extra-layers: none;
+    --tag-shadow: -2px 2px 0 var(--text);
+}
+
+:root[data-mode="mono"] .article-summary-card { --card-frame-width: 3px; }
+:root[data-mode="dark"] .article-summary-card { --card-frame-width: 2px; }
+
+/* No-JS fallbacks, same order as the color-mode fallbacks at the top of this file */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-mode]) .article-summary-card {
+        --card-bg: var(--primary);
+        --card-frame: var(--secondary);
+        --card-frame-width: 2px;
+        --title-fill: var(--text);
+        --extra-layers: none;
+        --tag-shadow: -2px 2px 0 var(--text);
+    }
+}
+
+@media (prefers-contrast: more), (forced-colors: active) {
+    :root:not([data-mode]) .article-summary-card {
+        --card-bg: var(--primary);
+        --card-frame: var(--secondary);
+        --card-frame-width: 3px;
+        --title-fill: var(--text);
+        --extra-layers: none;
+        --tag-shadow: -2px 2px 0 var(--text);
+    }
+}
+
+.article-summary-card {
+    /* the site-wide `header { display: flex }` would lay the crumb, title and tags out in a row */
+    > header {
+        display: block;
+        margin: 0 1.25rem;
+    }
+    > header > h2 {
+        font-size: 2.25rem;
+    }
+    h2.hidden {
+        margin: 0.375rem;
+    }
+    /* undo the main navigation's pill styles (nav li) on the breadcrumb */
+    .crumbs ol {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    li.crumb {
+        font-weight: 300;
+        font-size: 0.75rem;
+        padding: 0;
+        margin-left: 0;
+        border-radius: 0;
+    }
+    li.crumb:hover {
+        background-color: transparent;
+    }
+    li.crumb > i, li.crumb svg {
+        position: absolute;
+        transform: translate(-1.25rem, 3px);
+    }
+    .multilayer {
+        margin: 0rem;
+        margin-bottom: 0.25em;
+        display: grid;
+    }
+    .bungee-layers-inline {
+        z-index: 4;
+        grid-row: 1;
+        grid-column: 1;
+        font-family: 'Bungee Layers Inline','Bungee Hairline', cursive;
+        font-weight: 400; /* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight */  
+        color: var(--accent);
+        display: var(--extra-layers); /* hidden in mono and dark, see the tokens above */
+    }
+    .bungee-layers-regular {
+        z-index: 3;
+        grid-row: 1;
+        grid-column: 1;
+        font-family: 'Bungee Layers Regular','Bungee', cursive;
+        font-weight: 400;  
+        color: var(--title-fill); /* snow in light; the text color in mono and dark, where it is the only layer shown */
+    }
+    .bungee-layers-outline {
+        z-index: 2;
+        grid-row: 1;
+        grid-column: 1;
+        font-family: 'Bungee Layers Outline', 'Bungee Outline', cursive;
+        font-weight: 400; 
+        color: var(--accent);
+        display: var(--extra-layers);
+    }
+    .bungee-layers-shade {
+        z-index: 1;
+        grid-row: 1;
+        grid-column: 1;
+        font-family: 'Bungee Layers Shade', 'Bungee Shade', cursive;
+        font-weight: 400; 
+        color: var(--text);
+        display: var(--extra-layers);
+    }
+    .tag-list {
+        list-style-type: none;
+        padding: 0;      
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .tag-list li {
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 2px solid var(--accent);
+        box-shadow: var(--tag-shadow); /* hard offset shadow in mono and dark only; none in light */
+        cursor: pointer;
+        font-family: "Bungee", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 0.75rem;
+    }
+    /* .content-frame.content-summary so this outranks the :root[data-mode] .content-frame border rules */
+    .content-frame.content-summary {
+        border: var(--card-frame-width) solid var(--card-frame);
+        padding: 0px 16px;
+        margin: 1.5em 0 0.25em 0;
+    }
+    .typography-label {
+        background-color: var(--card-bg); /* hides the frame line behind the label, so it must match the card */
+    }
+}
+
 
 /* break point is 464px */
 @media (width <= 29em) {
