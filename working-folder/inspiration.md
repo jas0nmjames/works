@@ -15,12 +15,9 @@ Yoto cofounder [Ben Drury on the Design Better Podcast](https://designbetterpodc
 - ~~The business model is the grid~~
 - ~~Bob Baxley on Lenny's Podcast ([YouTube](https://www.youtube.com/watch?v=X-83gvgVaWc))~~
 - ~~Sentient Design @ Friends of Figma~~
-- Voyager documentary
-- If you build it documentary
-- Muscle Shoals Documentary
 - Ruha Benjamin
 
-## Reading
+## Books & Articles
 
 - Conversations with Things
 - Thinking in Systems by Donella Meadows
@@ -33,6 +30,29 @@ Yoto cofounder [Ben Drury on the Design Better Podcast](https://designbetterpodc
 - One Hundred Years of Solitude
 - Management and the Gospel
 - When Breath Becomes Air
+
+## ~~Media~~ Art
+
+- Voyager documentary
+- If you build it documentary
+- Muscle Shoals Documentary
+- The Prince of Egypt (animation)
+- Spiderman Into the Spiderverse
+
+[Malcolm X (1992) Euology](https://www.youtube.com/watch?v=T0TFu8kV9o8)
+
+> Malcolm was our manhood; our living, black manhood.
+
+## People
+
+- Mark Rukman
+- Lina Khan
+- RFK
+- Barbara Jordan
+
+## Fun
+
+[Interview with a 'sweating' AI CEO (2026)](https://www.youtube.com/watch?v=tnYaExb5JvM)
 
 ## Quotes
 
@@ -64,20 +84,3 @@ from Kanye West. "Praise God." *Donda*.
 > For, in the final analysis, our most basic common link is that we all inhabit this small planet. We all breathe the same air. We all cherish our children's future. And we are all mortal.
 
 [Commencement Address at American University, Washington, D.C., June 10, 1963](https://www.jfklibrary.org/archives/other-resources/john-f-kennedy-speeches/american-university-19630610)
-
-
-## Inspiration
-
-- The Prince of Egypt (animation)
-- Spiderman Into the Spiderverse
-
-### People
-
-- Mark Rukman
-- Lina Khan
-- RFK
-- Barbara Jordan
-
-## Fun
-
-[Interview with a 'sweating' AI CEO (2026)](https://www.youtube.com/watch?v=tnYaExb5JvM)

@@ -593,6 +593,7 @@ video {
     position: absolute;
     right: 0;
     bottom: -4em;
+    z-index: 5;
 }
 
 .story .hero > #video-summary {
@@ -695,6 +696,15 @@ video {
 .story .content {
     max-width: 32em;
     line-height: 1.5;
+}
+
+@media (width <= 66em) {
+    .image-gallery {
+        grid-row: 8 / 15;
+    }
+    .story .hero > #video-summary {
+        grid-row: 10;
+    }
 }
 
 /* [claude-story-mobile] Mobile layout built with assistance from Claude (Anthropic), October 8, 2026.

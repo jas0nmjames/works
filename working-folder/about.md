@@ -20,6 +20,14 @@ Thanks John Meada
 - First Responsible AI Conference
 - Marriage, Family, Friends, & Church & Youth
 
+### Drumline & Percussion
+
+#### UVa Cavalier Marching Band
+
+[![YouTube - Cavalier Marching Band - (2007) Pregame](assets/cavaliermarchingband-pregame-snapshot.jpg)](https://www.youtube.com/watch?v=L5300FTy6Yw)
+
+[![YouTube - liemn123 - UVA Marching Band at the Gator Bowl ](assets/cavaliermarchingband-pregame-snapshot.jpg)](https://www.youtube.com/watch?v=RhImntme28o)
+
 ## Writing
 
 - primogeniture essay (history capstone)
@@ -29,9 +37,10 @@ Thanks John Meada
 
 ### Questions 
 
-- design as repair & Maitenance
+- design as repair & Maintenance
 - The shipping container
 - ‘Technique’
+- 'A timeless way of building'
 
 ## Community
 

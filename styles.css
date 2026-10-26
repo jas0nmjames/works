@@ -342,6 +342,7 @@ button {
 
 #main-navigation {
     margin-left: 16px;
+    min-width: 15em;
 }
 
 #main-navigation ul {
@@ -355,7 +356,7 @@ button {
 nav ul {
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 1.25em;
     list-style: none;
     padding-left: 0;
     margin-left: 0;
@@ -376,10 +377,13 @@ nav ul {
 nav li {
     font-weight: 300;
     border-radius: 26px;
-    /* background-color: var(--primary); */
-    padding: 12px 16px;
+    padding: 8px 16px;
     position: relative;
     margin-left: -16px;
+}
+
+nav#main-navigation > ul > li {
+    border: 2px dotted var(--accent);
 }
 
 nav li:hover {
@@ -389,20 +393,22 @@ nav li:hover {
 .nav-sub-heading {
     position: absolute;
     left: 0;
-    transform: translate(5em, 2.25em);
+    transform: translate(4.5em, 2em);
     color: var(--accent);
+    background-color: var(--primary);
+    padding: 0 0.5em;
     font-family: "Bungee", sans-serif;
     font-weight: 400;
     font-style: normal;
     font-size: 0.625em;
-    /* width: 15em */ /* don't wrap */
+    white-space: nowrap;
 }
 
 /* I wasn't able to figure out how to curve the sub-heading with https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/textPath the way I wanted to quickly.  I'll try later with LLM assistance.  - Jason, September 14, 2026 */
 
-aside {
+nav aside {
     font-weight: 300;
-    max-width: 14em;
+    max-width: 13em;
 }
 
 details {
@@ -446,6 +452,12 @@ p, details {
 .icon {
     color: var(--accent);
     padding: 0;
+}
+
+.crumb a {
+    border-bottom: 2px solid var(--accent);
+    border-radius: 0.125em;
+    padding-bottom: 0.125em;
 }
 
 .fa-sun-bright, .fa-moon-waxing-crescent {
@@ -611,17 +623,13 @@ h1 {
 main {
     position: relative;
     display: flex;
-    flex-flow: row nowrap;
-    align-items: flex-start;
+    flex-flow: column nowrap;
+    align-items: stretch;
     gap: 2.5em;
 }
 
-#main-content {
-    align-self: center;
-}
-
 section {
-    margin: 0em 0em;
+    margin: 0em;
 }
 
 footer {
@@ -647,9 +655,12 @@ video {
     border-radius: 16px;
     padding: 0px 0.5em;
     position: relative;
-    
-    max-width: 15em;
     height: auto;
+}
+
+#home #video-summary {
+    max-width: 8em;
+    transform: rotate(5deg);
 }
 
 /* yay! I wrote this section to change the border widths based on data-mode myself! - Jason, September 29, 2026 */
@@ -676,6 +687,7 @@ video {
 .typography-label-container {
     position: absolute;
     left: 1em;
+    top: 0;
     transform: translateY(-60%);
 }
 
@@ -759,6 +771,41 @@ main, section, article {
     grid-row: 2 / 4;
 }
 
+/* homepage layout */
+
+main#home {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1em;
+    width: 100%;
+}
+
+#home #introduction {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 2em;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.hero .content-frame {
+    max-width: 21em;
+}
+
+.article-card-list {
+    display: flex;
+    flex-flow: column wrap;
+    gap: 1em;
+    padding: 0.5em;
+}
+
+#home .article-card-list {
+    max-width: 21em;
+}
+
+/* end homepage layout */
+
+
 /* article summary card */
 
 /* Ported from working-folder/template-article/styles.css (used by template-article-card).
@@ -779,6 +826,43 @@ main, section, article {
     background-color: var(--card-bg);
     padding: 1rem 1rem;
     border-radius: 24px;
+    max-width: 24em;
+    display: flex;
+    flex-direction: column;
+}
+
+.cta {
+    font-size: 1.125rem;
+    font-family: "Readex Pro", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings:
+        "HEXP" 0;
+    text-decoration: none;
+    padding: 0.5rem 1.25rem;
+    border: 2px dotted var(--accent);
+    border-radius: 32px;
+    z-index: 5;
+    align-self: flex-end;
+}
+
+.article-summary-card > .cta {
+    font-size: 1rem;
+    font-family: "Readex Pro", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings:
+        "HEXP" 0;
+    text-decoration: none;
+    /* margin-top: 0.5em; */
+    padding: 0.5rem 1.25rem;
+    border-radius: 32px;
+    color: var(--primary);
+    background-color: var(--accent);
+    z-index: 5;
+    align-self: flex-end;
 }
 
 :root[data-mode="mono"] .article-summary-card,
@@ -852,6 +936,7 @@ main, section, article {
         margin: 0rem;
         margin-bottom: 0.25em;
         display: grid;
+        line-height: 1.05;
     }
     .bungee-layers-inline {
         z-index: 4;
@@ -891,7 +976,7 @@ main, section, article {
     .tag-list {
         list-style-type: none;
         padding: 0;      
-        margin: 0;
+        margin: 0.75em 0 0 0;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -912,13 +997,43 @@ main, section, article {
     .content-frame.content-summary {
         border: var(--card-frame-width) solid var(--card-frame);
         padding: 0px 16px;
-        margin: 1.5em 0 0.25em 0;
+        margin: 1em 0 1em 0;
     }
     .typography-label {
         background-color: var(--card-bg); /* hides the frame line behind the label, so it must match the card */
     }
 }
 
+#stats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 1em;
+    row-gap: 0;
+    font-size: 1.25rem;
+
+    .bungee-layers-regular {
+        font-size: 3rem;
+        margin: 0;
+        color: var(--accent);
+        line-height: 1;
+    }
+
+    .stats-label {
+        font-size: 0.75rem;
+        margin-top: 0;
+    }
+}
+
+.article-card-list #stats .bungee-layers-regular {
+    font-size: 2rem;
+}
+
+.article-card-list .multilayer {
+    font-size: 2rem;
+}
+
+/* end article summary card */
 
 /* break point is 464px */
 @media (width <= 29em) {
@@ -929,7 +1044,7 @@ main, section, article {
         font-size: 1.2em;
         /* margin-left: -24px; /* negative margin aligns nav with html body on mobile */
     }
-    aside {
+    nav aside {
         max-width: 100%;
     }
     main {
