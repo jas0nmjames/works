@@ -785,7 +785,7 @@ main#home {
     flex-flow: row wrap;
     gap: 2em;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .hero .content-frame {
@@ -802,6 +802,29 @@ main#home {
 #home .article-card-list {
     max-width: 21em;
 }
+
+/* [claude-home-aside-column] Built with assistance from Claude (Anthropic), October 26, 2026.
+   Desktop: intro on the left, the aside (selected case studies / anecdotes / playgrounds) in a column on the right.
+   Below 60em (960px) main#home stays a column, so the aside stacks under the intro. */
+@media (width > 60em) {
+    main#home {
+        flex-flow: row nowrap;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+    #home #introduction {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+    main#home > aside {
+        flex: 0 0 auto;
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 2em;
+        margin-left: auto;
+    }
+}
+/* [/claude-home-aside-column] */
 
 /* end homepage layout */
 
