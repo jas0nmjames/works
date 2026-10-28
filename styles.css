@@ -155,39 +155,40 @@
 }
 /* [/claude-color-modes] */
 
-:root {
-    @font-face { /* See https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face and https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Web_fonts */
+/* [claude] These four @font-face rules used to sit inside the :root {} block below. @font-face can't be nested in a style rule, so browsers ignored them and the Bungee Layers fonts never loaded on the homepage. - October 15, 2026 */
+@font-face { /* See https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face and https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Web_fonts */
     font-family: "Bungee Layers Inline";
     src:
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.woff2") format("woff2"),
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.woff") format("woff"),
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Inline.eot") format("embedded-opentype");
-    }
+}
 
-    @font-face {
+@font-face {
     font-family: "Bungee Layers Regular";
     src:
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.woff2") format("woff2"),
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.woff") format("woff"),
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Regular.eot") format("embedded-opentype");
-    }
+}
 
-    @font-face {
+@font-face {
     font-family: "Bungee Layers Outline";
     src:
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.woff2") format("woff2"),
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.woff") format("woff"),
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Outline.eot") format("embedded-opentype");
-    }
+}
 
-    @font-face {
+@font-face {
     font-family: "Bungee Layers Shade";
     src:
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.woff2") format("woff2"),
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.woff") format("woff"),
         url("assets/fonts/bungee/Bungee_Web/BungeeLayers/BungeeLayers-Shade.eot") format("embedded-opentype");
-    }
+}
 
+:root {
     @font-face {
     font-family: "Lexend";
     src: 
@@ -341,6 +342,7 @@ button {
 
 #main-navigation {
     margin-left: 16px;
+    min-width: 15em;
 }
 
 #main-navigation ul {
@@ -354,7 +356,7 @@ button {
 nav ul {
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 1.25em;
     list-style: none;
     padding-left: 0;
     margin-left: 0;
@@ -375,10 +377,13 @@ nav ul {
 nav li {
     font-weight: 300;
     border-radius: 26px;
-    /* background-color: var(--primary); */
-    padding: 12px 16px;
+    padding: 8px 16px;
     position: relative;
     margin-left: -16px;
+}
+
+nav#main-navigation > ul > li {
+    border: 2px dotted var(--accent);
 }
 
 nav li:hover {
@@ -388,20 +393,22 @@ nav li:hover {
 .nav-sub-heading {
     position: absolute;
     left: 0;
-    transform: translate(5em, 2.25em);
+    transform: translate(4.5em, 2em);
     color: var(--accent);
+    background-color: var(--primary);
+    padding: 0 0.5em;
     font-family: "Bungee", sans-serif;
     font-weight: 400;
     font-style: normal;
     font-size: 0.625em;
-    /* width: 15em */ /* don't wrap */
+    white-space: nowrap;
 }
 
 /* I wasn't able to figure out how to curve the sub-heading with https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/textPath the way I wanted to quickly.  I'll try later with LLM assistance.  - Jason, September 14, 2026 */
 
-aside {
+nav aside {
     font-weight: 300;
-    max-width: 14em;
+    max-width: 13em;
 }
 
 details {
@@ -445,6 +452,12 @@ p, details {
 .icon {
     color: var(--accent);
     padding: 0;
+}
+
+.crumb a {
+    border-bottom: 2px solid var(--accent);
+    border-radius: 0.125em;
+    padding-bottom: 0.125em;
 }
 
 .fa-sun-bright, .fa-moon-waxing-crescent {
@@ -610,17 +623,13 @@ h1 {
 main {
     position: relative;
     display: flex;
-    flex-flow: row nowrap;
-    align-items: flex-start;
+    flex-flow: column nowrap;
+    align-items: stretch;
     gap: 2.5em;
 }
 
-#main-content {
-    align-self: center;
-}
-
 section {
-    margin: 0em 0em;
+    margin: 0em;
 }
 
 footer {
@@ -646,9 +655,12 @@ video {
     border-radius: 16px;
     padding: 0px 0.5em;
     position: relative;
-    
-    max-width: 15em;
     height: auto;
+}
+
+#home #video-summary {
+    max-width: 8em;
+    transform: rotate(5deg);
 }
 
 /* yay! I wrote this section to change the border widths based on data-mode myself! - Jason, September 29, 2026 */
@@ -675,6 +687,7 @@ video {
 .typography-label-container {
     position: absolute;
     left: 1em;
+    top: 0;
     transform: translateY(-60%);
 }
 
@@ -758,6 +771,293 @@ main, section, article {
     grid-row: 2 / 4;
 }
 
+/* homepage layout */
+
+main#home {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1em;
+    width: 100%;
+}
+
+#home #introduction {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 2em;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.hero .content-frame {
+    max-width: 21em;
+}
+
+.article-card-list {
+    display: flex;
+    flex-flow: column wrap;
+    gap: 1em;
+    padding: 0.5em;
+}
+
+#home .article-card-list {
+    max-width: 21em;
+}
+
+/* [claude-home-aside-column] Built with assistance from Claude (Anthropic), October 26, 2026.
+   Desktop: intro on the left, the aside (selected case studies / anecdotes / playgrounds) in a column on the right.
+   Below 60em (960px) main#home stays a column, so the aside stacks under the intro. */
+@media (width > 60em) {
+    main#home {
+        flex-flow: row nowrap;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+    #home #introduction {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+    main#home > aside {
+        flex: 0 0 auto;
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 2em;
+        margin-left: auto;
+    }
+}
+/* [/claude-home-aside-column] */
+
+/* end homepage layout */
+
+
+/* article summary card */
+
+/* Ported from working-folder/template-article/styles.css (used by template-article-card).
+   The template styles bare `article`; here everything is scoped to .article-summary-card so other
+   articles on the site (e.g. #about article) aren't affected.
+   Per-mode look as local tokens, same values as the template:
+   --card-bg / --card-frame: lavender card with snow frames in light; in mono and dark the card takes
+     the page background and the frames use --secondary.
+   --title-fill / --extra-layers: 4 stacked Bungee layers in light, one solid layer in mono and dark.
+   --tag-shadow: hard offset shadow on the tags in mono and dark only. */
+.article-summary-card {
+    --card-bg: var(--secondary);
+    --card-frame: var(--primary);
+    --card-frame-width: 4px;
+    --title-fill: var(--primary);
+    --extra-layers: block;
+    --tag-shadow: none;
+    background-color: var(--card-bg);
+    padding: 1rem 1rem;
+    border-radius: 24px;
+    max-width: 24em;
+    display: flex;
+    flex-direction: column;
+}
+
+.cta {
+    font-size: 1.125rem;
+    font-family: "Readex Pro", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings:
+        "HEXP" 0;
+    text-decoration: none;
+    padding: 0.5rem 1.25rem;
+    border: 2px dotted var(--accent);
+    border-radius: 32px;
+    z-index: 5;
+    align-self: flex-end;
+}
+
+.article-summary-card > .cta {
+    font-size: 1rem;
+    font-family: "Readex Pro", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings:
+        "HEXP" 0;
+    text-decoration: none;
+    /* margin-top: 0.5em; */
+    padding: 0.5rem 1.25rem;
+    border-radius: 32px;
+    color: var(--primary);
+    background-color: var(--accent);
+    z-index: 5;
+    align-self: flex-end;
+}
+
+:root[data-mode="mono"] .article-summary-card,
+:root[data-mode="dark"] .article-summary-card {
+    --card-bg: var(--primary);
+    --card-frame: var(--secondary);
+    --title-fill: var(--text);
+    --extra-layers: none;
+    --tag-shadow: -2px 2px 0 var(--text);
+}
+
+:root[data-mode="mono"] .article-summary-card { --card-frame-width: 3px; }
+:root[data-mode="dark"] .article-summary-card { --card-frame-width: 2px; }
+
+/* No-JS fallbacks, same order as the color-mode fallbacks at the top of this file */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-mode]) .article-summary-card {
+        --card-bg: var(--primary);
+        --card-frame: var(--secondary);
+        --card-frame-width: 2px;
+        --title-fill: var(--text);
+        --extra-layers: none;
+        --tag-shadow: -2px 2px 0 var(--text);
+    }
+}
+
+@media (prefers-contrast: more), (forced-colors: active) {
+    :root:not([data-mode]) .article-summary-card {
+        --card-bg: var(--primary);
+        --card-frame: var(--secondary);
+        --card-frame-width: 3px;
+        --title-fill: var(--text);
+        --extra-layers: none;
+        --tag-shadow: -2px 2px 0 var(--text);
+    }
+}
+
+.article-summary-card {
+    /* the site-wide `header { display: flex }` would lay the crumb, title and tags out in a row */
+    > header {
+        display: block;
+        margin: 0 1.25rem;
+    }
+    > header > h2 {
+        font-size: 2.25rem;
+    }
+    h2.hidden {
+        margin: 0.375rem;
+    }
+    /* undo the main navigation's pill styles (nav li) on the breadcrumb */
+    .crumbs ol {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    li.crumb {
+        font-weight: 300;
+        font-size: 0.75rem;
+        padding: 0;
+        margin-left: 0;
+        border-radius: 0;
+    }
+    li.crumb:hover {
+        background-color: transparent;
+    }
+    li.crumb > i, li.crumb svg {
+        position: absolute;
+        transform: translate(-1.25rem, 3px);
+    }
+    .multilayer {
+        margin: 0rem;
+        margin-bottom: 0.25em;
+        display: grid;
+        line-height: 1.05;
+    }
+    .bungee-layers-inline {
+        z-index: 4;
+        grid-row: 1;
+        grid-column: 1;
+        font-family: 'Bungee Layers Inline','Bungee Hairline', cursive;
+        font-weight: 400; /* see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight */  
+        color: var(--accent);
+        display: var(--extra-layers); /* hidden in mono and dark, see the tokens above */
+    }
+    .bungee-layers-regular {
+        z-index: 3;
+        grid-row: 1;
+        grid-column: 1;
+        font-family: 'Bungee Layers Regular','Bungee', cursive;
+        font-weight: 400;  
+        color: var(--title-fill); /* snow in light; the text color in mono and dark, where it is the only layer shown */
+    }
+    .bungee-layers-outline {
+        z-index: 2;
+        grid-row: 1;
+        grid-column: 1;
+        font-family: 'Bungee Layers Outline', 'Bungee Outline', cursive;
+        font-weight: 400; 
+        color: var(--accent);
+        display: var(--extra-layers);
+    }
+    .bungee-layers-shade {
+        z-index: 1;
+        grid-row: 1;
+        grid-column: 1;
+        font-family: 'Bungee Layers Shade', 'Bungee Shade', cursive;
+        font-weight: 400; 
+        color: var(--text);
+        display: var(--extra-layers);
+    }
+    .tag-list {
+        list-style-type: none;
+        padding: 0;      
+        margin: 0.75em 0 0 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .tag-list li {
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 2px solid var(--accent);
+        box-shadow: var(--tag-shadow); /* hard offset shadow in mono and dark only; none in light */
+        cursor: pointer;
+        font-family: "Bungee", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 0.75rem;
+    }
+    /* .content-frame.content-summary so this outranks the :root[data-mode] .content-frame border rules */
+    .content-frame.content-summary {
+        border: var(--card-frame-width) solid var(--card-frame);
+        padding: 0px 16px;
+        margin: 1em 0 1em 0;
+    }
+    .typography-label {
+        background-color: var(--card-bg); /* hides the frame line behind the label, so it must match the card */
+    }
+}
+
+#stats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 1em;
+    row-gap: 0;
+    font-size: 1.25rem;
+
+    .bungee-layers-regular {
+        font-size: 3rem;
+        margin: 0;
+        color: var(--accent);
+        line-height: 1;
+    }
+
+    .stats-label {
+        font-size: 0.75rem;
+        margin-top: 0;
+    }
+}
+
+.article-card-list #stats .bungee-layers-regular {
+    font-size: 2rem;
+}
+
+.article-card-list .multilayer {
+    font-size: 2rem;
+}
+
+/* end article summary card */
+
 /* break point is 464px */
 @media (width <= 29em) {
     .wrapper {
@@ -767,7 +1067,7 @@ main, section, article {
         font-size: 1.2em;
         /* margin-left: -24px; /* negative margin aligns nav with html body on mobile */
     }
-    aside {
+    nav aside {
         max-width: 100%;
     }
     main {

@@ -1,14 +1,5 @@
 # Notes (Outline)
 
-
-
-- Design as Repair - first encountered at the conference
-- The business model is the grid
-- Voyager documentary
-- If you build it documentary
-- Muscle Shoals Documentary
-- Ruha Benjamin
-
 ## Ron Bronson: Design As Repair
 
 [Throughline Conference (January 2026)](https://www.throughlineconf.com/2026-speakers/ron-bronson)
@@ -40,3 +31,21 @@ For more, see <https://www.bizmodisgrid.com/>.
 
 [![Screenshot of Jason from a YouTube video](/assets/images/notes/snapshot-machines-are-writing-now.jpg)](https://www.youtube.com/watch?v=lXevGcRracY)
 [UXPA Boston, July 20, 2023](https://www.eventbrite.com/e/machines-are-writing-now-conversational-experiences-in-the-age-of-gpt-tickets-627360501147) (Recording available on [YouTube](https://www.youtube.com/watch?v=lXevGcRracY))
+
+## Series
+
+### Mark Rukman's [Old Takes](https://www.youtube.com/@OldTakes)
+
+### [The Modern World](https://themodernworld.com/)
+
+> If you want to understand a society, don’t listen to what it says about itself — look at what it creates. You can learn everything about the Victorians — the good and the bad — just by looking at their lamp posts. 
+
+*From the pilot episode, [How did the world get so ugly?](https://www.youtube.com/watch?v=tWYxrowovts)*
+
+For more, also see *The Ezra Klein Show*: [Why the Modern World Looks So Drab](https://www.youtube.com/watch?v=2fb8aNqFSLc) with Debbie Millman
+
+### Like Stories of Old
+
+[Why Movies Don't Feel Real Anymore](https://www.youtube.com/watch?v=tvwPKBXEOKE) is a cinema lens into why Generative AI slop feels like slop.
+
+(You could also check out *Thomas Flight*'s [Why Do Movies Feel So Different Now?](https://www.youtube.com/watch?v=5xEi8qg266g))
