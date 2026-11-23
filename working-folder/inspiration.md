@@ -43,12 +43,25 @@ Yoto cofounder [Ben Drury on the Design Better Podcast](https://designbetterpodc
 
 > Malcolm was our manhood; our living, black manhood.
 
-## People
+- Star Wars Rogue One ([Trailer](https://www.youtube.com/watch?v=sC9abcLLQpI))
+
+
+<!--
+https://www.youtube.com/watch?v=EMSQtqUIlXY
+via Ovetta Sampson https://www.linkedin.com/posts/ovettasampson_the-humans-are-coming-for-ais-jobs-in-share-7523011446998360064-7MAt/?highlightedUpdateUrn=urn%3Ali%3Aactivity%3A7523011447736692736&highlightedUpdateType=SOCIAL_SHARE&origin=SOCIAL_SHARE&utm_source=share&utm_medium=member_desktop&rcm=ACoAAAVdYx8BnX9tJ58npa3EnyPoNj9nL8t4IVo
+-->
+
+
+
+
+## People with Ideas
 
 - Mark Rukman
 - Lina Khan
 - RFK
 - Barbara Jordan
+- Daron Acemoglu
+- [Gordon Parks](https://www.iphf.org/hof-gordon-parks)
 
 ## Fun
 
